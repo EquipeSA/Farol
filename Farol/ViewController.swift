@@ -22,6 +22,15 @@ class ViewController: UIViewController {
     }
 
     @IBAction func saveButtonAction(_ sender: Any) {
+        textViewInsight.isHidden = true
+        textViewInsight.layer.borderWidth = 0
+        textViewInsight.isUserInteractionEnabled = false
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.textViewInsight.textAlignment = .center
+            self.textViewInsight.isHidden = false
+        }
+        
     }
     
     
