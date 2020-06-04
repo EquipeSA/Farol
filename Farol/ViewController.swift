@@ -62,6 +62,7 @@ class ViewController: UIViewController {
         textViewInsight.layer.borderColor = UIColor.black.cgColor
         textViewInsight.layer.borderWidth = 0.5
         textViewInsight.layer.cornerRadius = 12
+        textViewInsight.contentInset = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
     }
     
     func configureSaveButton() {
