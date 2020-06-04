@@ -29,6 +29,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var textViewInsight: UITextView!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var insightQuestionLabel: UILabel!
     
     
     override func viewDidLoad() {
@@ -46,6 +47,9 @@ class ViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.textViewInsight.textAlignment = .center
             self.textViewInsight.isHidden = false
+            
+            let date = self.getCurrentDate()
+            self.insightQuestionLabel.text = date
         }
         // quando apertar o botão tem que:
         // 1- iniciar animação da bola de loading e fazer a animação do farol
@@ -70,6 +74,17 @@ class ViewController: UIViewController {
         saveButton.layer.borderWidth = 0.5
         saveButton.layer.borderColor = UIColor.black.cgColor
         saveButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+    }
+    
+    func getCurrentDate() -> String {
+        let currentDate = Date()
+        let formatter = DateFormatter()
+        formatter.timeStyle = .none
+        formatter.dateStyle = .long
+        
+        let dateString = formatter.string(from: currentDate)
+        
+        return dateString
     }
 }
 
