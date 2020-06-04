@@ -16,11 +16,26 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        configureTextViewInsight()
+        configureSaveButton()
+       
     }
 
     @IBAction func saveButtonAction(_ sender: Any) {
     }
     
+    
+    func configureTextViewInsight() {
+        textViewInsight.layer.borderColor = UIColor.black.cgColor
+        textViewInsight.layer.borderWidth = 0.5
+        textViewInsight.layer.cornerRadius = 12
+    }
+    
+    func configureSaveButton() {
+        saveButton.layer.cornerRadius = 5
+        saveButton.layer.borderWidth = 0.5
+        saveButton.layer.borderColor = UIColor.black.cgColor
+        saveButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+    }
 }
 
