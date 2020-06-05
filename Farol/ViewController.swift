@@ -47,6 +47,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         textViewInsight.isUserInteractionEnabled = false
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            let insightTextContent = self.validateText()
+            self.textViewInsight.text = insightTextContent
             self.textViewInsight.textAlignment = .center
             self.textViewInsight.isHidden = false
             
@@ -102,5 +104,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 50, height: 67)
-    }
+    func validateText() -> String{
+        let byLength = validLength(text: textViewInsight.text)
+        if !byLength{
+            return "Voce excedeu o tamanho de texto rapaz, faz de novo."
+        }else{
+            return textViewInsight.text
+        }
 }
+
