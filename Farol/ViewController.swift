@@ -104,6 +104,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 50, height: 67)
+    }
+    
     func validateText() -> String{
         let byLength = validLength(text: textViewInsight.text)
         if !byLength{
@@ -111,5 +113,5 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }else{
             return textViewInsight.text
         }
+    }
 }
-
