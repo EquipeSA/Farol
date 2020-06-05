@@ -45,7 +45,7 @@
                                 <rect key="frame" x="0.0" y="784" width="414" height="68"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="WFN-Sb-8cd">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="WFN-Sb-8cd">
                                     <size key="itemSize" width="50" height="67"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -53,7 +53,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="calendarCell" id="K44-2y-S0a" customClass="CalendarCell" customModule="Farol" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="67"/>
+                                        <rect key="frame" x="0.0" y="0.5" width="50" height="67"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="3g6-XL-rJZ">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="67"/>
@@ -83,16 +83,12 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="blP-u1-i8A">
-                                <rect key="frame" x="0.0" y="305" width="414" height="478"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="calendar" destination="to1-tq-XC9" id="wby-eu-7rp"/>
+                        <outlet property="calendarCV" destination="to1-tq-XC9" id="4a1-xQ-2O7"/>
                         <outlet property="insightQuestionLabel" destination="fYZ-ey-kAQ" id="wGC-5P-RXt"/>
                         <outlet property="saveButton" destination="taI-NU-m8M" id="PDO-l5-cZi"/>
                         <outlet property="textViewInsight" destination="kcd-Cj-L62" id="KNG-ac-E6R"/>
