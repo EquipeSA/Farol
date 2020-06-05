@@ -64,6 +64,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     
+    
     func configureTextViewInsight() {
         textViewInsight.layer.borderColor = UIColor.black.cgColor
         textViewInsight.layer.borderWidth = 0.5
