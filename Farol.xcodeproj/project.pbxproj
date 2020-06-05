@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B728B2F9248AC40A00549D0F /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B728B2F8248AC40A00549D0F /* CalendarCell.swift */; };
 		D05FF87124896C3000CD861E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05FF87024896C3000CD861E /* AppDelegate.swift */; };
 		D05FF87324896C3000CD861E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05FF87224896C3000CD861E /* SceneDelegate.swift */; };
 		D05FF87524896C3000CD861E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05FF87424896C3000CD861E /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B728B2F8248AC40A00549D0F /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		D05FF86D24896C3000CD861E /* Farol.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Farol.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D05FF87024896C3000CD861E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D05FF87224896C3000CD861E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				D05FF87024896C3000CD861E /* AppDelegate.swift */,
 				D05FF87224896C3000CD861E /* SceneDelegate.swift */,
 				D05FF87424896C3000CD861E /* ViewController.swift */,
+				B728B2F8248AC40A00549D0F /* CalendarCell.swift */,
 				D05FF87624896C3000CD861E /* Main.storyboard */,
 				D05FF87924896C3200CD861E /* Assets.xcassets */,
 				D05FF87B24896C3200CD861E /* LaunchScreen.storyboard */,
@@ -145,6 +148,7 @@
 				D05FF88524896CBF00CD861E /* Funcoes.swift in Sources */,
 				D05FF87124896C3000CD861E /* AppDelegate.swift in Sources */,
 				D05FF87324896C3000CD861E /* SceneDelegate.swift in Sources */,
+				B728B2F9248AC40A00549D0F /* CalendarCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
