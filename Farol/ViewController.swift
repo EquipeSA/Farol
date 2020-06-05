@@ -60,6 +60,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             let date = self.getCurrentDate()
             self.insightQuestionLabel.text = date
+            let days = calenDays()
+            print(days)
         }
         // quando apertar o botão tem que:
         // 1- iniciar animação da bola de loading e fazer a animação do farol
