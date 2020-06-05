@@ -60,7 +60,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             let date = self.getCurrentDate()
             self.insightQuestionLabel.text = date
-            let days = calenDays()
+            let days = calenDays(numOfDays: 29)
             print(days)
         }
         // quando apertar o botão tem que:

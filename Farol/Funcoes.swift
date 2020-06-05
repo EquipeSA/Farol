@@ -16,11 +16,11 @@ func validLength(text:String,length:Int = 300)->Bool{
     return true
 }
 
-func calenDays()->[Int]{
+func calenDays(numOfDays:Int)->[Int]{
     let cal = Calendar.current
     var date = cal.startOfDay(for: Date())
     var days = [Int]()
-    for i in 1 ... 29 {
+    for i in 1 ... numOfDays {
         let day = cal.component(.day, from: date)
         days.append(day)
         date = cal.date(byAdding: .day, value: 1, to: date)!
