@@ -45,6 +45,8 @@ class ViewController: UIViewController {
         textViewInsight.isUserInteractionEnabled = false
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            let insightTextContent = self.validateText()
+            self.textViewInsight.text = insightTextContent
             self.textViewInsight.textAlignment = .center
             self.textViewInsight.isHidden = false
             
@@ -85,6 +87,15 @@ class ViewController: UIViewController {
         let dateString = formatter.string(from: currentDate)
         
         return dateString
+    }
+    
+    func validateText() -> String{
+        let byLength = validLength(text: textViewInsight.text)
+        if !byLength{
+            return "Voce excedeu o tamanho de texto rapaz, faz de novo."
+        }else{
+            return textViewInsight.text
+        }
     }
 }
 
