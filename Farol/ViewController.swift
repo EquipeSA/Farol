@@ -45,6 +45,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         calendarCV.dataSource = self
         configureTextViewInsight()
         configureSaveButton()
+        textViewInsight.textContainer.maximumNumberOfLines = 7
+        textViewInsight.textContainer.lineBreakMode = .byWordWrapping
+    
     }
 
     @IBAction func saveButtonAction(_ sender: Any) {
@@ -53,8 +56,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         textViewInsight.isUserInteractionEnabled = false
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            let insightTextContent = self.validateText()
-            self.textViewInsight.text = insightTextContent
             self.textViewInsight.textAlignment = .center
             self.textViewInsight.isHidden = false
             
@@ -72,7 +73,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         // 4 - fazer o botão "salvar" sumir.
         // 5 - mostrar a notificação que foi salva
     }
-    
     
     
     func configureTextViewInsight() {
@@ -121,13 +121,5 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 50, height: 67)
     }
-    
-    func validateText() -> String{
-        let byLength = validLength(text: textViewInsight.text)
-        if !byLength{
-            return "Voce excedeu o tamanho de texto rapaz, faz de novo."
-        }else{
-            return textViewInsight.text
-        }
-    }
+
 }

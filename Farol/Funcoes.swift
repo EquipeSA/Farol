@@ -8,14 +8,6 @@
 
 import Foundation
 
-func validLength(text:String,length:Int = 300)->Bool{
-    let tam = text.count
-    if tam > length{
-        return false
-    }
-    return true
-}
-
 func calenDays(numOfDays:Int)->[Int]{
     let cal = Calendar.current
     var date = cal.startOfDay(for: Date())
