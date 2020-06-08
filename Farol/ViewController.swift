@@ -27,8 +27,8 @@ import UIKit
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    let daysOfMonth = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"]
     let daysOfChallenge: [Int] = []
+    let daysCalendar = calenDays(numOfDays: 29)
     
     var day: String = ""
 
@@ -61,8 +61,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             let date = self.getCurrentDate()
             self.insightQuestionLabel.text = date
-            let days = calenDays(numOfDays: 29)
-            print(days)
         }
         // quando apertar o botão tem que:
         // 1- iniciar animação da bola de loading e fazer a animação do farol
@@ -73,7 +71,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         // 4 - fazer o botão "salvar" sumir.
         // 5 - mostrar a notificação que foi salva
     }
-    
     
     func configureTextViewInsight() {
         textViewInsight.layer.borderColor = UIColor.black.cgColor
@@ -94,7 +91,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let formatter = DateFormatter()
         formatter.timeStyle = .none
         formatter.dateStyle = .long
-        
         var dateString = formatter.string(from: currentDate)
         return dateString
     }
@@ -115,11 +111,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
        
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCell", for: indexPath) as! CalendarCell
+        cell.dayLabel.text = daysCalendar[indexPath.item]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 50, height: 67)
     }
-
 }

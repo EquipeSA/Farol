@@ -8,13 +8,14 @@
 
 import Foundation
 
-func calenDays(numOfDays:Int)->[Int]{
+func calenDays(numOfDays:Int)->[String]{
     let cal = Calendar.current
     var date = cal.startOfDay(for: Date())
-    var days = [Int]()
+    var days = [String]()
     for i in 1 ... numOfDays {
         let day = cal.component(.day, from: date)
-        days.append(day)
+        let strDay = String(day)
+        days.append(strDay)
         date = cal.date(byAdding: .day, value: 1, to: date)!
     }
     return days
