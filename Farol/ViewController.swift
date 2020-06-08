@@ -40,6 +40,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        calendarCV.backgroundColor = UIColor.blue
         
         calendarCV.delegate = self
         calendarCV.dataSource = self
@@ -100,6 +101,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 50, height: 70)
+        return CGSize(width: 50, height: 77)
     }
 }
