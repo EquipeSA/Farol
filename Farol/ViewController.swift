@@ -27,10 +27,10 @@ import UIKit
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    let daysOfChallenge: [Int] = []
-    let daysCalendar = calenDays(numOfDays: 29)
+    var weekDay = -1
     
-    var day: String = ""
+    let daysOfChallengeNumber = calenDays(numOfDays: 29)
+    var daysOfChallengeCharacter: [String] = []
 
     @IBOutlet weak var textViewInsight: UITextView!
     @IBOutlet weak var saveButton: UIButton!
@@ -47,7 +47,31 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         configureSaveButton()
         textViewInsight.textContainer.maximumNumberOfLines = 7
         textViewInsight.textContainer.lineBreakMode = .byWordWrapping
+        
+        weekDay = getDayOfWeek()
+        daysOfChallengeCharacter = getSequenceDaysOfWeek(dayOfWeek: weekDay)
+    }
     
+    func getSequenceDaysOfWeek(dayOfWeek: Int) -> [String] {
+        switch dayOfWeek {
+        case 1:
+            return ["S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S"]
+        case 2:
+            return ["M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M"]
+        case 3:
+            return ["T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T"]
+        case 4:
+            return ["W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W"]
+        case 5:
+            return ["T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T"]
+        case 6:
+            return ["F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F"]
+        case 7:
+            return ["S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S"]
+        default:
+            return ["problem with date"]
+            print("problem with get Date")
+        }
     }
 
     @IBAction func saveButtonAction(_ sender: Any) {
@@ -95,27 +119,29 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         return dateString
     }
     
-    func getCurrentDayOfMonth() -> Int {
+    func getDayOfWeek() -> Int {
         let date = Date()
         let calendar = Calendar.current
-        let components = calendar.dateComponents([.day], from: date)
-        let dayOfMonth = components.day
-        guard let day = dayOfMonth else { return 0 }
+        let components = calendar.dateComponents([.weekday], from: date)
+        let dayOfWeek = components.weekday
+        guard let day = dayOfWeek else { return -1}
+        print(day)
         return day
     }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return daysCalendar.count
+        return daysOfChallengeNumber.count
     }
        
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCell", for: indexPath) as! CalendarCell
-        cell.dayLabel.text = daysCalendar[indexPath.item]
+        cell.dayLabel.text = daysOfChallengeNumber[indexPath.item]
+        cell.weekDayLabel.text = daysOfChallengeCharacter[indexPath.item]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 55, height: 70)
+        return CGSize(width: 50, height: 70)
     }
 }
