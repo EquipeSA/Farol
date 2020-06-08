@@ -9,8 +9,13 @@
 import UIKit
 
 class ChallengeDate {
-    let day: String = ""
-    let weekDay: String = ""
     
-    let weekDayNumber: Int = 0
+    init(day: String, weekDay: String, completed: Bool) {
+        self.day = day
+        self.weekDay = weekDay
+        self.completed = completed
+    }
+    let day: String
+    let weekDay: String
+    let completed: Bool
 }

@@ -29,7 +29,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var weekDay = -1
     
-    let daysOfChallengeNumber = calenDays(numOfDays: 29)
+    var daysOfChallenge: [ChallengeDate] = []
+    
+    var daysOfChallengeNumber: [String] = []
     var daysOfChallengeCharacter: [String] = []
 
     @IBOutlet weak var textViewInsight: UITextView!
@@ -49,8 +51,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         textViewInsight.textContainer.maximumNumberOfLines = 7
         textViewInsight.textContainer.lineBreakMode = .byWordWrapping
         
+        daysOfChallengeNumber = calenDays(numOfDays: 29)
         weekDay = getDayOfWeek()
         daysOfChallengeCharacter = getSequenceDaysOfWeek(dayOfWeek: weekDay)
+        
+        for i in 0...31 {
+            daysOfChallenge.append(ChallengeDate(day: daysOfChallengeNumber[i], weekDay: daysOfChallengeCharacter[i], completed: false))
+        }
     }
 
     @IBAction func saveButtonAction(_ sender: Any) {
