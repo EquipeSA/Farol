@@ -56,7 +56,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         daysOfChallengeCharacter = getSequenceDaysOfWeek(dayOfWeek: weekDay)
         
         for i in 0...31 {
-            daysOfChallenge.append(ChallengeDate(day: daysOfChallengeNumber[i], weekDay: daysOfChallengeCharacter[i], completed: false))
+            daysOfChallenge.append(ChallengeDate(day: daysOfChallengeNumber[i], weekDay: daysOfChallengeCharacter[i], completed: false, selecionavel: true))
         }
     }
 
@@ -103,10 +103,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCell", for: indexPath) as! CalendarCell
         cell.day = daysOfChallenge[indexPath.item]
+        if indexPath.item == 0 || indexPath.item == 1 || indexPath.item == 2 {
+            cell.isUserInteractionEnabled = false
+            cell.day?.selecionavel = false
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 50, height: 77)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(111)
     }
 }
