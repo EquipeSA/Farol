@@ -12,7 +12,8 @@ class CalendarCell: UICollectionViewCell {
     
     @IBOutlet weak var weekDayLabel: UILabel!
     @IBOutlet weak var dayLabel: UILabel!
-       
+    @IBOutlet weak var selectedImage: UIImageView!
+    
     var day: ChallengeDate? {
         didSet {
             dayLabel.text = day?.day
@@ -20,5 +21,4 @@ class CalendarCell: UICollectionViewCell {
         }
     }
     
-   
 }
