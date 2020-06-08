@@ -12,5 +12,13 @@ class CalendarCell: UICollectionViewCell {
     
     @IBOutlet weak var weekDayLabel: UILabel!
     @IBOutlet weak var dayLabel: UILabel!
+       
+    var day: ChallengeDate? {
+        didSet {
+            dayLabel.text = day?.day
+            weekDayLabel.text = day?.weekDay
+        }
+    }
     
+   
 }

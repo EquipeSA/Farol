@@ -102,8 +102,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
        
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCell", for: indexPath) as! CalendarCell
-        cell.dayLabel.text = daysOfChallengeNumber[indexPath.item]
-        cell.weekDayLabel.text = daysOfChallengeCharacter[indexPath.item]
+        cell.day = daysOfChallenge[indexPath.item]
         return cell
     }
     
