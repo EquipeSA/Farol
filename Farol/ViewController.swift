@@ -51,28 +51,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         weekDay = getDayOfWeek()
         daysOfChallengeCharacter = getSequenceDaysOfWeek(dayOfWeek: weekDay)
     }
-    
-    func getSequenceDaysOfWeek(dayOfWeek: Int) -> [String] {
-        switch dayOfWeek {
-        case 1:
-            return ["S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S"]
-        case 2:
-            return ["M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M"]
-        case 3:
-            return ["T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T"]
-        case 4:
-            return ["W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W"]
-        case 5:
-            return ["T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T"]
-        case 6:
-            return ["F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F"]
-        case 7:
-            return ["S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S"]
-        default:
-            return ["problem with date"]
-            print("problem with get Date")
-        }
-    }
 
     @IBAction func saveButtonAction(_ sender: Any) {
         textViewInsight.isHidden = true
@@ -83,7 +61,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.textViewInsight.textAlignment = .center
             self.textViewInsight.isHidden = false
             
-            let date = self.getCurrentDate()
+            let date = getCurrentDate()
             self.insightQuestionLabel.text = date
         }
         // quando apertar o botão tem que:
@@ -109,26 +87,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         saveButton.layer.borderColor = UIColor.black.cgColor
         saveButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
     }
-    
-    func getCurrentDate() -> String {
-        let currentDate = Date()
-        let formatter = DateFormatter()
-        formatter.timeStyle = .none
-        formatter.dateStyle = .long
-        var dateString = formatter.string(from: currentDate)
-        return dateString
-    }
-    
-    func getDayOfWeek() -> Int {
-        let date = Date()
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.weekday], from: date)
-        let dayOfWeek = components.weekday
-        guard let day = dayOfWeek else { return -1}
-        print(day)
-        return day
-    }
-    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return daysOfChallengeNumber.count
