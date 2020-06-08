@@ -106,7 +106,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 29
+        return daysCalendar.count
     }
        
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -116,6 +116,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 50, height: 67)
+        return CGSize(width: 55, height: 70)
     }
 }
