@@ -13,13 +13,22 @@ func calenDays(numOfDays:Int)->[String]{
     var date = cal.startOfDay(for: Date())
 
     var days = [String]()
+    for i in 1 ... 4 {
+        let day = cal.component(.day, from: date)
+        let strDay = String(day)
+        days.append(strDay)
+        date = cal.date(byAdding: .day, value: -1, to: date)!
+    }
+    days.reverse()
+    days.remove(at: 3)
+    date = cal.startOfDay(for: Date())
     for i in 1 ... numOfDays {
-        var day = cal.component(.day, from: date)
-        day = day - 3
+        let day = cal.component(.day, from: date)
         let strDay = String(day)
         days.append(strDay)
         date = cal.date(byAdding: .day, value: 1, to: date)!
     }
+    
     return days
 }
 
