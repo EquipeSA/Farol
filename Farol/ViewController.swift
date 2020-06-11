@@ -29,10 +29,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var weekDay = -1
     
+    let calendarsChallenge = calenDays(numOfDays: 29)
     var daysOfChallenge: [ChallengeDate] = []
-    
-    var daysOfChallengeNumber: [String] = []
-    var daysOfChallengeCharacter: [String] = []
 
     @IBOutlet weak var textViewInsight: UITextView!
     @IBOutlet weak var saveButton: UIButton!
@@ -51,12 +49,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         textViewInsight.textContainer.maximumNumberOfLines = 7
         textViewInsight.textContainer.lineBreakMode = .byWordWrapping
         
-        daysOfChallengeNumber = calenDays(numOfDays: 29)
-        weekDay = getDayOfWeek()
-        daysOfChallengeCharacter = getSequenceDaysOfWeek(dayOfWeek: weekDay)
-        
-        for i in 0...31 {
-            daysOfChallenge.append(ChallengeDate(day: daysOfChallengeNumber[i], weekDay: daysOfChallengeCharacter[i], completed: false, selecionavel: true))
+        for challengeDay in calendarsChallenge {
+            daysOfChallenge.append(ChallengeDate(day: challengeDay.day, weekDay: challengeDay.weekDay, completed: false, selecionavel: true))
         }
     }
 
@@ -97,7 +91,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return daysOfChallengeNumber.count
+        return calendarsChallenge.count
     }
        
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

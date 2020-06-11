@@ -8,49 +8,57 @@
 
 import Foundation
 
-func calenDays(numOfDays:Int)->[String]{
-    let cal = Calendar.current
-    var date = cal.startOfDay(for: Date())
+struct WeekCalendar{
+    var weekDay:String
+    var day:String
+}
+func calenDays(numOfDays:Int) -> [WeekCalendar]{
+    let calendar = Calendar.current
+    var date = calendar.startOfDay(for: Date())
 
-    var days = [String]()
-    for i in 1 ... 4 {
-        let day = cal.component(.day, from: date)
+    var weekDays = [WeekCalendar]()
+    for _ in 1 ... 4 {
+        let week = calendar.component(.weekday, from: date)
+        let day = calendar.component(.day, from: date)
         let strDay = String(day)
-        days.append(strDay)
-        date = cal.date(byAdding: .day, value: -1, to: date)!
+        let strWeek = convertToWeekString(correspondingNumber: week)
+        let weekDay = WeekCalendar(weekDay: strWeek, day: strDay)
+        weekDays.append(weekDay)
+        date = calendar.date(byAdding: .day, value: -1, to: date)!
     }
-    days.reverse()
-    days.remove(at: 3)
-    date = cal.startOfDay(for: Date())
-    for i in 1 ... numOfDays {
-        let day = cal.component(.day, from: date)
+    weekDays.reverse()
+    weekDays.remove(at: 3)
+    date = calendar.startOfDay(for: Date())
+    for _ in 1 ... numOfDays {
+        let week = calendar.component(.weekday, from: date)
+        let day = calendar.component(.day, from: date)
         let strDay = String(day)
-        days.append(strDay)
-        date = cal.date(byAdding: .day, value: 1, to: date)!
+        let strWeek = convertToWeekString(correspondingNumber: week)
+        let weekDay = WeekCalendar(weekDay: strWeek, day: strDay)
+        weekDays.append(weekDay)
+        date = calendar.date(byAdding: .day, value: 1, to: date)!
     }
-    
-    return days
+    return weekDays
 }
 
-func getSequenceDaysOfWeek(dayOfWeek: Int) -> [String] {
-    switch dayOfWeek {
+func convertToWeekString(correspondingNumber number:Int)->String{
+    switch number {
     case 1:
-        return ["T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S"]
+        return "D"
     case 2:
-        return ["F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M"]
+        return "S"
     case 3:
-        return ["S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T"]
+        return "T"
     case 4:
-        return ["S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W"]
+        return "Q"
     case 5:
-        return ["M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T"]
+        return "Q"
     case 6:
-        return ["T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F"]
+        return "S"
     case 7:
-        return ["W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S","S","M","T","W","T","F","S"]
+        return "S"
     default:
-        print("problem with get Date")
-        return ["problem with date"]
+       return  "problem with date"
     }
 }
 
@@ -59,16 +67,6 @@ func getCurrentDate() -> String {
     let formatter = DateFormatter()
     formatter.timeStyle = .none
     formatter.dateStyle = .long
-    var dateString = formatter.string(from: currentDate)
+    let dateString = formatter.string(from: currentDate)
     return dateString
-}
-
-func getDayOfWeek() -> Int {
-    let date = Date()
-    let calendar = Calendar.current
-    let components = calendar.dateComponents([.weekday], from: date)
-    let dayOfWeek = components.weekday
-    guard let day = dayOfWeek else { return -1}
-    print(day)
-    return day
 }
