@@ -37,14 +37,25 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        calendarCV.backgroundColor = UIColor.blue
-        
+
         calendarCV.delegate = self
         calendarCV.dataSource = self
         configureTextViewInsight()
         configureSaveButton()
         textViewInsight.textContainer.maximumNumberOfLines = 7
         textViewInsight.textContainer.lineBreakMode = .byWordWrapping
+        
+        let today = getTodayNumber()
+        var count = 0
+        for challenge in daysOfChallenge {
+            if challenge.day == today {
+                challenge.challengeDay = true
+            }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
     }
 
     @IBAction func saveButtonAction(_ sender: Any) {
@@ -92,8 +103,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         cell.day = daysOfChallenge[indexPath.item]
         if indexPath.item == 0 || indexPath.item == 1 || indexPath.item == 2 {
             cell.isUserInteractionEnabled = false
-            cell.day?.selecionavel = false
         }
+        
+
         return cell
     }
     
