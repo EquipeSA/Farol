@@ -39,9 +39,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        checkIfFirstTimeInApp(reset: false)
 
+        checkIfFirstTimeInApp(reset: false)
         calendarCV.delegate = self
         calendarCV.dataSource = self
         configureTextViewInsight()
@@ -49,14 +48,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         textViewInsight.textContainer.maximumNumberOfLines = 7
         textViewInsight.textContainer.lineBreakMode = .byWordWrapping
         
-        let today = getTodayNumber()
-        var count = 0
+        let todayIn = getTodayNumber()
         for challenge in daysOfChallenge {
-            if challenge.day == today {
+            if challenge.day == todayIn {
                 challenge.challengeDay = true
             }
         }
+    
     }
+
     func checkIfFirstTimeInApp(reset: Bool) {
         if reset == true {
             defaults.removeObject(forKey: "First Launch")
@@ -65,22 +65,32 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 print("Seconds+")
                        
                 // Run Code After First Launch
+                daysOfChallenge = calenDays(numOfDays: 29)
                        
                 defaults.set(true, forKey: "First Launch")
             } else {
                 print("First")
-                       
+                
+                // Run Code At First Launch
                 daysOfChallenge = calenDays(numOfDays: 29)
                 defaults.set(true, forKey: "First Launch")
             }
         }
-       
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        print("haha")
+        var count = 0
+        let today = getTodayNumber()
+        for challenge in daysOfChallenge {
+            if challenge.day == today {
+                break
+            }
+            count += 1
+        }
+        let desiredPosition = IndexPath(item: count, section: 0)
+        calendarCV.scrollToItem(at: desiredPosition, at: .centeredHorizontally, animated: false)
     }
-
     @IBAction func saveButtonAction(_ sender: Any) {
         textViewInsight.isHidden = true
         textViewInsight.layer.borderWidth = 0
@@ -92,7 +102,22 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             let date = getCurrentDate()
             self.insightQuestionLabel.text = date
+            let today = getTodayNumber()
+            for challenge in self.daysOfChallenge {
+                if challenge.day == today {
+                    challenge.completed = true
+                    self.calendarCV.reloadData()
+                    challenge.insight = self.textViewInsight.text
+                    print(challenge.insight ?? "eh nil")
+                    break
+                }
+            }
         }
+        
+//        let desiredPosition = IndexPath(item: 11, section: 0)
+//        calendarCV.scrollToItem(at: desiredPosition, at: .centeredHorizontally, animated: false)
+//        calendarCV.layoutIfNeeded()
+        
         // quando apertar o botão tem que:
         // 1- iniciar animação da bola de loading e fazer a animação do farol
         // depois que terminar as animações do farol e do loading, tem que:
@@ -139,4 +164,5 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(111)
     }
+    
 }

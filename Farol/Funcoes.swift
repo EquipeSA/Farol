@@ -66,10 +66,10 @@ func getCurrentDate() -> String {
 }
 
 func getTodayNumber() -> String {
-    var today = getCurrentDate()
-    var todayWithoutComma = today.replacingOccurrences(of: ",", with: "")
+    let today = getCurrentDate()
+    let todayWithoutComma = today.replacingOccurrences(of: ",", with: "")
     
-    var splitToday = todayWithoutComma.components(separatedBy: " ")
+    let splitToday = todayWithoutComma.components(separatedBy: " ")
     let day = splitToday[1]
     return day
 }

@@ -22,8 +22,8 @@ class ChallengeDate {
     
     let day: String
     let weekDay: String
-    let insight: String?
-    let completed: Bool
+    var insight: String?
+    var completed: Bool
     var selecionavel: Bool
     var trashDays: Bool
     var challengeDay: Bool
