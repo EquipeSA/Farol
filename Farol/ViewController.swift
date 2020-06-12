@@ -39,6 +39,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
 
         checkIfFirstTimeInApp(reset: false)
         calendarCV.delegate = self
@@ -55,6 +58,22 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             }
         }
     
+    }
+    
+    @objc func appMovedToForeground() {
+        print("enter foreground")
+        var count = 0
+        let today = getTodayNumber()
+        for challenge in daysOfChallenge {
+            if challenge.day == today {
+                break
+            }
+            count += 1
+        }
+        
+        let desiredPosition = IndexPath(item: count, section: 0)
+        calendarCV.scrollToItem(at: desiredPosition, at: .centeredHorizontally, animated: false)
+        calendarCV.layoutIfNeeded()
     }
 
     func checkIfFirstTimeInApp(reset: Bool) {
@@ -77,20 +96,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             }
         }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        print("haha")
-        var count = 0
-        let today = getTodayNumber()
-        for challenge in daysOfChallenge {
-            if challenge.day == today {
-                break
-            }
-            count += 1
-        }
-        let desiredPosition = IndexPath(item: count, section: 0)
-        calendarCV.scrollToItem(at: desiredPosition, at: .centeredHorizontally, animated: false)
-    }
+
     @IBAction func saveButtonAction(_ sender: Any) {
         textViewInsight.isHidden = true
         textViewInsight.layer.borderWidth = 0
