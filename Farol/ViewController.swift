@@ -26,8 +26,10 @@
 import UIKit
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    let defaults = UserDefaults.standard
 
-    var daysOfChallenge = calenDays(numOfDays: 29)
+    var daysOfChallenge: [ChallengeDate] = []
     
     @IBOutlet weak var textViewInsight: UITextView!
     @IBOutlet weak var saveButton: UIButton!
@@ -37,6 +39,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        checkIfFirstTimeInApp(reset: false)
 
         calendarCV.delegate = self
         calendarCV.dataSource = self
@@ -52,6 +56,25 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 challenge.challengeDay = true
             }
         }
+    }
+    func checkIfFirstTimeInApp(reset: Bool) {
+        if reset == true {
+            defaults.removeObject(forKey: "First Launch")
+        } else {
+            if defaults.bool(forKey: "First Launch") == true {
+                print("Seconds+")
+                       
+                // Run Code After First Launch
+                       
+                defaults.set(true, forKey: "First Launch")
+            } else {
+                print("First")
+                       
+                daysOfChallenge = calenDays(numOfDays: 29)
+                defaults.set(true, forKey: "First Launch")
+            }
+        }
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {

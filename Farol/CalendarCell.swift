@@ -19,6 +19,12 @@ class CalendarCell: UICollectionViewCell {
             dayLabel.text = day?.day
             weekDayLabel.text = day?.weekDay
             
+            if day?.completed == true {
+                selectedImage.image = UIImage(named: "bolinhaCheia")
+            } else {
+                selectedImage.image = UIImage(named: "bolinhaVazia")
+            }
+                       
             if day?.trashDays == false && day?.challengeDay == true {
                 selectedImage.image = UIImage(named: "bolinhaVazia")
             } else {
@@ -32,7 +38,6 @@ class CalendarCell: UICollectionViewCell {
                 dayLabel.textColor = .black
                 weekDayLabel.textColor = .black
             }
-            
         }
     }
     
