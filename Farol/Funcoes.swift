@@ -8,37 +8,31 @@
 
 import Foundation
 
-struct WeekCalendar{
-    var weekDay:String
-    var day:String
-}
-func calenDays(numOfDays:Int) -> [WeekCalendar]{
+func calenDays(numOfDays:Int) -> [ChallengeDate]{
     let calendar = Calendar.current
     var date = calendar.startOfDay(for: Date())
-
-    var weekDays = [WeekCalendar]()
+    var challengeDays = [ChallengeDate]()
+    
     for _ in 1 ... 4 {
         let week = calendar.component(.weekday, from: date)
         let day = calendar.component(.day, from: date)
         let strDay = String(day)
         let strWeek = convertToWeekString(correspondingNumber: week)
-        let weekDay = WeekCalendar(weekDay: strWeek, day: strDay)
-        weekDays.append(weekDay)
+        challengeDays.append(ChallengeDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: true))
         date = calendar.date(byAdding: .day, value: -1, to: date)!
     }
-    weekDays.reverse()
-    weekDays.remove(at: 3)
+    challengeDays.reverse()
+    challengeDays.remove(at: 3)
     date = calendar.startOfDay(for: Date())
     for _ in 1 ... numOfDays {
         let week = calendar.component(.weekday, from: date)
         let day = calendar.component(.day, from: date)
         let strDay = String(day)
         let strWeek = convertToWeekString(correspondingNumber: week)
-        let weekDay = WeekCalendar(weekDay: strWeek, day: strDay)
-        weekDays.append(weekDay)
+        challengeDays.append(ChallengeDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: true))
         date = calendar.date(byAdding: .day, value: 1, to: date)!
     }
-    return weekDays
+    return challengeDays
 }
 
 func convertToWeekString(correspondingNumber number:Int)->String{

@@ -26,12 +26,9 @@
 import UIKit
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    var weekDay = -1
-    
-    let calendarsChallenge = calenDays(numOfDays: 29)
-    var daysOfChallenge: [ChallengeDate] = []
 
+    var daysOfChallenge = calenDays(numOfDays: 29)
+    
     @IBOutlet weak var textViewInsight: UITextView!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var insightQuestionLabel: UILabel!
@@ -48,10 +45,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         configureSaveButton()
         textViewInsight.textContainer.maximumNumberOfLines = 7
         textViewInsight.textContainer.lineBreakMode = .byWordWrapping
-        
-        for challengeDay in calendarsChallenge {
-            daysOfChallenge.append(ChallengeDate(day: challengeDay.day, weekDay: challengeDay.weekDay, completed: false, selecionavel: true))
-        }
     }
 
     @IBAction func saveButtonAction(_ sender: Any) {
@@ -91,7 +84,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return calendarsChallenge.count
+        return daysOfChallenge.count
     }
        
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
