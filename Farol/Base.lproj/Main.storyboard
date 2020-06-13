@@ -31,16 +31,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="taI-NU-m8M">
-                                <rect key="frame" x="332" y="262" width="62" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Salvar">
-                                    <color key="titleColor" red="0.24705882352941178" green="0.23921568627450979" blue="0.33725490196078434" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                </state>
-                                <connections>
-                                    <action selector="saveButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BPT-Mi-ZAk"/>
-                                </connections>
-                            </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="to1-tq-XC9">
                                 <rect key="frame" x="0.0" y="771" width="414" height="81"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -89,11 +79,23 @@
                                 </cells>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EId-Se-YMF">
-                                <rect key="frame" x="184" y="433" width="46" height="30"/>
+                                <rect key="frame" x="20" y="259" width="63" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Next Day">
+                                    <color key="titleColor" red="0.2470588235" green="0.23921568630000001" blue="0.33725490200000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
                                 <connections>
                                     <action selector="botaoTeste:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7vE-ZC-kWg"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="taI-NU-m8M">
+                                <rect key="frame" x="332" y="259" width="62" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Salvar">
+                                    <color key="titleColor" red="0.24705882352941178" green="0.23921568627450979" blue="0.33725490196078434" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                                <connections>
+                                    <action selector="saveButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BPT-Mi-ZAk"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -110,7 +112,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="131.8840579710145" y="138.61607142857142"/>
+            <point key="canvasLocation" x="-655" y="135"/>
         </scene>
     </scenes>
 </document>
