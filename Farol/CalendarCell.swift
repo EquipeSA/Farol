@@ -18,12 +18,6 @@ class CalendarCell: UICollectionViewCell {
         didSet {
             dayLabel.text = day?.day
             weekDayLabel.text = day?.weekDay
-                       
-            if day?.trashDays == false && day?.challengeDay == true {
-                selectedImage.image = UIImage(named: "bolinhaVazia")
-            } else {
-                selectedImage.image = nil
-            }
             
             if day?.trashDays == false && day?.challengeDay == false {
                 dayLabel.textColor = .red
@@ -32,7 +26,14 @@ class CalendarCell: UICollectionViewCell {
                 dayLabel.textColor = .black
                 weekDayLabel.textColor = .black
             }
-            if day?.completed == true && day?.trashDays == false  {
+                       
+            if day?.trashDays == false && day?.challengeDay == true {
+                selectedImage.image = UIImage(named: "bolinhaVazia")
+            } else {
+                selectedImage.image = nil
+            }
+           
+            if day?.trashDays == false && day?.completed == true  {
                 selectedImage.image = UIImage(named: "bolinhaCheia")
             }
         }
