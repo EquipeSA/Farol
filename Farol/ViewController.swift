@@ -48,6 +48,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             textViewInsight.isUserInteractionEnabled = true
             textViewInsight.textAlignment = .left
             textViewInsight.text = nil
+            saveButton.isHidden = false
         }
     }
     
@@ -99,11 +100,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var counterSaveButton = 0
     var saveTestToday = 1
+    var actualDay = 0
 
     @IBAction func saveButtonAction(_ sender: Any) {
         textViewInsight.isHidden = true
         textViewInsight.layer.borderWidth = 0
         textViewInsight.isUserInteractionEnabled = false
+        saveButton.isHidden = true
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
             self.textViewInsight.textAlignment = .center
@@ -115,8 +118,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 //            for challenge in self.daysOfChallenge {
 //                if challenge.day == today {
 //                    challenge.completed = true
-//                    self.calendarCV.reloadData()
+//                    challenge.date = date
+//                    challenge.selecionavel = true
 //                    challenge.insight = self.textViewInsight.text
+//                    self.calendarCV.reloadData()
 //                    print(challenge.insight ?? "eh nil")
 //                    break
 //                }
@@ -136,12 +141,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
             for challenge in self.daysOfChallenge {
                 if challenge.day == todayString {
+                    challenge.date = date
+                    challenge.selecionavel = true
                     challenge.completed = true
                     challenge.insight = self.textViewInsight.text
                     self.calendarCV.reloadData()
                     break
                 }
             }
+            self.actualDay += 1
             self.counterSaveButton += 1
             //fim da parte de teste
         }
@@ -189,6 +197,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         textViewInsight.isUserInteractionEnabled = true
         textViewInsight.textAlignment = .left
         textViewInsight.text = nil
+        saveButton.isHidden = false
     }
     // fim do comentario
     
@@ -216,6 +225,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         cell.day = daysOfChallenge[indexPath.item]
         if indexPath.item == 0 || indexPath.item == 1 || indexPath.item == 2 {
             cell.isUserInteractionEnabled = false
+        } else {
+            cell.isUserInteractionEnabled = true
         }
         
 
@@ -226,8 +237,36 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         return CGSize(width: 50, height: 77)
     }
     
+    var testTodayClick = 1
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(111)
+        let day = daysOfChallenge[indexPath.item]
+        
+        let today = getTodayNumber()
+        var todayInt = Int(today)! + self.actualDay
+        if todayInt >= 31 {
+            todayInt = testTodayClick
+            testTodayClick += 1
+        }
+        
+        let todayString = String(todayInt)
+        
+        if day.selecionavel == true {
+            insightQuestionLabel.text = day.date!
+            textViewInsight.isHidden = false
+            textViewInsight.text = day.insight!
+            textViewInsight.layer.borderWidth = 0
+            textViewInsight.isUserInteractionEnabled = false
+            self.textViewInsight.textAlignment = .center
+            saveButton.isHidden = true
+        } else if day.day == todayString {
+            insightQuestionLabel.text = "Qual seu insight de hoje?"
+            textViewInsight.isHidden = false
+            textViewInsight.text = nil
+            textViewInsight.layer.borderWidth = 0.5
+            textViewInsight.isUserInteractionEnabled = true
+            self.textViewInsight.textAlignment = .left
+            saveButton.isHidden = false
+        }
     }
     
 }
