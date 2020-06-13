@@ -106,76 +106,66 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var daysCompleteds = 0
 
     @IBAction func saveButtonAction(_ sender: Any) {
-        
-        if textViewInsight.text == "" {
-            let alert = UIAlertController(title: "Olá", message: "Você precisa escrever um insight para poder salvar", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
-            present(alert, animated: true)
-        } else {
-            textViewInsight.isHidden = true
-            textViewInsight.layer.borderWidth = 0
-            textViewInsight.isUserInteractionEnabled = false
-            ilusionView.isHidden = true
-            saveButton.isHidden = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.textViewInsight.isHidden = false
-                self.ilusionView.isHidden = false
-                self.textViewInsight.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
-                self.ilusionView.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
-                self.textViewInsight.textColor = UIColor.white
-                self.textViewInsight.textAlignment = .center
-                
-                
-            }
-            
-            //            let date = getCurrentDate()
-            //            self.insightQuestionLabel.text = date
-            //            let today = getTodayNumber()
-            //            for challenge in self.daysOfChallenge {
-            //                if challenge.day == today {
-            //                    challenge.completed = true
-            //                    challenge.date = date
-            //                    challenge.selecionavel = true
-            //                    challenge.insight = self.textViewInsight.text
-            //                    self.calendarCV.reloadData()
-            //                    print(challenge.insight ?? "eh nil")
-            //                    break
-            //                }
-            //            }
+        textViewInsight.isHidden = true
+        textViewInsight.layer.borderWidth = 0
+        textViewInsight.isUserInteractionEnabled = false
+        ilusionView.isHidden = true
+        saveButton.isHidden = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.textViewInsight.isHidden = false
+            self.ilusionView.isHidden = false
+            self.textViewInsight.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
+            self.ilusionView.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
+            self.textViewInsight.textColor = UIColor(red: 204/255, green: 204/255, blue: 204/255, alpha: 1)
+            self.textViewInsight.textAlignment = .center
+        }
+        //            let date = getCurrentDate()
+        //            self.insightQuestionLabel.text = date
+        //            let today = getTodayNumber()
+        //            for challenge in self.daysOfChallenge {
+        //                if challenge.day == today {
+        //                    challenge.completed = true
+        //                    challenge.date = date
+        //                    challenge.selecionavel = true
+        //                    challenge.insight = self.textViewInsight.text
+        //                    self.calendarCV.reloadData()
+        //                    print(challenge.insight ?? "eh nil")
+        //                    break
+        //                }
+        //            }
                         
-            //essa parte do codigo e so pra testar os proximos dias
-            let date = getCurrentDate()
-            self.insightQuestionLabel.text = date
-
-            let today = getTodayNumber()
-            var todayInt = Int(today)! + self.counterSaveButton
-            if todayInt >= 31 {
-                todayInt = self.saveTestToday
-                self.saveTestToday += 1
+        //essa parte do codigo e so pra testar os proximos dias
+        let date = getCurrentDate()
+        self.insightQuestionLabel.text = date
+        
+        let today = getTodayNumber()
+        var todayInt = Int(today)! + self.counterSaveButton
+        if todayInt >= 31 {
+            todayInt = self.saveTestToday
+            self.saveTestToday += 1
+        }
+        let todayString = String(todayInt)
+        
+        for challenge in self.daysOfChallenge {
+            if challenge.day == todayString {
+                challenge.date = date
+                challenge.selecionavel = true
+                challenge.completed = true
+                challenge.insight = self.textViewInsight.text
+                self.calendarCV.reloadData()
+                break
             }
-            let todayString = String(todayInt)
-
-            for challenge in self.daysOfChallenge {
-                if challenge.day == todayString {
-                    challenge.date = date
-                    challenge.selecionavel = true
-                    challenge.completed = true
-                    challenge.insight = self.textViewInsight.text
-                    self.calendarCV.reloadData()
-                    break
-                    }
-            }
-            self.actualDay += 1
-            self.counterSaveButton += 1
-            //fim da parte de teste
-            let todayInNumber = getTodayNumber()
-            defaults.setValue(todayInNumber, forKey: "today")
+        }
+        self.actualDay += 1
+        self.counterSaveButton += 1
+        //fim da parte de teste
+        let todayInNumber = getTodayNumber()
+        defaults.setValue(todayInNumber, forKey: "today")
                     
-            daysCompleteds += 1
-            if daysCompleteds == 21{
-                botaoTeste.isHidden = true
-                botaoTeste.isUserInteractionEnabled = false
-            }
+        daysCompleteds += 1
+        if daysCompleteds == 21{
+            botaoTeste.isHidden = true
+            botaoTeste.isUserInteractionEnabled = false
         }
     }
     
