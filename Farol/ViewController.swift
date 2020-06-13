@@ -14,6 +14,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
     var daysOfChallenge: [ChallengeDate] = []
     
+    @IBOutlet weak var dateOfCollectionViewLabel: UILabel!
+    @IBOutlet weak var ilusionViewOfCollectionView: UIView!
     @IBOutlet weak var ilusionView: UIView!
     @IBOutlet weak var textViewInsight: UITextView!
     @IBOutlet weak var saveButton: UIButton!
@@ -37,6 +39,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         configureTextViewInsight()
         configureSaveButton()
         textViewInsight.textContainer.lineBreakMode = .byWordWrapping
+        
+        ilusionViewOfCollectionView.layer.cornerRadius = 30
     }
     
     @objc func appMovedToForegroundCheckIfIsNewDayToResetUI() {
