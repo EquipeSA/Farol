@@ -227,10 +227,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func configureSaveButton() {
-        saveButton.layer.cornerRadius = 5
-        saveButton.layer.borderWidth = 0.5
+        saveButton.layer.cornerRadius = 15
+//        saveButton.layer.borderWidth = 0.5
         saveButton.layer.borderColor = UIColor.black.cgColor
-        saveButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 5, right: 8)
+        saveButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 8, bottom: 5, right: 8)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
