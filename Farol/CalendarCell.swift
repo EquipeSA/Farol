@@ -20,8 +20,8 @@ class CalendarCell: UICollectionViewCell {
             weekDayLabel.text = day?.weekDay
             
             if day?.trashDays == false && day?.challengeDay == false {
-                dayLabel.textColor = .red
-                weekDayLabel.textColor = .red
+                dayLabel.textColor = .lightGray
+                weekDayLabel.textColor = .lightGray
             } else {
                 dayLabel.textColor = .black
                 weekDayLabel.textColor = .black

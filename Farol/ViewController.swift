@@ -33,6 +33,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         checkIfFirstTimeInApp(reset: false)
         calendarCV.delegate = self
         calendarCV.dataSource = self
+        textViewInsight.delegate = self
         configureTextViewInsight()
         configureSaveButton()
         textViewInsight.textContainer.lineBreakMode = .byWordWrapping
@@ -112,14 +113,21 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             present(alert, animated: true)
         } else {
             textViewInsight.isHidden = true
-                    textViewInsight.layer.borderWidth = 0
-                    textViewInsight.isUserInteractionEnabled = false
-                    saveButton.isHidden = true
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
-                        self.textViewInsight.textAlignment = .center
-                        self.textViewInsight.isHidden = false
-                        
+            textViewInsight.layer.borderWidth = 0
+            textViewInsight.isUserInteractionEnabled = false
+            ilusionView.isHidden = true
+            saveButton.isHidden = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.textViewInsight.isHidden = false
+                self.ilusionView.isHidden = false
+                self.textViewInsight.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
+                self.ilusionView.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
+                self.textViewInsight.textColor = UIColor.white
+                self.textViewInsight.textAlignment = .center
+                
+                
+            }
+            
             //            let date = getCurrentDate()
             //            self.insightQuestionLabel.text = date
             //            let today = getTodayNumber()
@@ -135,40 +143,39 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             //                }
             //            }
                         
-                        //essa parte do codigo e so pra testar os proximos dias
-                        let date = getCurrentDate()
-                        self.insightQuestionLabel.text = date
+            //essa parte do codigo e so pra testar os proximos dias
+            let date = getCurrentDate()
+            self.insightQuestionLabel.text = date
 
-                        let today = getTodayNumber()
-                        var todayInt = Int(today)! + self.counterSaveButton
-                        if todayInt >= 31 {
-                            todayInt = self.saveTestToday
-                            self.saveTestToday += 1
-                        }
-                        let todayString = String(todayInt)
+            let today = getTodayNumber()
+            var todayInt = Int(today)! + self.counterSaveButton
+            if todayInt >= 31 {
+                todayInt = self.saveTestToday
+                self.saveTestToday += 1
+            }
+            let todayString = String(todayInt)
 
-                        for challenge in self.daysOfChallenge {
-                            if challenge.day == todayString {
-                                challenge.date = date
-                                challenge.selecionavel = true
-                                challenge.completed = true
-                                challenge.insight = self.textViewInsight.text
-                                self.calendarCV.reloadData()
-                                break
-                            }
-                        }
-                        self.actualDay += 1
-                        self.counterSaveButton += 1
-                        //fim da parte de teste
+            for challenge in self.daysOfChallenge {
+                if challenge.day == todayString {
+                    challenge.date = date
+                    challenge.selecionavel = true
+                    challenge.completed = true
+                    challenge.insight = self.textViewInsight.text
+                    self.calendarCV.reloadData()
+                    break
                     }
-                    let todayInNumber = getTodayNumber()
-                    defaults.setValue(todayInNumber, forKey: "today")
+            }
+            self.actualDay += 1
+            self.counterSaveButton += 1
+            //fim da parte de teste
+            let todayInNumber = getTodayNumber()
+            defaults.setValue(todayInNumber, forKey: "today")
                     
-                    daysCompleteds += 1
-                    if daysCompleteds == 21{
-                        botaoTeste.isHidden = true
-                        botaoTeste.isUserInteractionEnabled = false
-                    }
+            daysCompleteds += 1
+            if daysCompleteds == 21{
+                botaoTeste.isHidden = true
+                botaoTeste.isUserInteractionEnabled = false
+            }
         }
     }
     
@@ -212,7 +219,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         textViewInsight.isUserInteractionEnabled = true
         textViewInsight.textAlignment = .left
         textViewInsight.text = nil
+        textViewInsight.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
+        textViewInsight.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
+        ilusionView.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
+        
+        
         saveButton.isHidden = false
+        saveButton.isEnabled = false
+        saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
+        saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
     }
     // fim do comentario
     
@@ -286,5 +301,20 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             saveButton.isHidden = false
         }
     }
+}
+
+extension ViewController: UITextViewDelegate {
     
+    func textViewDidChange(_ textView: UITextView) {
+        guard let text = textView.text else { return }
+        if text != "" {
+            saveButton.isEnabled = true
+            saveButton.backgroundColor = UIColor(red: 255/255, green: 154/255, blue: 34/255, alpha: 1)
+            saveButton.setTitleColor(UIColor.white, for: .normal)
+        } else {
+            saveButton.isEnabled = false
+            saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
+            saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
+        }
+    }
 }
