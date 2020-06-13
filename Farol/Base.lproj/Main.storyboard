@@ -59,6 +59,10 @@
                                     <action selector="saveButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BPT-Mi-ZAk"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="FarolEAmbiente" translatesAutoresizingMaskIntoConstraints="NO" id="9Cy-4U-VoV">
+                                <rect key="frame" x="0.0" y="425" width="414" height="394"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vnz-vc-P6B">
                                 <rect key="frame" x="0.0" y="734" width="414" height="162"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -140,4 +144,7 @@
             <point key="canvasLocation" x="-710.14492753623199" y="121.875"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="FarolEAmbiente" width="1131" height="833"/>
+    </resources>
 </document>
