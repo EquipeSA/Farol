@@ -6,23 +6,6 @@
 //  Copyright © 2020 yuryAntony. All rights reserved.
 //
 
-// TODO
-// Ainda é preciso:
-// CODIGO
-// 1 - Conectar a collectionView pra fazer o calendario
-// 1.1 - botar logica pra aparecer dia anterior quando apertar numa celula do calendario
-// 1.2 - implementar o calendario
-// 1.3 - fazer um calendario de 29 dias
-// 2 - fazer os passos que estao dentro do action saveButtonAction
-// 3 - fazer auto layout (DEIXAR PRO FINAL)
-
-// FORA CODIGO
-// 1 - Ver como saber a data do dia atual
-// 2 - onde verificar a data do dia e ver se ele ja esta no outro dia pra resetar a ui
-
-
-
-
 import UIKit
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -41,7 +24,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         super.viewDidLoad()
         
         let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(appMovedToForegroundCenterCollectionView), name: UIApplication.willEnterForegroundNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(appMovedToForegroundCheckIfIsChallengeDay), name: UIApplication.willEnterForegroundNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(appMovedToForegroundCheckIfIsNewDayToResetUI), name: UIApplication.willEnterForegroundNotification, object: nil)
 
         checkIfFirstTimeInApp(reset: false)
         calendarCV.delegate = self
@@ -50,18 +35,33 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         configureSaveButton()
         textViewInsight.textContainer.maximumNumberOfLines = 7
         textViewInsight.textContainer.lineBreakMode = .byWordWrapping
-        
-        let todayIn = getTodayNumber()
-        for challenge in daysOfChallenge {
-            if challenge.day == todayIn {
-                challenge.challengeDay = true
-            }
-        }
-    
     }
     
-    @objc func appMovedToForeground() {
-        print("enter foreground")
+    @objc func appMovedToForegroundCheckIfIsNewDayToResetUI() {
+        let today = getTodayNumber()
+        if defaults.string(forKey: "today") != today {
+            let date = getCurrentDate()
+            insightQuestionLabel.text = date
+            
+            textViewInsight.isHidden = false
+            textViewInsight.layer.borderWidth = 0.5
+            textViewInsight.isUserInteractionEnabled = true
+            textViewInsight.textAlignment = .left
+            textViewInsight.text = nil
+        }
+    }
+    
+    @objc func appMovedToForegroundCheckIfIsChallengeDay() {
+        let today = getTodayNumber()
+        for challenge in daysOfChallenge {
+            if challenge.day == today {
+                challenge.challengeDay = true
+                calendarCV.reloadData()
+            }
+        }
+    }
+    
+    @objc func appMovedToForegroundCenterCollectionView() {
         var count = 0
         let today = getTodayNumber()
         for challenge in daysOfChallenge {
@@ -84,55 +84,114 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 print("Seconds+")
                        
                 // Run Code After First Launch
-                daysOfChallenge = calenDays(numOfDays: 29)
+                daysOfChallenge = calenDays(numOfDays: 21)
                        
                 defaults.set(true, forKey: "First Launch")
             } else {
                 print("First")
                 
                 // Run Code At First Launch
-                daysOfChallenge = calenDays(numOfDays: 29)
+                daysOfChallenge = calenDays(numOfDays: 21)
                 defaults.set(true, forKey: "First Launch")
             }
         }
     }
+    
+    var counterSaveButton = 0
+    var saveTestToday = 1
 
     @IBAction func saveButtonAction(_ sender: Any) {
         textViewInsight.isHidden = true
         textViewInsight.layer.borderWidth = 0
         textViewInsight.isUserInteractionEnabled = false
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
             self.textViewInsight.textAlignment = .center
             self.textViewInsight.isHidden = false
             
+//            let date = getCurrentDate()
+//            self.insightQuestionLabel.text = date
+//            let today = getTodayNumber()
+//            for challenge in self.daysOfChallenge {
+//                if challenge.day == today {
+//                    challenge.completed = true
+//                    self.calendarCV.reloadData()
+//                    challenge.insight = self.textViewInsight.text
+//                    print(challenge.insight ?? "eh nil")
+//                    break
+//                }
+//            }
+            
+            //essa parte do codigo e so pra testar os proximos dias
             let date = getCurrentDate()
             self.insightQuestionLabel.text = date
+
             let today = getTodayNumber()
+            var todayInt = Int(today)! + self.counterSaveButton
+            if todayInt >= 31 {
+                todayInt = self.saveTestToday
+                self.saveTestToday += 1
+            }
+            let todayString = String(todayInt)
+
             for challenge in self.daysOfChallenge {
-                if challenge.day == today {
+                if challenge.day == todayString {
                     challenge.completed = true
-                    self.calendarCV.reloadData()
                     challenge.insight = self.textViewInsight.text
-                    print(challenge.insight ?? "eh nil")
+                    self.calendarCV.reloadData()
                     break
                 }
             }
+            self.counterSaveButton += 1
+            //fim da parte de teste
+        }
+        let todayInNumber = getTodayNumber()
+        defaults.setValue(todayInNumber, forKey: "today")
+    }
+    
+    // o que ta dentro desse comentario é teste tambem
+    var counterBotaoTeste = 1
+    var testToday = 1
+    
+    @IBAction func botaoTeste(_ sender: Any) {
+        let today = getTodayNumber()
+        var todayInt = Int(today)! + counterBotaoTeste
+        if todayInt >= 31 {
+            todayInt = testToday
+            testToday += 1
+        }
+        print(todayInt)
+        let todayString = String(todayInt)
+        for challenge in daysOfChallenge {
+            if challenge.day == todayString {
+                challenge.challengeDay = true
+                calendarCV.reloadData()
+            }
         }
         
-//        let desiredPosition = IndexPath(item: 11, section: 0)
-//        calendarCV.scrollToItem(at: desiredPosition, at: .centeredHorizontally, animated: false)
-//        calendarCV.layoutIfNeeded()
+        var count = 0
+        for challenge in daysOfChallenge {
+            if challenge.day == todayString {
+                break
+            }
+            count += 1
+        }
+               
+        let desiredPosition = IndexPath(item: count, section: 0)
+        calendarCV.scrollToItem(at: desiredPosition, at: .centeredHorizontally, animated: false)
+        calendarCV.layoutIfNeeded()
         
-        // quando apertar o botão tem que:
-        // 1- iniciar animação da bola de loading e fazer a animação do farol
-        // depois que terminar as animações do farol e do loading, tem que:
-        // 1 - label "qual seu insight de hoje tem que mudar pro dia de hoje"
-        // 2 - mostrar insight no text view
-        // 3 - marcar a bola no calendario
-        // 4 - fazer o botão "salvar" sumir.
-        // 5 - mostrar a notificação que foi salva
+        counterBotaoTeste += 1
+        
+        
+        textViewInsight.isHidden = false
+        textViewInsight.layer.borderWidth = 0.5
+        textViewInsight.isUserInteractionEnabled = true
+        textViewInsight.textAlignment = .left
+        textViewInsight.text = nil
     }
+    // fim do comentario
+    
     
     func configureTextViewInsight() {
         textViewInsight.layer.borderColor = UIColor.black.cgColor
