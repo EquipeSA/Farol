@@ -17,6 +17,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var textViewInsight: UITextView!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var insightQuestionLabel: UILabel!
+    @IBOutlet weak var botaoTeste: UIButton!
     
     @IBOutlet weak var calendarCV: UICollectionView!
     
@@ -101,6 +102,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var counterSaveButton = 0
     var saveTestToday = 1
     var actualDay = 0
+    var daysCompleteds = 0
 
     @IBAction func saveButtonAction(_ sender: Any) {
         textViewInsight.isHidden = true
@@ -155,6 +157,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         let todayInNumber = getTodayNumber()
         defaults.setValue(todayInNumber, forKey: "today")
+        
+        daysCompleteds += 1
+        if daysCompleteds == 21{
+            botaoTeste.isHidden = true
+            botaoTeste.isUserInteractionEnabled = false
+        }
     }
     
     // o que ta dentro desse comentario é teste tambem
@@ -239,6 +247,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var testTodayClick = 1
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("kk")
         let day = daysOfChallenge[indexPath.item]
         
         let today = getTodayNumber()
