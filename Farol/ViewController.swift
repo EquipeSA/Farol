@@ -105,63 +105,70 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var daysCompleteds = 0
 
     @IBAction func saveButtonAction(_ sender: Any) {
-        textViewInsight.isHidden = true
-        textViewInsight.layer.borderWidth = 0
-        textViewInsight.isUserInteractionEnabled = false
-        saveButton.isHidden = true
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
-            self.textViewInsight.textAlignment = .center
-            self.textViewInsight.isHidden = false
-            
-//            let date = getCurrentDate()
-//            self.insightQuestionLabel.text = date
-//            let today = getTodayNumber()
-//            for challenge in self.daysOfChallenge {
-//                if challenge.day == today {
-//                    challenge.completed = true
-//                    challenge.date = date
-//                    challenge.selecionavel = true
-//                    challenge.insight = self.textViewInsight.text
-//                    self.calendarCV.reloadData()
-//                    print(challenge.insight ?? "eh nil")
-//                    break
-//                }
-//            }
-            
-            //essa parte do codigo e so pra testar os proximos dias
-            let date = getCurrentDate()
-            self.insightQuestionLabel.text = date
+        if textViewInsight.text == "" {
+            let alert = UIAlertController(title: "Olá", message: "Você precisa escrever um insight para poder salvar", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
+        } else {
+            textViewInsight.isHidden = true
+                    textViewInsight.layer.borderWidth = 0
+                    textViewInsight.isUserInteractionEnabled = false
+                    saveButton.isHidden = true
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
+                        self.textViewInsight.textAlignment = .center
+                        self.textViewInsight.isHidden = false
+                        
+            //            let date = getCurrentDate()
+            //            self.insightQuestionLabel.text = date
+            //            let today = getTodayNumber()
+            //            for challenge in self.daysOfChallenge {
+            //                if challenge.day == today {
+            //                    challenge.completed = true
+            //                    challenge.date = date
+            //                    challenge.selecionavel = true
+            //                    challenge.insight = self.textViewInsight.text
+            //                    self.calendarCV.reloadData()
+            //                    print(challenge.insight ?? "eh nil")
+            //                    break
+            //                }
+            //            }
+                        
+                        //essa parte do codigo e so pra testar os proximos dias
+                        let date = getCurrentDate()
+                        self.insightQuestionLabel.text = date
 
-            let today = getTodayNumber()
-            var todayInt = Int(today)! + self.counterSaveButton
-            if todayInt >= 31 {
-                todayInt = self.saveTestToday
-                self.saveTestToday += 1
-            }
-            let todayString = String(todayInt)
+                        let today = getTodayNumber()
+                        var todayInt = Int(today)! + self.counterSaveButton
+                        if todayInt >= 31 {
+                            todayInt = self.saveTestToday
+                            self.saveTestToday += 1
+                        }
+                        let todayString = String(todayInt)
 
-            for challenge in self.daysOfChallenge {
-                if challenge.day == todayString {
-                    challenge.date = date
-                    challenge.selecionavel = true
-                    challenge.completed = true
-                    challenge.insight = self.textViewInsight.text
-                    self.calendarCV.reloadData()
-                    break
-                }
-            }
-            self.actualDay += 1
-            self.counterSaveButton += 1
-            //fim da parte de teste
-        }
-        let todayInNumber = getTodayNumber()
-        defaults.setValue(todayInNumber, forKey: "today")
-        
-        daysCompleteds += 1
-        if daysCompleteds == 21{
-            botaoTeste.isHidden = true
-            botaoTeste.isUserInteractionEnabled = false
+                        for challenge in self.daysOfChallenge {
+                            if challenge.day == todayString {
+                                challenge.date = date
+                                challenge.selecionavel = true
+                                challenge.completed = true
+                                challenge.insight = self.textViewInsight.text
+                                self.calendarCV.reloadData()
+                                break
+                            }
+                        }
+                        self.actualDay += 1
+                        self.counterSaveButton += 1
+                        //fim da parte de teste
+                    }
+                    let todayInNumber = getTodayNumber()
+                    defaults.setValue(todayInNumber, forKey: "today")
+                    
+                    daysCompleteds += 1
+                    if daysCompleteds == 21{
+                        botaoTeste.isHidden = true
+                        botaoTeste.isUserInteractionEnabled = false
+                    }
         }
     }
     
