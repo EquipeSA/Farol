@@ -14,6 +14,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
     var daysOfChallenge: [ChallengeDate] = []
     
+    @IBOutlet weak var ilusionView: UIView!
     @IBOutlet weak var textViewInsight: UITextView!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var insightQuestionLabel: UILabel!
@@ -34,7 +35,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         calendarCV.dataSource = self
         configureTextViewInsight()
         configureSaveButton()
-        textViewInsight.textContainer.maximumNumberOfLines = 7
         textViewInsight.textContainer.lineBreakMode = .byWordWrapping
     }
     
@@ -45,7 +45,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             insightQuestionLabel.text = date
             
             textViewInsight.isHidden = false
-            textViewInsight.layer.borderWidth = 0.5
+//            textViewInsight.layer.borderWidth = 0.5
             textViewInsight.isUserInteractionEnabled = true
             textViewInsight.textAlignment = .left
             textViewInsight.text = nil
@@ -208,7 +208,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         
         textViewInsight.isHidden = false
-        textViewInsight.layer.borderWidth = 0.5
+//        textViewInsight.layer.borderWidth = 0.5
         textViewInsight.isUserInteractionEnabled = true
         textViewInsight.textAlignment = .left
         textViewInsight.text = nil
@@ -219,16 +219,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func configureTextViewInsight() {
         textViewInsight.layer.borderColor = UIColor.black.cgColor
-        textViewInsight.layer.borderWidth = 0.5
+//        textViewInsight.layer.borderWidth = 0.5
         textViewInsight.layer.cornerRadius = 12
-        textViewInsight.contentInset = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
+        ilusionView.layer.cornerRadius = 12
+        textViewInsight.contentInset = UIEdgeInsets(top: 3, left: 10, bottom: 5, right: 10)
+//        textViewInsight.textContainer.maximumNumberOfLines = 7
     }
     
     func configureSaveButton() {
         saveButton.layer.cornerRadius = 5
         saveButton.layer.borderWidth = 0.5
         saveButton.layer.borderColor = UIColor.black.cgColor
-        saveButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+        saveButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 5, right: 8)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -278,7 +280,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             insightQuestionLabel.text = "Qual seu insight de hoje?"
             textViewInsight.isHidden = false
             textViewInsight.text = nil
-            textViewInsight.layer.borderWidth = 0.5
+//            textViewInsight.layer.borderWidth = 0.5
             textViewInsight.isUserInteractionEnabled = true
             self.textViewInsight.textAlignment = .left
             saveButton.isHidden = false
