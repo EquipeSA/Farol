@@ -13,7 +13,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     let defaults = UserDefaults.standard
     var daysOfChallenge: [ChallengeDate] = []
     
-    
     @IBOutlet weak var congratulationNotification: UIView!
     @IBOutlet weak var dateOfCollectionViewLabel: UILabel!
     @IBOutlet weak var ilusionViewOfCollectionView: UIView!
@@ -111,37 +110,29 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var daysCompleted = 0
 
     @IBAction func saveButtonAction(_ sender: Any) {
-        textViewInsight.isHidden = true
-        textViewInsight.layer.borderWidth = 0
         textViewInsight.isUserInteractionEnabled = false
-        ilusionView.isHidden = true
         saveButton.isHidden = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.textViewInsight.isHidden = false
-            self.ilusionView.isHidden = false
+        // o codigo la de baixo é pra ta aqui
+        //essa parte do codigo e so pra testar os proximos dias
+        let date = getCurrentDate()
+        UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
+            self.insightQuestionLabel.alpha = 0
+            self.textViewInsight.alpha = 0
+            self.ilusionView.alpha = 0
+        })
+//        UIView.animate(withDuration: 1, delay: 1, options: [], animations: {
+//            self.insightQuestionLabel.text = date
+//            self.insightQuestionLabel.alpha = 1
+//        })
+        
+         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        //            self.textViewInsight.isHidden = false
+        //            self.ilusionView.isHidden = false
             self.textViewInsight.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
             self.ilusionView.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
             self.textViewInsight.textColor = UIColor(red: 204/255, green: 204/255, blue: 204/255, alpha: 1)
             self.textViewInsight.textAlignment = .center
         }
-        //            let date = getCurrentDate()
-        //            self.insightQuestionLabel.text = date
-        //            let today = getTodayNumber()
-        //            for challenge in self.daysOfChallenge {
-        //                if challenge.day == today {
-        //                    challenge.completed = true
-        //                    challenge.date = date
-        //                    challenge.selecionavel = true
-        //                    challenge.insight = self.textViewInsight.text
-        //                    self.calendarCV.reloadData()
-        //                    print(challenge.insight ?? "eh nil")
-        //                    break
-        //                }
-        //            }
-                        
-        //essa parte do codigo e so pra testar os proximos dias
-        let date = getCurrentDate()
-        self.insightQuestionLabel.text = date
         
         let today = getTodayNumber()
         var todayInt = Int(today)! + self.counterSaveButton
@@ -178,6 +169,21 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         UIView.animate(withDuration: 0.4, delay: 1, options: [.curveEaseInOut], animations: {
             self.congratulationNotification.center.y -= 100
         })
+        
+        //            let date = getCurrentDate()
+               //            self.insightQuestionLabel.text = date
+               //            let today = getTodayNumber()
+               //            for challenge in self.daysOfChallenge {
+               //                if challenge.day == today {
+               //                    challenge.completed = true
+               //                    challenge.date = date
+               //                    challenge.selecionavel = true
+               //                    challenge.insight = self.textViewInsight.text
+               //                    self.calendarCV.reloadData()
+               //                    print(challenge.insight ?? "eh nil")
+               //                    break
+               //                }
+               //            }
     }
     
     // o que ta dentro desse comentario é teste tambem
@@ -214,6 +220,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         counterBotaoTeste += 1
         
+        insightQuestionLabel.text = "Qual seu insight de hoje?"
         textViewInsight.isHidden = false
         textViewInsight.isUserInteractionEnabled = true
         textViewInsight.textAlignment = .left
@@ -239,8 +246,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func configureTextViewInsight() {
         textViewInsight.layer.borderColor = UIColor.black.cgColor
-        textViewInsight.layer.cornerRadius = 12
-        ilusionView.layer.cornerRadius = 12
+        textViewInsight.roundCorners([.bottomLeft, .bottomRight], radius: 12)
+        ilusionView.roundCorners([.topLeft, .topRight], radius: 12)
         textViewInsight.contentInset = UIEdgeInsets(top: 3, left: 10, bottom: 5, right: 10)
     }
     
