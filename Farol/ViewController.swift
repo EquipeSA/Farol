@@ -122,7 +122,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         })
 
         
-         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.textViewInsight.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
             self.ilusionView.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
             self.textViewInsight.textColor = UIColor(red: 204/255, green: 204/255, blue: 204/255, alpha: 1)
@@ -215,11 +215,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             }
             count += 1
         }
-               
-        let desiredPosition = IndexPath(item: count, section: 0)
-        calendarCV.scrollToItem(at: desiredPosition, at: .centeredHorizontally, animated: false)
-        calendarCV.layoutIfNeeded()
-        
         counterBotaoTeste += 1
         
         UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
@@ -251,6 +246,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.saveButton.alpha = 1
                 self.ilusionView.alpha = 1
                 self.textViewInsight.alpha = 1
+                
+                let desiredPosition = IndexPath(item: count, section: 0)
+                self.calendarCV.scrollToItem(at: desiredPosition, at: .centeredHorizontally, animated: false)
+                self.calendarCV.layoutIfNeeded()
             })
         }
         
