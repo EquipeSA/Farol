@@ -6,7 +6,7 @@
 //  Copyright © 2020 yuryAntony. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 func calenDays(numOfDays:Int) -> [ChallengeDate]{
     let calendar = Calendar.current
@@ -72,4 +72,10 @@ func getTodayNumber() -> String {
     let splitToday = todayWithoutComma.components(separatedBy: " ")
     let day = splitToday[1]
     return day
+}
+
+func fade(imageView: UIImageView, toImage: UIImage) {
+    UIView.transition(with: imageView, duration: 1.0, options: .transitionCrossDissolve, animations: {
+        imageView.image = toImage
+    }, completion: nil)
 }

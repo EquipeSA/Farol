@@ -13,7 +13,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     let defaults = UserDefaults.standard
     var daysOfChallenge: [ChallengeDate] = []
     
-    @IBOutlet weak var farolLight: UIImageView!
+    @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var congratulationNotification: UIView!
     @IBOutlet weak var dateOfCollectionViewLabel: UILabel!
     @IBOutlet weak var ilusionViewOfCollectionView: UIView!
@@ -39,8 +39,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         textViewInsight.delegate = self
         configureTextViewInsight()
         configureSaveButton()
-        
-        farolLight.bounds.size = CGSize(width: 0, height: 0)
         
         congratulationNotification.center.y += 100
         congratulationNotification.layer.cornerRadius = 10
@@ -113,11 +111,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var daysCompleted = 0
 
     @IBAction func saveButtonAction(_ sender: Any) {
-        
-        UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
-            self.farolLight.bounds.size = CGSize(width: 171, height: 153)
-        })
-        
         textViewInsight.isUserInteractionEnabled = false
         //            let date = getCurrentDate()
         //            self.insightQuestionLabel.text = date
