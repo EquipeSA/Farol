@@ -111,27 +111,29 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
     @IBAction func saveButtonAction(_ sender: Any) {
         textViewInsight.isUserInteractionEnabled = false
-        saveButton.isHidden = true
         // o codigo la de baixo é pra ta aqui
         //essa parte do codigo e so pra testar os proximos dias
         let date = getCurrentDate()
-        UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
             self.insightQuestionLabel.alpha = 0
             self.textViewInsight.alpha = 0
             self.ilusionView.alpha = 0
+            self.saveButton.alpha = 0
         })
-//        UIView.animate(withDuration: 1, delay: 1, options: [], animations: {
-//            self.insightQuestionLabel.text = date
-//            self.insightQuestionLabel.alpha = 1
-//        })
+
         
          DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-        //            self.textViewInsight.isHidden = false
-        //            self.ilusionView.isHidden = false
             self.textViewInsight.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
             self.ilusionView.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
             self.textViewInsight.textColor = UIColor(red: 204/255, green: 204/255, blue: 204/255, alpha: 1)
             self.textViewInsight.textAlignment = .center
+            
+            UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
+                self.insightQuestionLabel.text = date
+                self.insightQuestionLabel.alpha = 1
+                self.textViewInsight.alpha = 1
+                self.ilusionView.alpha = 1
+            })
         }
         
         let today = getTodayNumber()
@@ -220,22 +222,37 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         counterBotaoTeste += 1
         
-        insightQuestionLabel.text = "Qual seu insight de hoje?"
-        textViewInsight.isHidden = false
-        textViewInsight.isUserInteractionEnabled = true
-        textViewInsight.textAlignment = .left
-        textViewInsight.text = nil
-        textViewInsight.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
-        textViewInsight.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
-        ilusionView.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
+        UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+            self.insightQuestionLabel.alpha = 0
+            self.textViewInsight.alpha = 0
+            self.ilusionView.alpha = 0
+        })
         
-        saveButton.isHidden = false
-        saveButton.isEnabled = false
-        saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
-        saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
-        
-        botaoTeste.setTitleColor(UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1), for: .normal)
-        botaoTeste.isEnabled = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.insightQuestionLabel.text = "Qual seu insight de hoje?"
+            
+            self.textViewInsight.isUserInteractionEnabled = true
+            self.textViewInsight.textAlignment = .left
+            self.textViewInsight.text = nil
+            self.textViewInsight.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
+            self.textViewInsight.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
+                       
+            self.ilusionView.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
+            
+            self.saveButton.isEnabled = false
+            self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
+            self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
+            
+            self.botaoTeste.setTitleColor(UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1), for: .normal)
+            self.botaoTeste.isEnabled = false
+            
+            UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+                self.insightQuestionLabel.alpha = 1
+                self.saveButton.alpha = 1
+                self.ilusionView.alpha = 1
+                self.textViewInsight.alpha = 1
+            })
+        }
         
         UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseInOut], animations: {
             self.congratulationNotification.center.y += 100
@@ -243,9 +260,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     // fim do comentario
     
-    
     func configureTextViewInsight() {
-        textViewInsight.layer.borderColor = UIColor.black.cgColor
         textViewInsight.roundCorners([.bottomLeft, .bottomRight], radius: 12)
         ilusionView.roundCorners([.topLeft, .topRight], radius: 12)
         textViewInsight.contentInset = UIEdgeInsets(top: 3, left: 10, bottom: 5, right: 10)
@@ -253,7 +268,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func configureSaveButton() {
         saveButton.layer.cornerRadius = 15
-        saveButton.layer.borderColor = UIColor.black.cgColor
         saveButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 8, bottom: 5, right: 8)
     }
     
