@@ -13,6 +13,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     let defaults = UserDefaults.standard
     var daysOfChallenge: [ChallengeDate] = []
     
+    @IBOutlet weak var farolLight: UIImageView!
     @IBOutlet weak var congratulationNotification: UIView!
     @IBOutlet weak var dateOfCollectionViewLabel: UILabel!
     @IBOutlet weak var ilusionViewOfCollectionView: UIView!
@@ -38,6 +39,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         textViewInsight.delegate = self
         configureTextViewInsight()
         configureSaveButton()
+        
+        farolLight.bounds.size = CGSize(width: 0, height: 0)
         
         congratulationNotification.center.y += 100
         congratulationNotification.layer.cornerRadius = 10
@@ -110,17 +113,60 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var daysCompleted = 0
 
     @IBAction func saveButtonAction(_ sender: Any) {
+        
+        UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
+            self.farolLight.bounds.size = CGSize(width: 171, height: 153)
+        })
+        
         textViewInsight.isUserInteractionEnabled = false
-        // o codigo la de baixo é pra ta aqui
+        //            let date = getCurrentDate()
+        //            self.insightQuestionLabel.text = date
+        //            let today = getTodayNumber()
+        //            for challenge in self.daysOfChallenge {
+        //                if challenge.day == today {
+        //                    challenge.completed = true
+        //                    challenge.date = date
+        //                    challenge.selecionavel = true
+        //                    challenge.insight = self.textViewInsight.text
+        //                    self.calendarCV.reloadData()
+        //                    print(challenge.insight ?? "eh nil")
+        //                    break
+        //                }
+        //            }
+        
+        
         //essa parte do codigo e so pra testar os proximos dias
         let date = getCurrentDate()
+        
+        let today = getTodayNumber()
+        var todayInt = Int(today)! + self.counterSaveButton
+        if todayInt >= 31 {
+            todayInt = self.saveTestToday
+            self.saveTestToday += 1
+        }
+        let todayString = String(todayInt)
+               
+        for challenge in self.daysOfChallenge {
+            if challenge.day == todayString {
+                challenge.date = date
+                challenge.selecionavel = true
+                challenge.completed = true
+                challenge.insight = self.textViewInsight.text
+                self.calendarCV.reloadData()
+                break
+            }
+        }
+        self.actualDay += 1
+        self.counterSaveButton += 1
+        
+        
+        //fim da parte de teste
         UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
             self.insightQuestionLabel.alpha = 0
             self.textViewInsight.alpha = 0
             self.ilusionView.alpha = 0
             self.saveButton.alpha = 0
         })
-
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.textViewInsight.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
@@ -136,27 +182,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             })
         }
         
-        let today = getTodayNumber()
-        var todayInt = Int(today)! + self.counterSaveButton
-        if todayInt >= 31 {
-            todayInt = self.saveTestToday
-            self.saveTestToday += 1
-        }
-        let todayString = String(todayInt)
-        
-        for challenge in self.daysOfChallenge {
-            if challenge.day == todayString {
-                challenge.date = date
-                challenge.selecionavel = true
-                challenge.completed = true
-                challenge.insight = self.textViewInsight.text
-                self.calendarCV.reloadData()
-                break
-            }
-        }
-        self.actualDay += 1
-        self.counterSaveButton += 1
-        //fim da parte de teste
         let todayInNumber = getTodayNumber()
         defaults.setValue(todayInNumber, forKey: "today")
                     
@@ -171,21 +196,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         UIView.animate(withDuration: 0.4, delay: 1, options: [.curveEaseInOut], animations: {
             self.congratulationNotification.center.y -= 100
         })
-        
-        //            let date = getCurrentDate()
-               //            self.insightQuestionLabel.text = date
-               //            let today = getTodayNumber()
-               //            for challenge in self.daysOfChallenge {
-               //                if challenge.day == today {
-               //                    challenge.completed = true
-               //                    challenge.date = date
-               //                    challenge.selecionavel = true
-               //                    challenge.insight = self.textViewInsight.text
-               //                    self.calendarCV.reloadData()
-               //                    print(challenge.insight ?? "eh nil")
-               //                    break
-               //                }
-               //            }
     }
     
     // o que ta dentro desse comentario é teste tambem

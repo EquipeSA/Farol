@@ -21,6 +21,18 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.76862745098039209" green="0.76862745098039209" blue="0.76862745098039209" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="LuaEEstrelas" translatesAutoresizingMaskIntoConstraints="NO" id="hg5-QA-p6N">
+                                <rect key="frame" x="20" y="310" width="365" height="192"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="luzdofarol" translatesAutoresizingMaskIntoConstraints="NO" id="3db-OP-apK">
+                                <rect key="frame" x="207" y="449" width="171" height="153"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="FarolEAmbiente" translatesAutoresizingMaskIntoConstraints="NO" id="9Cy-4U-VoV">
+                                <rect key="frame" x="0.0" y="425" width="414" height="394"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Qual seu insight de hoje?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fYZ-ey-kAQ">
                                 <rect key="frame" x="90" y="69" width="234" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -48,10 +60,6 @@
                                     <action selector="saveButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BPT-Mi-ZAk"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="FarolEAmbiente" translatesAutoresizingMaskIntoConstraints="NO" id="9Cy-4U-VoV">
-                                <rect key="frame" x="0.0" y="425" width="414" height="394"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fj5-eY-uxK">
                                 <rect key="frame" x="20" y="695" width="374" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -142,10 +150,6 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="LuaEEstrelas" translatesAutoresizingMaskIntoConstraints="NO" id="hg5-QA-p6N">
-                                <rect key="frame" x="20" y="310" width="365" height="192"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.16862745098039217" green="0.16470588235294117" blue="0.25098039215686274" alpha="1" colorSpace="calibratedRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -155,6 +159,7 @@
                         <outlet property="calendarCV" destination="to1-tq-XC9" id="4a1-xQ-2O7"/>
                         <outlet property="congratulationNotification" destination="Fj5-eY-uxK" id="TLK-QZ-vIz"/>
                         <outlet property="dateOfCollectionViewLabel" destination="xnC-nf-PIb" id="6dT-EJ-4dt"/>
+                        <outlet property="farolLight" destination="3db-OP-apK" id="paO-9z-j7N"/>
                         <outlet property="ilusionView" destination="1Qy-7h-KM3" id="2fN-Qh-hHJ"/>
                         <outlet property="ilusionViewOfCollectionView" destination="Vnz-vc-P6B" id="6xq-Rt-8Aj"/>
                         <outlet property="insightQuestionLabel" destination="fYZ-ey-kAQ" id="wGC-5P-RXt"/>
@@ -171,5 +176,6 @@
         <image name="FarolEAmbiente" width="1131" height="833"/>
         <image name="LuaEEstrelas" width="940" height="495"/>
         <image name="check" width="18" height="18"/>
+        <image name="luzdofarol" width="479" height="479"/>
     </resources>
 </document>
