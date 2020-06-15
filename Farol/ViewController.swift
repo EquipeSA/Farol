@@ -11,7 +11,6 @@ import UIKit
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     let defaults = UserDefaults.standard
-
     var daysOfChallenge: [ChallengeDate] = []
     
     @IBOutlet weak var dateOfCollectionViewLabel: UILabel!
@@ -50,7 +49,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             insightQuestionLabel.text = date
             
             textViewInsight.isHidden = false
-//            textViewInsight.layer.borderWidth = 0.5
             textViewInsight.isUserInteractionEnabled = true
             textViewInsight.textAlignment = .left
             textViewInsight.text = nil
@@ -107,7 +105,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var counterSaveButton = 0
     var saveTestToday = 1
     var actualDay = 0
-    var daysCompleteds = 0
+    var daysCompleted = 0
 
     @IBAction func saveButtonAction(_ sender: Any) {
         textViewInsight.isHidden = true
@@ -166,11 +164,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let todayInNumber = getTodayNumber()
         defaults.setValue(todayInNumber, forKey: "today")
                     
-        daysCompleteds += 1
-        if daysCompleteds == 21{
+        daysCompleted += 1
+        if daysCompleted == 21{
             botaoTeste.isHidden = true
             botaoTeste.isUserInteractionEnabled = false
         }
+        botaoTeste.setTitleColor(UIColor(red: 63/255, green: 61/255, blue: 86/255, alpha: 1), for: .normal)
+        botaoTeste.isEnabled = true
     }
     
     // o que ta dentro desse comentario é teste tambem
@@ -207,9 +207,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         counterBotaoTeste += 1
         
-        
         textViewInsight.isHidden = false
-//        textViewInsight.layer.borderWidth = 0.5
         textViewInsight.isUserInteractionEnabled = true
         textViewInsight.textAlignment = .left
         textViewInsight.text = nil
@@ -217,27 +215,26 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         textViewInsight.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
         ilusionView.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
         
-        
         saveButton.isHidden = false
         saveButton.isEnabled = false
         saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
         saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
+        
+        botaoTeste.setTitleColor(UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1), for: .normal)
+        botaoTeste.isEnabled = false
     }
     // fim do comentario
     
     
     func configureTextViewInsight() {
         textViewInsight.layer.borderColor = UIColor.black.cgColor
-//        textViewInsight.layer.borderWidth = 0.5
         textViewInsight.layer.cornerRadius = 12
         ilusionView.layer.cornerRadius = 12
         textViewInsight.contentInset = UIEdgeInsets(top: 3, left: 10, bottom: 5, right: 10)
-//        textViewInsight.textContainer.maximumNumberOfLines = 7
     }
     
     func configureSaveButton() {
         saveButton.layer.cornerRadius = 15
-//        saveButton.layer.borderWidth = 0.5
         saveButton.layer.borderColor = UIColor.black.cgColor
         saveButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 8, bottom: 5, right: 8)
     }
@@ -255,7 +252,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             cell.isUserInteractionEnabled = true
         }
         
-
         return cell
     }
     
@@ -289,7 +285,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             insightQuestionLabel.text = "Qual seu insight de hoje?"
             textViewInsight.isHidden = false
             textViewInsight.text = nil
-//            textViewInsight.layer.borderWidth = 0.5
             textViewInsight.isUserInteractionEnabled = true
             self.textViewInsight.textAlignment = .left
             saveButton.isHidden = false
