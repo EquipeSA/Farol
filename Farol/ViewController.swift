@@ -141,6 +141,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBAction func saveButtonAction(_ sender: Any) {
         let date = getCurrentDate()
         textViewInsight.isUserInteractionEnabled = false
+        // esse codigo aqui em comentario eh o codigo oficial sem avancar os dias com botao falso
         //            let date = getCurrentDate()
         //            self.insightQuestionLabel.text = date
         //            let today = getTodayNumber()
@@ -187,6 +188,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     
         daysCompleted += 1
         if daysCompleted == 21{
+            print("huehue")
             botaoTeste.isHidden = true
             botaoTeste.isUserInteractionEnabled = false
             
@@ -311,19 +313,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var testTodayClick = 1
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("kk")
-        let day = daysOfChallenge[indexPath.item]
+        let pickedDay = daysOfChallenge[indexPath.item]
         
-        let today = getTodayNumber()
-        var todayInt = Int(today)! + self.actualDay
+        let todayNumber = getTodayNumber()
+        var todayInt = Int(todayNumber)! + actualDay
         if todayInt >= 31 {
-            todayInt = testTodayClick
-            testTodayClick += 1
+            todayInt = todayInt - 30
         }
         
         let todayString = String(todayInt)
         
-        if day.selecionavel == true {
+        if pickedDay.selecionavel == true && pickedDay.day != todayString {
+            print("kkk \(pickedDay.day)")
             UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                 self.insightQuestionLabel.alpha = 0
                 self.textViewInsight.alpha = 0
@@ -336,9 +337,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.ilusionView.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
                 self.textViewInsight.textColor = UIColor(red: 204/255, green: 204/255, blue: 204/255, alpha: 1)
                 self.textViewInsight.textAlignment = .center
-                self.insightQuestionLabel.text = day.testDay //esse é teste o comentario de baixo que eh oficial
+                self.insightQuestionLabel.text = pickedDay.testDay //esse é teste o comentario de baixo que eh oficial
 //                insightQuestionLabel.text = day.date!
-                self.textViewInsight.text = day.insight
+                self.textViewInsight.text = pickedDay.insight
                 self.textViewInsight.textAlignment = .center
                 self.textViewInsight.isUserInteractionEnabled = false
                 
@@ -348,7 +349,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     self.ilusionView.alpha = 1
                 })
             }
-        } else if day.day == todayString {
+        } else if pickedDay.day == todayString {
+            print("hihihi \(pickedDay.day)")
             UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                 self.insightQuestionLabel.alpha = 0
                 self.textViewInsight.alpha = 0
