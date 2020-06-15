@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		B7203D2D2497C7AC0074B985 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7203D2C2497C7AC0074B985 /* Extensions.swift */; };
 		B728B2F9248AC40A00549D0F /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B728B2F8248AC40A00549D0F /* CalendarCell.swift */; };
-		B7A1A096248EC7AC006B37D9 /* ChallengeDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A1A095248EC7AC006B37D9 /* ChallengeDate.swift */; };
+		B7A1A096248EC7AC006B37D9 /* HabitDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A1A095248EC7AC006B37D9 /* HabitDate.swift */; };
 		D05FF87124896C3000CD861E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05FF87024896C3000CD861E /* AppDelegate.swift */; };
 		D05FF87324896C3000CD861E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05FF87224896C3000CD861E /* SceneDelegate.swift */; };
 		D05FF87524896C3000CD861E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05FF87424896C3000CD861E /* ViewController.swift */; };
@@ -22,7 +22,7 @@
 /* Begin PBXFileReference section */
 		B7203D2C2497C7AC0074B985 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		B728B2F8248AC40A00549D0F /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
-		B7A1A095248EC7AC006B37D9 /* ChallengeDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeDate.swift; sourceTree = "<group>"; };
+		B7A1A095248EC7AC006B37D9 /* HabitDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDate.swift; sourceTree = "<group>"; };
 		D05FF86D24896C3000CD861E /* Farol.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Farol.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D05FF87024896C3000CD861E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D05FF87224896C3000CD861E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,7 +73,7 @@
 				D05FF87B24896C3200CD861E /* LaunchScreen.storyboard */,
 				D05FF87E24896C3200CD861E /* Info.plist */,
 				D05FF88424896CBF00CD861E /* Funcoes.swift */,
-				B7A1A095248EC7AC006B37D9 /* ChallengeDate.swift */,
+				B7A1A095248EC7AC006B37D9 /* HabitDate.swift */,
 				B7203D2C2497C7AC0074B985 /* Extensions.swift */,
 			);
 			path = Farol;
@@ -151,7 +151,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D05FF87524896C3000CD861E /* ViewController.swift in Sources */,
-				B7A1A096248EC7AC006B37D9 /* ChallengeDate.swift in Sources */,
+				B7A1A096248EC7AC006B37D9 /* HabitDate.swift in Sources */,
 				D05FF88524896CBF00CD861E /* Funcoes.swift in Sources */,
 				D05FF87124896C3000CD861E /* AppDelegate.swift in Sources */,
 				D05FF87324896C3000CD861E /* SceneDelegate.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  ChallengeDate.swift
+//  HabitDate.swift
 //  Farol
 //
 //  Created by Rodrigo Lemos on 08/06/20.
@@ -8,14 +8,14 @@
 
 import UIKit
 
-class ChallengeDate {
+class HabitDate {
     
-    init(day: String, weekDay: String, completed: Bool, selecionavel: Bool, challengeDay: Bool, trashDays: Bool, insight: String?, date: String?, testDay: String?) {
+    init(day: String, weekDay: String, completed: Bool, selecionavel: Bool, habitDay: Bool, trashDays: Bool, insight: String?, date: String?, testDay: String?) {
         self.day = day
         self.weekDay = weekDay
         self.completed = completed
         self.selecionavel = selecionavel
-        self.challengeDay = challengeDay
+        self.habitDay = habitDay
         self.trashDays = trashDays
         self.insight = insight
         self.date = date
@@ -28,7 +28,7 @@ class ChallengeDate {
     var completed: Bool
     var selecionavel: Bool
     var trashDays: Bool
-    var challengeDay: Bool
+    var habitDay: Bool
     var date: String?
     var testDay: String?
 }

@@ -8,31 +8,31 @@
 
 import UIKit
 
-func calenDays(numOfDays:Int) -> [ChallengeDate]{
+func calenDays(numOfDays:Int) -> [HabitDate]{
     let calendar = Calendar.current
     var date = calendar.startOfDay(for: Date())
-    var challengeDays = [ChallengeDate]()
+    var habitDays = [HabitDate]()
     
     for _ in 1 ... 4 {
         let week = calendar.component(.weekday, from: date)
         let day = calendar.component(.day, from: date)
         let strDay = String(day)
         let strWeek = convertToWeekString(correspondingNumber: week)
-        challengeDays.append(ChallengeDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: false, challengeDay: false, trashDays: true, insight: nil, date: nil, testDay: nil))
+        habitDays.append(HabitDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: false, habitDay: false, trashDays: true, insight: nil, date: nil, testDay: nil))
         date = calendar.date(byAdding: .day, value: -1, to: date)!
     }
-    challengeDays.reverse()
-    challengeDays.remove(at: 3)
+    habitDays.reverse()
+    habitDays.remove(at: 3)
     date = calendar.startOfDay(for: Date())
     for _ in 1 ... numOfDays {
         let week = calendar.component(.weekday, from: date)
         let day = calendar.component(.day, from: date)
         let strDay = String(day)
         let strWeek = convertToWeekString(correspondingNumber: week)
-        challengeDays.append(ChallengeDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: false, challengeDay: false, trashDays: false, insight: nil, date: nil, testDay: nil))
+        habitDays.append(HabitDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: false, habitDay: false, trashDays: false, insight: nil, date: nil, testDay: nil))
         date = calendar.date(byAdding: .day, value: 1, to: date)!
     }
-    return challengeDays
+    return habitDays
 }
 
 func convertToWeekString(correspondingNumber number:Int)->String{

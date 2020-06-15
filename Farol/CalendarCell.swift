@@ -14,12 +14,12 @@ class CalendarCell: UICollectionViewCell {
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var selectedImage: UIImageView!
     
-    var day: ChallengeDate? {
+    var day: HabitDate? {
         didSet {
             dayLabel.text = day?.day
             weekDayLabel.text = day?.weekDay
             
-            if day?.trashDays == false && day?.challengeDay == false {
+            if day?.trashDays == false && day?.habitDay == false {
                 dayLabel.textColor = .lightGray
                 weekDayLabel.textColor = .lightGray
             } else {
@@ -27,7 +27,7 @@ class CalendarCell: UICollectionViewCell {
                 weekDayLabel.textColor = .black
             }
                        
-            if day?.trashDays == false && day?.challengeDay == true {
+            if day?.trashDays == false && day?.habitDay == true {
                 selectedImage.image = UIImage(named: "bolinhaVazia")
             } else {
                 selectedImage.image = nil
