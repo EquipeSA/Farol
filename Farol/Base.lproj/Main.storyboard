@@ -52,6 +52,24 @@
                                 <rect key="frame" x="0.0" y="425" width="414" height="394"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fj5-eY-uxK">
+                                <rect key="frame" x="20" y="695" width="374" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Poh cara... show de bola você" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLz-WJ-Uk2">
+                                        <rect key="frame" x="50" y="5" width="240" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="check" translatesAutoresizingMaskIntoConstraints="NO" id="sOS-cn-VdU">
+                                        <rect key="frame" x="10" y="4" width="25" height="23"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.68282836680000003" green="0.6771326661" blue="0.74902957680000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vnz-vc-P6B">
                                 <rect key="frame" x="0.0" y="734" width="414" height="162"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -135,6 +153,7 @@
                     <connections>
                         <outlet property="botaoTeste" destination="EId-Se-YMF" id="Lnp-9r-fVT"/>
                         <outlet property="calendarCV" destination="to1-tq-XC9" id="4a1-xQ-2O7"/>
+                        <outlet property="congratulationNotification" destination="Fj5-eY-uxK" id="TLK-QZ-vIz"/>
                         <outlet property="dateOfCollectionViewLabel" destination="xnC-nf-PIb" id="6dT-EJ-4dt"/>
                         <outlet property="ilusionView" destination="1Qy-7h-KM3" id="2fN-Qh-hHJ"/>
                         <outlet property="ilusionViewOfCollectionView" destination="Vnz-vc-P6B" id="6xq-Rt-8Aj"/>
@@ -151,5 +170,6 @@
     <resources>
         <image name="FarolEAmbiente" width="1131" height="833"/>
         <image name="LuaEEstrelas" width="940" height="495"/>
+        <image name="check" width="18" height="18"/>
     </resources>
 </document>

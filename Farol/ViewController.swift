@@ -13,6 +13,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     let defaults = UserDefaults.standard
     var daysOfChallenge: [ChallengeDate] = []
     
+    
+    @IBOutlet weak var congratulationNotification: UIView!
     @IBOutlet weak var dateOfCollectionViewLabel: UILabel!
     @IBOutlet weak var ilusionViewOfCollectionView: UIView!
     @IBOutlet weak var ilusionView: UIView!
@@ -30,15 +32,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         notificationCenter.addObserver(self, selector: #selector(appMovedToForegroundCenterCollectionView), name: UIApplication.willEnterForegroundNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(appMovedToForegroundCheckIfIsChallengeDay), name: UIApplication.willEnterForegroundNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(appMovedToForegroundCheckIfIsNewDayToResetUI), name: UIApplication.willEnterForegroundNotification, object: nil)
-
+        
         checkIfFirstTimeInApp(reset: false)
         calendarCV.delegate = self
         calendarCV.dataSource = self
         textViewInsight.delegate = self
         configureTextViewInsight()
         configureSaveButton()
-        textViewInsight.textContainer.lineBreakMode = .byWordWrapping
         
+        congratulationNotification.center.y += 100
+        congratulationNotification.layer.cornerRadius = 10
         ilusionViewOfCollectionView.layer.cornerRadius = 30
     }
     
@@ -171,6 +174,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         botaoTeste.setTitleColor(UIColor(red: 63/255, green: 61/255, blue: 86/255, alpha: 1), for: .normal)
         botaoTeste.isEnabled = true
+        
+        UIView.animate(withDuration: 0.4, delay: 1, options: [.curveEaseInOut], animations: {
+            self.congratulationNotification.center.y -= 100
+        })
     }
     
     // o que ta dentro desse comentario é teste tambem
@@ -222,6 +229,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         botaoTeste.setTitleColor(UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1), for: .normal)
         botaoTeste.isEnabled = false
+        
+        UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseInOut], animations: {
+            self.congratulationNotification.center.y += 100
+        })
     }
     // fim do comentario
     
