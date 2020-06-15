@@ -33,9 +33,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         farolAcendeImages = createImageArray(total: 5, imagePrefix: "farolAcendendo")
         
         let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(appMovedToForegroundCenterCollectionView), name: UIApplication.willEnterForegroundNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(appMovedToForegroundCheckIfIsNewHabitDay), name: UIApplication.willEnterForegroundNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(appMovedToForegroundCheckIfIsNewDayToResetUI), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         checkIfFirstTimeInApp(reset: false)
         calendarCV.delegate = self
@@ -49,44 +47,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         ilusionViewOfCollectionView.layer.cornerRadius = 30
     }
     
-    @objc func appMovedToForegroundCheckIfIsNewDayToResetUI() {
-        let today = getTodayNumber()
-        if defaults.string(forKey: "today") != today {
-            
-            UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
-                self.insightQuestionLabel.alpha = 0
-                self.textViewInsight.alpha = 0
-                self.ilusionView.alpha = 0
-            })
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                 self.insightQuestionLabel.text = "Qual seu insight de hoje?"
-                                      
-                self.textViewInsight.isUserInteractionEnabled = true
-                self.textViewInsight.textAlignment = .left
-                self.textViewInsight.text = nil
-                self.textViewInsight.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
-                self.textViewInsight.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
-                                                 
-                self.ilusionView.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
-                                    
-                self.saveButton.isEnabled = false
-                self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
-                self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
-                                   
-                self.botaoTeste.setTitleColor(UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1), for: .normal)
-                self.botaoTeste.isEnabled = false
-            }
-           
-            UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
-                self.insightQuestionLabel.alpha = 1
-                self.saveButton.alpha = 1
-                self.ilusionView.alpha = 1
-                self.textViewInsight.alpha = 1
-            })
-        }
-    }
-    
     @objc func appMovedToForegroundCheckIfIsNewHabitDay() {
         let today = getTodayNumber()
         for habit in daysOfHabit {
@@ -96,23 +56,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             }
         }
     }
-    
-    @objc func appMovedToForegroundCenterCollectionView() {
-        var count = 0
-        let today = getTodayNumber()
-        for habit in daysOfHabit {
-            if habit.day == today {
-                break
-            }
-            count += 1
-        }
-        
-        UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
-            let desiredPosition = IndexPath(item: count, section: 0)
-            self.calendarCV.scrollToItem(at: desiredPosition, at: .centeredHorizontally, animated: false)
-            self.calendarCV.layoutIfNeeded()
-        })
-    }
 
     func checkIfFirstTimeInApp(reset: Bool) {
         if reset == true {
@@ -120,21 +63,21 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         } else {
             if defaults.bool(forKey: "First Launch") == true {
                 print("Seconds+")
-                       
+
                 // Run Code After First Launch
                 daysOfHabit = calenDays(numOfDays: 21)
-                       
+
                 defaults.set(true, forKey: "First Launch")
             } else {
                 print("First")
-                
+
                 // Run Code At First Launch
                 daysOfHabit = calenDays(numOfDays: 21)
                 defaults.set(true, forKey: "First Launch")
             }
         }
     }
-    
+
     var counterSaveButton = 0
     var saveTestToday = 1
     var actualDay = 0
@@ -171,26 +114,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBAction func saveButtonAction(_ sender: Any) {
         let date = getCurrentDate()
         textViewInsight.isUserInteractionEnabled = false
-        // esse codigo aqui em comentario eh o codigo oficial sem avancar os dias com botao falso
-        //            let date = getCurrentDate()
-        //            self.insightQuestionLabel.text = date
-        //            let today = getTodayNumber()
-        //            for habit in self.daysOfHabit {
-        //                if habit.day == today {
-        //                    habit.completed = true
-        //                    habit.date = date
-        //                    habit.selecionavel = true
-        //                    habit.insight = self.textViewInsight.text
-        //                    self.calendarCV.reloadData()
-        //                    print(habit.insight ?? "eh nil")
-        //                    break
-        //                }
-        //            }
-        
-        
-        //essa parte do codigo e so pra testar os proximos dias
         testSaveButton(date: date)
-        //fim da parte de teste
         
         UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
             self.insightQuestionLabel.alpha = 0
@@ -240,7 +164,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
     }
     
-    // o que ta dentro desse comentario é teste tambem
     var counterBotaoTeste = 1
     var testToday = 1
     
@@ -309,7 +232,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.congratulationNotification.center.y += 100
         })
     }
-    // fim do comentario
     
     func configureTextViewInsight() {
         textViewInsight.roundCorners([.bottomLeft, .bottomRight], radius: 12)
@@ -368,8 +290,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.ilusionView.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
                 self.textViewInsight.textColor = UIColor(red: 204/255, green: 204/255, blue: 204/255, alpha: 1)
                 self.textViewInsight.textAlignment = .center
-                self.insightQuestionLabel.text = pickedDay.testDay //esse é teste o comentario de baixo que eh oficial
-//                self.insightQuestionLabel.text = pickedDay.date! // OFICIAL AQUI
+                self.insightQuestionLabel.text = pickedDay.testDay
                 self.textViewInsight.text = pickedDay.insight
                 self.textViewInsight.textAlignment = .center
                 self.textViewInsight.isUserInteractionEnabled = false
@@ -380,7 +301,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     self.ilusionView.alpha = 1
                 })
             }
-        } else if pickedDay.day == todayString { // aqui no codigo oficial vai ser "pickedDay.day == todayNumber"
+        } else if pickedDay.day == todayString {
             print("hihihi \(pickedDay.day)")
             UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                 self.insightQuestionLabel.alpha = 0
