@@ -12,6 +12,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     let defaults = UserDefaults.standard
     var daysOfChallenge: [ChallengeDate] = []
+    var farolAcendeImages: [UIImage] = []
     
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var congratulationNotification: UIView!
@@ -22,11 +23,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var insightQuestionLabel: UILabel!
     @IBOutlet weak var botaoTeste: UIButton!
+    @IBOutlet weak var environment: UIImageView!
     
     @IBOutlet weak var calendarCV: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        farolAcendeImages = createImageArray(total: 5, imagePrefix: "farolAcendendo")
         
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(appMovedToForegroundCenterCollectionView), name: UIApplication.willEnterForegroundNotification, object: nil)
@@ -173,6 +177,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.textViewInsight.alpha = 1
                 self.ilusionView.alpha = 1
             })
+            animate(imageView: self.environment, images: self.farolAcendeImages,duration: 2,repeatCount: 10)
         }
         
         let todayInNumber = getTodayNumber()

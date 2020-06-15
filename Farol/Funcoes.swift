@@ -79,3 +79,23 @@ func fade(imageView: UIImageView, toImage: UIImage) {
         imageView.image = toImage
     }, completion: nil)
 }
+
+
+func createImageArray(total: Int, imagePrefix: String) -> [UIImage] {
+    var imageArray: [UIImage] = []
+    for imageCount in 0..<total {
+        let imageName = "\(imagePrefix)-\(imageCount).pdf"
+        let image = UIImage(named: imageName)!
+        imageArray.append(image)
+        print(imageArray)
+    }
+    return imageArray
+}
+
+    // Can be refactored to an extension on UIImage
+func animate(imageView: UIImageView, images: [UIImage],duration:Double = 1,repeatCount:Int) {
+    imageView.animationImages = images
+    imageView.animationDuration = duration
+    imageView.animationRepeatCount = repeatCount
+    imageView.startAnimating()
+}
