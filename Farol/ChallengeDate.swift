@@ -10,7 +10,7 @@ import UIKit
 
 class ChallengeDate {
     
-    init(day: String, weekDay: String, completed: Bool, selecionavel: Bool, challengeDay: Bool, trashDays: Bool, insight: String?, date: String?) {
+    init(day: String, weekDay: String, completed: Bool, selecionavel: Bool, challengeDay: Bool, trashDays: Bool, insight: String?, date: String?, testDay: String?) {
         self.day = day
         self.weekDay = weekDay
         self.completed = completed
@@ -19,6 +19,7 @@ class ChallengeDate {
         self.trashDays = trashDays
         self.insight = insight
         self.date = date
+        self.testDay = testDay
     }
     
     let day: String
@@ -29,4 +30,5 @@ class ChallengeDate {
     var trashDays: Bool
     var challengeDay: Bool
     var date: String?
+    var testDay: String?
 }
