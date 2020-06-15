@@ -110,7 +110,36 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var actualDay = 0
     var daysCompleted = 0
 
+    var testDay: String = ""
+    
+    func testSaveButton(date: String) {
+        
+        let today = getTodayNumber()
+        var todayInt = Int(today)! + self.counterSaveButton
+        if todayInt >= 31 {
+            todayInt = self.saveTestToday
+            self.saveTestToday += 1
+        }
+        let todayString = String(todayInt)
+               
+        for challenge in self.daysOfChallenge {
+            if challenge.day == todayString {
+                challenge.date = date
+                challenge.selecionavel = true
+                challenge.completed = true
+                challenge.insight = self.textViewInsight.text
+                challenge.testDay = date.replacingOccurrences(of: today, with: todayString)
+                self.calendarCV.reloadData()
+                break
+            }
+        }
+        self.actualDay += 1
+        self.counterSaveButton += 1
+        testDay = date.replacingOccurrences(of: today, with: todayString)
+    }
+    
     @IBAction func saveButtonAction(_ sender: Any) {
+        let date = getCurrentDate()
         textViewInsight.isUserInteractionEnabled = false
         //            let date = getCurrentDate()
         //            self.insightQuestionLabel.text = date
@@ -129,31 +158,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         
         //essa parte do codigo e so pra testar os proximos dias
-        let date = getCurrentDate()
-        
-        let today = getTodayNumber()
-        var todayInt = Int(today)! + self.counterSaveButton
-        if todayInt >= 31 {
-            todayInt = self.saveTestToday
-            self.saveTestToday += 1
-        }
-        let todayString = String(todayInt)
-               
-        for challenge in self.daysOfChallenge {
-            if challenge.day == todayString {
-                challenge.date = date
-                challenge.selecionavel = true
-                challenge.completed = true
-                challenge.insight = self.textViewInsight.text
-                self.calendarCV.reloadData()
-                break
-            }
-        }
-        self.actualDay += 1
-        self.counterSaveButton += 1
-        
-        
+        testSaveButton(date: date)
         //fim da parte de teste
+        
         UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
             self.insightQuestionLabel.alpha = 0
             self.textViewInsight.alpha = 0
@@ -168,7 +175,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.textViewInsight.textAlignment = .center
             
             UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
-                self.insightQuestionLabel.text = date
+                self.insightQuestionLabel.text = self.testDay
                 self.insightQuestionLabel.alpha = 1
                 self.textViewInsight.alpha = 1
                 self.ilusionView.alpha = 1
@@ -182,13 +189,22 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         if daysCompleted == 21{
             botaoTeste.isHidden = true
             botaoTeste.isUserInteractionEnabled = false
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseInOut], animations: {
+                    self.congratulationNotification.center.y += 100
+                })
+            }
         }
-        botaoTeste.setTitleColor(UIColor(red: 63/255, green: 61/255, blue: 86/255, alpha: 1), for: .normal)
-        botaoTeste.isEnabled = true
-        
         UIView.animate(withDuration: 0.4, delay: 1, options: [.curveEaseInOut], animations: {
             self.congratulationNotification.center.y -= 100
         })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            self.botaoTeste.setTitleColor(UIColor(red: 63/255, green: 61/255, blue: 86/255, alpha: 1), for: .normal)
+            self.botaoTeste.isEnabled = true
+        }
+        
     }
     
     // o que ta dentro desse comentario é teste tambem
@@ -308,20 +324,63 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let todayString = String(todayInt)
         
         if day.selecionavel == true {
-            insightQuestionLabel.text = day.date!
-            textViewInsight.isHidden = false
-            textViewInsight.text = day.insight!
-            textViewInsight.layer.borderWidth = 0
-            textViewInsight.isUserInteractionEnabled = false
-            self.textViewInsight.textAlignment = .center
-            saveButton.isHidden = true
+            UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+                self.insightQuestionLabel.alpha = 0
+                self.textViewInsight.alpha = 0
+                self.ilusionView.alpha = 0
+                self.saveButton.alpha = 0
+            })
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                self.textViewInsight.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
+                self.ilusionView.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
+                self.textViewInsight.textColor = UIColor(red: 204/255, green: 204/255, blue: 204/255, alpha: 1)
+                self.textViewInsight.textAlignment = .center
+                self.insightQuestionLabel.text = day.testDay //esse é teste o comentario de baixo que eh oficial
+//                insightQuestionLabel.text = day.date!
+                self.textViewInsight.text = day.insight
+                self.textViewInsight.textAlignment = .center
+                self.textViewInsight.isUserInteractionEnabled = false
+                
+                UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
+                    self.insightQuestionLabel.alpha = 1
+                    self.textViewInsight.alpha = 1
+                    self.ilusionView.alpha = 1
+                })
+            }
         } else if day.day == todayString {
-            insightQuestionLabel.text = "Qual seu insight de hoje?"
-            textViewInsight.isHidden = false
-            textViewInsight.text = nil
-            textViewInsight.isUserInteractionEnabled = true
-            self.textViewInsight.textAlignment = .left
-            saveButton.isHidden = false
+            UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+                self.insightQuestionLabel.alpha = 0
+                self.textViewInsight.alpha = 0
+                self.ilusionView.alpha = 0
+                self.saveButton.alpha = 0
+            })
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.insightQuestionLabel.text = "Qual seu insight de hoje?"
+           
+                self.textViewInsight.isUserInteractionEnabled = true
+                self.textViewInsight.textAlignment = .left
+                self.textViewInsight.text = nil
+                self.textViewInsight.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
+                self.textViewInsight.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
+                      
+                self.ilusionView.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
+           
+                self.saveButton.isEnabled = false
+                self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
+                self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
+           
+                self.botaoTeste.setTitleColor(UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1), for: .normal)
+                self.botaoTeste.isEnabled = false
+           
+                UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+                    self.insightQuestionLabel.alpha = 1
+                    self.saveButton.alpha = 1
+                    self.ilusionView.alpha = 1
+                    self.textViewInsight.alpha = 1
+                })
+            }
         }
     }
 }
