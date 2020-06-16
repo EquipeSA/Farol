@@ -22,7 +22,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var textViewInsight: UITextView!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var insightQuestionLabel: UILabel!
-    @IBOutlet weak var botaoTeste: UIButton!
     @IBOutlet weak var environment: UIImageView!
     
     @IBOutlet weak var calendarCV: UICollectionView!
@@ -33,9 +32,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         farolAcendeImages = createImageArray(total: 5, imagePrefix: "farolAcendendo")
         
         let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(dayChanged), name: .NSCalendarDayChanged, object: nil)
         notificationCenter.addObserver(self, selector: #selector(appMovedToForegroundCenterCollectionView), name: UIApplication.willEnterForegroundNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(appMovedToForegroundCheckIfIsNewHabitDay), name: UIApplication.willEnterForegroundNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(appMovedToForegroundCheckIfIsNewDayToResetUI), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         checkIfFirstTimeInApp(reset: false)
         calendarCV.delegate = self
@@ -49,42 +48,57 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         ilusionViewOfCollectionView.layer.cornerRadius = 30
     }
     
-    @objc func appMovedToForegroundCheckIfIsNewDayToResetUI() {
+    @objc func dayChanged() {
         let today = getTodayNumber()
-        if defaults.string(forKey: "today") != today {
-            
-            UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
-                self.insightQuestionLabel.alpha = 0
-                self.textViewInsight.alpha = 0
-                self.ilusionView.alpha = 0
-            })
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                 self.insightQuestionLabel.text = "Qual seu insight de hoje?"
-                                      
-                self.textViewInsight.isUserInteractionEnabled = true
-                self.textViewInsight.textAlignment = .left
-                self.textViewInsight.text = nil
-                self.textViewInsight.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
-                self.textViewInsight.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
-                                                 
-                self.ilusionView.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
-                                    
-                self.saveButton.isEnabled = false
-                self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
-                self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
-                                   
-                self.botaoTeste.setTitleColor(UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1), for: .normal)
-                self.botaoTeste.isEnabled = false
+        for habit in daysOfHabit {
+            if habit.day == today {
+                habit.habitDay = true
+                calendarCV.reloadData()
             }
-           
+        }
+        
+        var count = 0
+        for habit in daysOfHabit {
+            if habit.day == today {
+                break
+            }
+            count += 1
+        }
+        
+        UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+            self.insightQuestionLabel.alpha = 0
+            self.textViewInsight.alpha = 0
+            self.ilusionView.alpha = 0
+        })
+                    
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.insightQuestionLabel.text = "Qual seu insight de hoje?"
+                                              
+            self.textViewInsight.isUserInteractionEnabled = true
+            self.textViewInsight.textAlignment = .left
+            self.textViewInsight.text = nil
+            self.textViewInsight.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
+            self.textViewInsight.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
+                                                         
+            self.ilusionView.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
+                                            
+            self.saveButton.isEnabled = false
+            self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
+            self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
+            
             UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                 self.insightQuestionLabel.alpha = 1
                 self.saveButton.alpha = 1
                 self.ilusionView.alpha = 1
                 self.textViewInsight.alpha = 1
+                
+                let desiredPosition = IndexPath(item: count, section: 0)
+                self.calendarCV.scrollToItem(at: desiredPosition, at: .centeredHorizontally, animated: false)
+                self.calendarCV.layoutIfNeeded()
             })
         }
+                   
+       
     }
     
     @objc func appMovedToForegroundCheckIfIsNewHabitDay() {
@@ -135,62 +149,23 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
-    var counterSaveButton = 0
-    var saveTestToday = 1
-    var actualDay = 0
     var daysCompleted = 0
-
-    var testDay: String = ""
-    
-    func testSaveButton(date: String) {
-        
-        let today = getTodayNumber()
-        var todayInt = Int(today)! + self.counterSaveButton
-        if todayInt >= 31 {
-            todayInt = self.saveTestToday
-            self.saveTestToday += 1
-        }
-        let todayString = String(todayInt)
-               
-        for habit in self.daysOfHabit {
-            if habit.day == todayString {
-                habit.date = date
-                habit.selecionavel = true
-                habit.completed = true
-                habit.insight = self.textViewInsight.text
-                habit.testDay = date.replacingOccurrences(of: today, with: todayString)
-                self.calendarCV.reloadData()
-                break
-            }
-        }
-        self.actualDay += 1
-        self.counterSaveButton += 1
-        testDay = date.replacingOccurrences(of: today, with: todayString)
-    }
     
     @IBAction func saveButtonAction(_ sender: Any) {
         let date = getCurrentDate()
         textViewInsight.isUserInteractionEnabled = false
-        // esse codigo aqui em comentario eh o codigo oficial sem avancar os dias com botao falso
-        //            let date = getCurrentDate()
-        //            self.insightQuestionLabel.text = date
-        //            let today = getTodayNumber()
-        //            for habit in self.daysOfHabit {
-        //                if habit.day == today {
-        //                    habit.completed = true
-        //                    habit.date = date
-        //                    habit.selecionavel = true
-        //                    habit.insight = self.textViewInsight.text
-        //                    self.calendarCV.reloadData()
-        //                    print(habit.insight ?? "eh nil")
-        //                    break
-        //                }
-        //            }
-        
-        
-        //essa parte do codigo e so pra testar os proximos dias
-        testSaveButton(date: date)
-        //fim da parte de teste
+        let today = getTodayNumber()
+        for habit in daysOfHabit {
+            if habit.day == today {
+                habit.completed = true
+                habit.date = date
+                habit.selecionavel = true
+                habit.insight = self.textViewInsight.text
+                self.calendarCV.reloadData()
+                print(habit.insight ?? "eh nil")
+                break
+            }
+        }
         
         UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
             self.insightQuestionLabel.alpha = 0
@@ -206,110 +181,30 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.textViewInsight.textAlignment = .center
             
             UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
-                self.insightQuestionLabel.text = self.testDay
+                self.insightQuestionLabel.text = date
                 self.insightQuestionLabel.alpha = 1
                 self.textViewInsight.alpha = 1
                 self.ilusionView.alpha = 1
             })
             animate(imageView: self.environment, images: self.farolAcendeImages,duration: 2,repeatCount: 10)
         }
-        
-        let todayInNumber = getTodayNumber()
-        defaults.setValue(todayInNumber, forKey: "today")
                     
         daysCompleted += 1
         if daysCompleted == 21{
             print("huehue")
-            botaoTeste.isHidden = true
-            botaoTeste.isUserInteractionEnabled = false
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-                UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseInOut], animations: {
-                    self.congratulationNotification.center.y += 100
-                })
-            }
-        }
-        UIView.animate(withDuration: 0.4, delay: 1, options: [.curveEaseInOut], animations: {
-            self.congratulationNotification.center.y -= 100
-        })
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            self.botaoTeste.setTitleColor(UIColor(red: 63/255, green: 61/255, blue: 86/255, alpha: 1), for: .normal)
-            self.botaoTeste.isEnabled = true
+            NotificationCenter.default.removeObserver(self)
         }
         
-    }
-    
-    // o que ta dentro desse comentario é teste tambem
-    var counterBotaoTeste = 1
-    var testToday = 1
-    
-    @IBAction func botaoTeste(_ sender: Any) {
-        let today = getTodayNumber()
-        var todayInt = Int(today)! + counterBotaoTeste
-        if todayInt >= 31 {
-            todayInt = testToday
-            testToday += 1
-        }
-        print(todayInt)
-        let todayString = String(todayInt)
-        for habit in daysOfHabit {
-            if habit.day == todayString {
-                habit.habitDay = true
-                calendarCV.reloadData()
-            }
-        }
-        
-        var count = 0
-        for habit in daysOfHabit {
-            if habit.day == todayString {
-                break
-            }
-            count += 1
-        }
-        counterBotaoTeste += 1
-        
-        UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
-            self.insightQuestionLabel.alpha = 0
-            self.textViewInsight.alpha = 0
-            self.ilusionView.alpha = 0
-        })
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.insightQuestionLabel.text = "Qual seu insight de hoje?"
-            
-            self.textViewInsight.isUserInteractionEnabled = true
-            self.textViewInsight.textAlignment = .left
-            self.textViewInsight.text = nil
-            self.textViewInsight.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
-            self.textViewInsight.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
-                       
-            self.ilusionView.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
-            
-            self.saveButton.isEnabled = false
-            self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
-            self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
-            
-            self.botaoTeste.setTitleColor(UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1), for: .normal)
-            self.botaoTeste.isEnabled = false
-            
-            UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
-                self.insightQuestionLabel.alpha = 1
-                self.saveButton.alpha = 1
-                self.ilusionView.alpha = 1
-                self.textViewInsight.alpha = 1
-                
-                let desiredPosition = IndexPath(item: count, section: 0)
-                self.calendarCV.scrollToItem(at: desiredPosition, at: .centeredHorizontally, animated: false)
-                self.calendarCV.layoutIfNeeded()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseInOut], animations: {
+                self.congratulationNotification.center.y += 100
             })
         }
         
-        UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseInOut], animations: {
-            self.congratulationNotification.center.y += 100
+        UIView.animate(withDuration: 0.4, delay: 1, options: [.curveEaseInOut], animations: {
+            self.congratulationNotification.center.y -= 100
         })
     }
-    // fim do comentario
     
     func configureTextViewInsight() {
         textViewInsight.roundCorners([.bottomLeft, .bottomRight], radius: 12)
@@ -345,16 +240,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var testTodayClick = 1
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let pickedDay = daysOfHabit[indexPath.item]
-        
         let todayNumber = getTodayNumber()
-        var todayInt = Int(todayNumber)! + actualDay
-        if todayInt >= 31 {
-            todayInt = todayInt - 30
-        }
+        let todayString = String(todayNumber)
         
-        let todayString = String(todayInt)
-        
-        if pickedDay.selecionavel == true && pickedDay.day != todayString { // O codigo oficial aqui é "pickedDay.selecionavel == true && pickedDay.day != todayString"
+        if  pickedDay.selecionavel == true && pickedDay.day != todayString {
             print("kkk \(pickedDay.day)")
             UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                 self.insightQuestionLabel.alpha = 0
@@ -368,8 +257,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.ilusionView.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
                 self.textViewInsight.textColor = UIColor(red: 204/255, green: 204/255, blue: 204/255, alpha: 1)
                 self.textViewInsight.textAlignment = .center
-                self.insightQuestionLabel.text = pickedDay.testDay //esse é teste o comentario de baixo que eh oficial
-//                self.insightQuestionLabel.text = pickedDay.date! // OFICIAL AQUI
+                self.insightQuestionLabel.text = pickedDay.date!
                 self.textViewInsight.text = pickedDay.insight
                 self.textViewInsight.textAlignment = .center
                 self.textViewInsight.isUserInteractionEnabled = false
@@ -380,7 +268,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     self.ilusionView.alpha = 1
                 })
             }
-        } else if pickedDay.day == todayString { // aqui no codigo oficial vai ser "pickedDay.day == todayNumber"
+        } else if pickedDay.day == todayNumber {
             print("hihihi \(pickedDay.day)")
             UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                 self.insightQuestionLabel.alpha = 0
@@ -403,10 +291,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.saveButton.isEnabled = false
                 self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
                 self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
-           
-                self.botaoTeste.setTitleColor(UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1), for: .normal)
-                self.botaoTeste.isEnabled = false
-           
+
                 UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                     self.insightQuestionLabel.alpha = 1
                     self.saveButton.alpha = 1

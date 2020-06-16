@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -88,9 +88,6 @@
                                         <state key="normal" title="&gt;">
                                             <color key="titleColor" red="0.71372549019607845" green="0.71372549019607845" blue="0.71372549019607845" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
-                                        <connections>
-                                            <action selector="botaoTeste:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7vE-ZC-kWg"/>
-                                        </connections>
                                     </button>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="to1-tq-XC9">
                                         <rect key="frame" x="0.0" y="40" width="414" height="81"/>
@@ -148,7 +145,6 @@
                     </view>
                     <connections>
                         <outlet property="backgroundImage" destination="ekm-Bb-RJS" id="gKE-K5-WWR"/>
-                        <outlet property="botaoTeste" destination="EId-Se-YMF" id="Lnp-9r-fVT"/>
                         <outlet property="calendarCV" destination="to1-tq-XC9" id="4a1-xQ-2O7"/>
                         <outlet property="congratulationNotification" destination="Fj5-eY-uxK" id="TLK-QZ-vIz"/>
                         <outlet property="dateOfCollectionViewLabel" destination="xnC-nf-PIb" id="6dT-EJ-4dt"/>
@@ -166,7 +162,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="backgroundFarolELua" width="1131" height="1271"/>
+        <image name="backgroundFarolELua" width="1131" height="1260"/>
         <image name="check" width="18" height="18"/>
     </resources>
 </document>
