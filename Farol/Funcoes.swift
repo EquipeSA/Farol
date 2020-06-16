@@ -81,13 +81,20 @@ func fade(imageView: UIImageView, toImage: UIImage) {
 }
 
 
-func createImageArray(total: Int, imagePrefix: String) -> [UIImage] {
+func createImageArray(imagePrefix: String) -> [UIImage] {
     var imageArray: [UIImage] = []
-    for imageCount in 0..<total {
+    var aux = true
+    var imageCount = 0
+    while aux {
         let imageName = "\(imagePrefix)-\(imageCount).pdf"
-        let image = UIImage(named: imageName)!
-        imageArray.append(image)
-        print(imageArray)
+        if let image = try? UIImage(named: imageName){
+            imageArray.append(image)
+            imageCount+=1
+            print("\(imageName) rolou")
+        } else {
+            aux = false
+            print("\(imageName) nao rolou")
+        }
     }
     return imageArray
 }

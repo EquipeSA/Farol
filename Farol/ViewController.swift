@@ -12,7 +12,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     let defaults = UserDefaults.standard
     var daysOfHabit: [HabitDate] = []
-    var farolAcendeImages: [UIImage] = []
+    let scenesInScreen: SceneManager = DEFAULTSCENES
+    
     
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var congratulationNotification: UIView!
@@ -29,8 +30,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        farolAcendeImages = createImageArray(total: 5, imagePrefix: "farolAcendendo")
         
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(appMovedToForegroundCheckIfIsNewHabitDay), name: UIApplication.willEnterForegroundNotification, object: nil)
@@ -135,7 +134,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.textViewInsight.alpha = 1
                 self.ilusionView.alpha = 1
             })
-            animate(imageView: self.environment, images: self.farolAcendeImages,duration: 2,repeatCount: 10)
+            animate(imageView: self.environment, images: self.scenesInScreen.animatedScene,duration: 2,repeatCount: 10)
         }
         
         let todayInNumber = getTodayNumber()

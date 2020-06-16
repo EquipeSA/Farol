@@ -23,6 +23,6 @@ class SceneManager {
     let currentScene: UIImage
 }
 let defaultScene = UIImage(named: "backgroundFarolELua")
-let animatedScene = createImageArray(total: 8, imagePrefix: "farolAcendendo")
+let animatedScene = createImageArray(imagePrefix: "farolAcendendo")
 let currentScene = UIImage(named: "farolAcendendo-2")
 let DEFAULTSCENES = SceneManager(defaultScene: defaultScene!, animatedScene: animatedScene, currentScene: currentScene!)
