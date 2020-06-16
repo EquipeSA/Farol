@@ -14,6 +14,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var daysOfHabit: [HabitDate] = []
     var farolAcendeImages: [UIImage] = []
     var completedTodayHabit: Bool = false
+    var daysNotCompleted: Int = 0
     
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var congratulationNotification: UIView!
@@ -48,76 +49,103 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         ilusionViewOfCollectionView.layer.cornerRadius = 30
     }
     
+    func resetAll() {
+        daysNotCompleted = 0
+        daysOfHabit = calenDays(numOfDays: 21)
+        DispatchQueue.main.async {
+            print(2)
+            self.calendarCV.reloadData()
+        }
+        
+    }
+    
     @objc func dayChanged() {
-        print(111)
+        print("dayChanged")
         if completedTodayHabit == false {
+            daysNotCompleted += 1
             completedTodayHabit = false
-            let yesterday = getTodayNumberInt() - 1
-            let yesterdayString = String(yesterday)
-            for habit in daysOfHabit {
-                if habit.day == yesterdayString {
-                    habit.badUI = true
-                    calendarCV.reloadData()
+            if daysNotCompleted >= 3 {
+                print("reset tudo")
+                resetAll()
+            } else {
+                let yesterday = getTodayNumberInt() - 1
+                let yesterdayString = String(yesterday)
+                for habit in daysOfHabit {
+                    if habit.day == yesterdayString {
+                        habit.badUI = true
+                    }
+                }
+                let lastDayOfChallengeString = daysOfHabit.last?.day
+                let newHabitAdded = Int(lastDayOfChallengeString!)! + 1
+                let newHabitDayAddedToLastPosition = String(newHabitAdded)
+                let newDays = calenDays(numOfDays: 21)
+                for day in newDays {
+                    if day.day == newHabitDayAddedToLastPosition {
+                        daysOfHabit.append(day)
+                        DispatchQueue.main.async {
+                            print(1)
+                            self.calendarCV.reloadData()
+                        }
+                    }
                 }
             }
         } else {
             completedTodayHabit = false
+            daysNotCompleted = 0
         }
         let today = getTodayNumber()
         for habit in daysOfHabit {
             if habit.day == today {
-                print(222)
                 habit.habitDay = true
-                calendarCV.reloadData()
+                DispatchQueue.main.async {
+                    print(3)
+                    self.calendarCV.reloadData()
+                }
             }
         }
         
         var count = 0
         for habit in daysOfHabit {
-            print(333)
             if habit.day == today {
                 break
             }
             count += 1
         }
         
-        UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
-            print(444)
-            self.insightQuestionLabel.alpha = 0
-            self.textViewInsight.alpha = 0
-            self.ilusionView.alpha = 0
-        })
-                    
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            print(555)
-            self.insightQuestionLabel.text = "Qual seu insight de hoje?"
-                                              
-            self.textViewInsight.isUserInteractionEnabled = true
-            self.textViewInsight.textAlignment = .left
-            self.textViewInsight.text = nil
-            self.textViewInsight.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
-            self.textViewInsight.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
-                                                         
-            self.ilusionView.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
-                                            
-            self.saveButton.isEnabled = false
-            self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
-            self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
-            
+        DispatchQueue.main.async {
             UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
-                print(666)
-                self.insightQuestionLabel.alpha = 1
-                self.saveButton.alpha = 1
-                self.ilusionView.alpha = 1
-                self.textViewInsight.alpha = 1
-                
-                let desiredPosition = IndexPath(item: count, section: 0)
-                self.calendarCV.scrollToItem(at: desiredPosition, at: .centeredHorizontally, animated: false)
-                self.calendarCV.layoutIfNeeded()
+                self.insightQuestionLabel.alpha = 0
+                self.textViewInsight.alpha = 0
+                self.ilusionView.alpha = 0
             })
+                               
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.insightQuestionLabel.text = "Qual seu insight de hoje?"
+                                                         
+                self.textViewInsight.isUserInteractionEnabled = true
+                self.textViewInsight.textAlignment = .left
+                self.textViewInsight.text = nil
+                self.textViewInsight.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
+                self.textViewInsight.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
+                                                                    
+                self.ilusionView.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
+                                                
+                self.saveButton.isEnabled = false
+                self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
+                self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
+                       
+                UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+                    self.insightQuestionLabel.alpha = 1
+                    self.saveButton.alpha = 1
+                    self.ilusionView.alpha = 1
+                    self.textViewInsight.alpha = 1
+                           
+                    let desiredPosition = IndexPath(item: count, section: 0)
+                    self.calendarCV.scrollToItem(at: desiredPosition, at: .centeredHorizontally, animated: false)
+                    self.calendarCV.layoutIfNeeded()
+                })
+            }
         }
-                   
-       
     }
     
     @objc func appMovedToForegroundCheckIfIsNewHabitDay() {
@@ -125,7 +153,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         for habit in daysOfHabit {
             if habit.day == today {
                 habit.habitDay = true
-                calendarCV.reloadData()
+                DispatchQueue.main.async {
+                    print(4)
+                    self.calendarCV.reloadData()
+                }
             }
         }
     }
@@ -150,7 +181,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             }
         }
     }
-    
     var daysCompleted = 0
     
     @IBAction func saveButtonAction(_ sender: Any) {
@@ -166,8 +196,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 habit.selecionavel = true
                 habit.badUI = false
                 habit.insight = self.textViewInsight.text
-                self.calendarCV.reloadData()
-                print(habit.insight ?? "eh nil")
+                DispatchQueue.main.async {
+                    self.calendarCV.reloadData()
+                    print(5)
+                }
                 break
             }
         }
@@ -191,7 +223,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.textViewInsight.alpha = 1
                 self.ilusionView.alpha = 1
             })
-            animate(imageView: self.environment, images: self.farolAcendeImages,duration: 2,repeatCount: 2)
+            DispatchQueue.main.async {
+                animate(imageView: self.environment, images: self.farolAcendeImages,duration: 2,repeatCount: 2)
+            }
         }
                     
         daysCompleted += 1
