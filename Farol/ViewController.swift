@@ -12,7 +12,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     let defaults = UserDefaults.standard
     var daysOfHabit: [HabitDate] = []
-    let scenesInScreen: SceneManager = DEFAULTSCENES
+    var scenesInScreen: SceneManager = DEFAULTSCENES
     
     
     @IBOutlet weak var backgroundImage: UIImageView!
@@ -24,7 +24,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var insightQuestionLabel: UILabel!
     @IBOutlet weak var botaoTeste: UIButton!
-    @IBOutlet weak var environment: UIImageView!
+    //@IBOutlet weak var environment: UIImageView!
     
     @IBOutlet weak var calendarCV: UICollectionView!
     
@@ -134,7 +134,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.textViewInsight.alpha = 1
                 self.ilusionView.alpha = 1
             })
-            animate(imageView: self.environment, images: self.scenesInScreen.animatedScene,duration: 2,repeatCount: 10)
+            self.backgroundImage.image = self.scenesInScreen.currentScene
+            animateScene(imageView: self.backgroundImage, images: self.scenesInScreen.animatedScene,duration: 0.5,repeatCount: 5)
         }
         
         let todayInNumber = getTodayNumber()
@@ -274,6 +275,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         
         let todayString = String(todayInt)
+        
+        backgroundImage.image = pickedDay.scenes.defaultScene
+        scenesInScreen = pickedDay.scenes
         
         if pickedDay.selecionavel == true && pickedDay.day != todayString { // O codigo oficial aqui é "pickedDay.selecionavel == true && pickedDay.day != todayString"
             print("kkk \(pickedDay.day)")

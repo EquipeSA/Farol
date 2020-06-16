@@ -152,7 +152,6 @@
                         <outlet property="calendarCV" destination="to1-tq-XC9" id="4a1-xQ-2O7"/>
                         <outlet property="congratulationNotification" destination="Fj5-eY-uxK" id="TLK-QZ-vIz"/>
                         <outlet property="dateOfCollectionViewLabel" destination="xnC-nf-PIb" id="6dT-EJ-4dt"/>
-                        <outlet property="environment" destination="ekm-Bb-RJS" id="o5h-y9-jdR"/>
                         <outlet property="ilusionView" destination="1Qy-7h-KM3" id="2fN-Qh-hHJ"/>
                         <outlet property="ilusionViewOfCollectionView" destination="Vnz-vc-P6B" id="6xq-Rt-8Aj"/>
                         <outlet property="insightQuestionLabel" destination="fYZ-ey-kAQ" id="wGC-5P-RXt"/>
@@ -166,7 +165,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="backgroundFarolELua" width="1131" height="1271"/>
+        <image name="backgroundFarolELua" width="1131" height="1260"/>
         <image name="check" width="18" height="18"/>
     </resources>
 </document>

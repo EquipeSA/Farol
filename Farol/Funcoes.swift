@@ -90,17 +90,15 @@ func createImageArray(imagePrefix: String) -> [UIImage] {
         if let image = try? UIImage(named: imageName){
             imageArray.append(image)
             imageCount+=1
-            print("\(imageName) rolou")
         } else {
             aux = false
-            print("\(imageName) nao rolou")
         }
     }
     return imageArray
 }
 
     // Can be refactored to an extension on UIImage
-func animate(imageView: UIImageView, images: [UIImage],duration:Double = 1,repeatCount:Int) {
+func animateScene(imageView: UIImageView, images: [UIImage],duration:Double = 1,repeatCount:Int) {
     imageView.animationImages = images
     imageView.animationDuration = duration
     imageView.animationRepeatCount = repeatCount
