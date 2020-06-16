@@ -10,7 +10,7 @@ import UIKit
 
 class HabitDate {
     
-    init(day: String, weekDay: String, completed: Bool, selecionavel: Bool, habitDay: Bool, trashDays: Bool, insight: String?, date: String?, testDay: String?,scenes:SceneManager = DEFAULTSCENES) {
+    init(day: String, weekDay: String, completed: Bool, selecionavel: Bool, habitDay: Bool, trashDays: Bool, insight: String?, date: String?, testDay: String?,scenes:SceneManager) {
         self.day = day
         self.weekDay = weekDay
         self.completed = completed

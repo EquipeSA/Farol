@@ -12,24 +12,32 @@ func calenDays(numOfDays:Int) -> [HabitDate]{
     let calendar = Calendar.current
     var date = calendar.startOfDay(for: Date())
     var habitDays = [HabitDate]()
+    let scenes = storyScenes()
     
     for _ in 1 ... 4 {
         let week = calendar.component(.weekday, from: date)
         let day = calendar.component(.day, from: date)
         let strDay = String(day)
         let strWeek = convertToWeekString(correspondingNumber: week)
-        habitDays.append(HabitDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: false, habitDay: false, trashDays: true, insight: nil, date: nil, testDay: nil))
+        habitDays.append(HabitDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: false, habitDay: false, trashDays: true, insight: nil, date: nil, testDay: nil, scenes: scenes[0]))
         date = calendar.date(byAdding: .day, value: -1, to: date)!
     }
     habitDays.reverse()
     habitDays.remove(at: 3)
     date = calendar.startOfDay(for: Date())
-    for _ in 1 ... numOfDays {
+    for i in 1 ... numOfDays {
         let week = calendar.component(.weekday, from: date)
         let day = calendar.component(.day, from: date)
         let strDay = String(day)
         let strWeek = convertToWeekString(correspondingNumber: week)
-        habitDays.append(HabitDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: false, habitDay: false, trashDays: false, insight: nil, date: nil, testDay: nil))
+        let scenesLength = scenes.count
+        var correspondentScene:SceneManager
+        if i <= scenesLength{
+            correspondentScene = scenes[i-1]
+        }else{
+            correspondentScene = scenes[0]
+        }
+        habitDays.append(HabitDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: false, habitDay: false, trashDays: false, insight: nil, date: nil, testDay: nil, scenes: correspondentScene))
         date = calendar.date(byAdding: .day, value: 1, to: date)!
     }
     return habitDays
@@ -88,6 +96,7 @@ func createImageArray(imagePrefix: String) -> [UIImage] {
     while aux {
         let imageName = "\(imagePrefix)-\(imageCount).pdf"
         if let image = try? UIImage(named: imageName){
+            print(image)
             imageArray.append(image)
             imageCount+=1
         } else {

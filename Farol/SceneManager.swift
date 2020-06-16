@@ -22,7 +22,20 @@ class SceneManager {
     let animatedScene: [UIImage]
     let currentScene: UIImage
 }
-let defaultScene = UIImage(named: "backgroundFarolELua")
-let animatedScene = createImageArray(imagePrefix: "farolAcendendo")
-let currentScene = UIImage(named: "farolAcendendo-2")
-let DEFAULTSCENES = SceneManager(defaultScene: defaultScene!, animatedScene: animatedScene, currentScene: currentScene!)
+
+func storyScenes() -> [SceneManager]{
+    var storyScenes:[SceneManager] = []
+
+    let scene1 = SceneManager(
+        defaultScene: UIImage(named: "backgroundFarolELua")!,
+        animatedScene: createImageArray(imagePrefix: "farolAcendendo"),
+        currentScene: UIImage(named: "farolAcendendo-2")!)
+    storyScenes.append(scene1)
+
+    let scene2 = SceneManager(
+        defaultScene: UIImage(named: "alternativeBack")!,
+        animatedScene: createImageArray(imagePrefix: "cadente"),
+        currentScene: UIImage(named: "cadente")!)
+    storyScenes.append(scene2)
+    return storyScenes
+}

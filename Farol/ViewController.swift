@@ -12,7 +12,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     let defaults = UserDefaults.standard
     var daysOfHabit: [HabitDate] = []
-    var scenesInScreen: SceneManager = DEFAULTSCENES
     
     
     @IBOutlet weak var backgroundImage: UIImageView!
@@ -24,8 +23,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var insightQuestionLabel: UILabel!
     @IBOutlet weak var botaoTeste: UIButton!
-    //@IBOutlet weak var environment: UIImageView!
-    
     @IBOutlet weak var calendarCV: UICollectionView!
     
     override func viewDidLoad() {
@@ -102,6 +99,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 habit.insight = self.textViewInsight.text
                 habit.testDay = date.replacingOccurrences(of: today, with: todayString)
                 self.calendarCV.reloadData()
+                self.backgroundImage.image = habit.scenes.currentScene
+                animateScene(imageView: self.backgroundImage, images: habit.scenes.animatedScene,duration: 2.5,repeatCount: 5)
                 break
             }
         }
@@ -134,8 +133,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.textViewInsight.alpha = 1
                 self.ilusionView.alpha = 1
             })
-            self.backgroundImage.image = self.scenesInScreen.currentScene
-            animateScene(imageView: self.backgroundImage, images: self.scenesInScreen.animatedScene,duration: 0.5,repeatCount: 5)
+            
         }
         
         let todayInNumber = getTodayNumber()
@@ -180,6 +178,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             if habit.day == todayString {
                 habit.habitDay = true
                 calendarCV.reloadData()
+                backgroundImage.image = habit.scenes.defaultScene
             }
         }
         
@@ -275,9 +274,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         
         let todayString = String(todayInt)
-        
-        backgroundImage.image = pickedDay.scenes.defaultScene
-        scenesInScreen = pickedDay.scenes
+        backgroundImage.image = pickedDay.scenes.currentScene
         
         if pickedDay.selecionavel == true && pickedDay.day != todayString { // O codigo oficial aqui é "pickedDay.selecionavel == true && pickedDay.day != todayString"
             print("kkk \(pickedDay.day)")
