@@ -28,6 +28,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = UIColor(red: 0.18, green: 0.18, blue: 0.25, alpha: 1.00)
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(appMovedToForegroundCheckIfIsNewHabitDay), name: UIApplication.willEnterForegroundNotification, object: nil)
         
@@ -100,7 +101,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 habit.testDay = date.replacingOccurrences(of: today, with: todayString)
                 self.calendarCV.reloadData()
                 self.backgroundImage.image = habit.scenes.currentScene
-                animateScene(imageView: self.backgroundImage, images: habit.scenes.animatedScene,duration: 2.5,repeatCount: 5)
+                animateScene(imageView: self.backgroundImage, images: habit.scenes.animatedScene,duration: habit.scenes.animateTime,repeatCount: habit.scenes.animateRepeat)
                 break
             }
         }
