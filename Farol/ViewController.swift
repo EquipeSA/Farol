@@ -6,15 +6,23 @@
 //  Copyright © 2020 yuryAntony. All rights reserved.
 //
 
-import UIKit
+//
+//  ViewController.swift
+//  Farol
+//
+//  Created by yury antony on 04/06/20.
+//  Copyright © 2020 yuryAntony. All rights reserved.
+//
 
+import UIKit
+    
+    
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("HabitDays.plist")
     
     let defaults = UserDefaults.standard
     var daysOfHabit: [HabitDate] = []
-    var farolAcendeImages: [UIImage] = []
     var completedTodayHabit: Bool = false
     var daysNotCompleted: Int = 0
     
@@ -35,8 +43,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         print("view did load")
         print(completedTodayHabit)
         checkIfFirstTimeInApp(reset: false)
-    
-        farolAcendeImages = createImageArray(total: 5, imagePrefix: "farolAcendendo")
         
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(dayChanged), name: .NSCalendarDayChanged, object: nil)
@@ -412,6 +418,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 }
                 saveItems()
                 print("salva quando adiciona um insight")
+                let currentScene = UIImage(named: habit.scenes.currentScene)
+                self.backgroundImage.image = currentScene
+                animateScene(imageView: self.backgroundImage, images: habit.scenes.animatedScene,duration: habit.scenes.animateTime,repeatCount: habit.scenes.animateRepeat)
                 break
             }
         }
@@ -435,9 +444,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.textViewInsight.alpha = 1
                 self.ilusionView.alpha = 1
             })
-            DispatchQueue.main.async {
-                animate(imageView: self.environment, images: self.farolAcendeImages,duration: 2,repeatCount: 2)
-            }
         }
                     
         daysCompleted += 1
