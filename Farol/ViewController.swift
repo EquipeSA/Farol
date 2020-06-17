@@ -506,8 +506,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let tamanhoDaTelaAtual = UIScreen.main.bounds.size
+        let sizeIphone8Plus = CGSize(width: 414.0, height: 736.0)
+        let sizeIphone11 = CGSize(width: 414.0, height: 896.0)
+        if tamanhoDaTelaAtual == sizeIphone8Plus || tamanhoDaTelaAtual == sizeIphone11 {
+            print("ui")
+            return CGSize(width: 50, height: 65)
+        }
         return CGSize(width: 45, height: 65)
-//        return CGSize(width: 50, height: 77)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
