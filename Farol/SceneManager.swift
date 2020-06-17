@@ -43,10 +43,18 @@ func storyScenes() -> [SceneManager]{
         defaultScene: "backgroundFarolELua",
         animatedScene: createImageArray(imagePrefix: "fatcat"),
         currentScene: "fatcat",animateTime:3.5,animateRepeat: 3)
+    
+    let scene4 = SceneManager(
+    defaultScene: "backgroundFarolELua",
+    animatedScene: createImageArray(imagePrefix: "boreal"),
+    currentScene: "boreal",animateTime:3.5,animateRepeat: 3)
 
-
+    
+    
     storyScenes.append(scene1)
     storyScenes.append(scene2)
     storyScenes.append(scene3)
+    storyScenes.append(scene4)
+    
     return storyScenes
 }
