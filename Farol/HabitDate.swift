@@ -21,6 +21,7 @@ class HabitDate: Codable {
         self.date = date
         self.incompleted = incompleted
         self.badUI = badUI
+        
         self.scenes = scenes
     }
     
@@ -34,7 +35,6 @@ class HabitDate: Codable {
     var date: String?
     var incompleted: Bool
     var badUI: Bool
-    var scenes: SceneManager
+    
+   var scenes: SceneManager
 }
-
-import UIKit

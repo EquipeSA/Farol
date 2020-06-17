@@ -100,14 +100,14 @@ func fade(imageView: UIImageView, toImage: UIImage) {
 }
 
 
-func createImageArray(imagePrefix: String) -> [UIImage] {
-    var imageArray: [UIImage] = []
+func createImageArray(imagePrefix: String) -> [String] {
+    var imageArray: [String] = []
     var aux = true
     var imageCount = 0
     while aux {
         let imageName = "\(imagePrefix)-\(imageCount).pdf"
         if let image = try? UIImage(named: imageName){
-            imageArray.append(image)
+            imageArray.append(imageName)
             imageCount+=1
         } else {
             aux = false
@@ -117,8 +117,13 @@ func createImageArray(imagePrefix: String) -> [UIImage] {
 }
 
 
-func animateScene(imageView: UIImageView, images: [UIImage],duration:Double = 1,repeatCount:Int) {
-    imageView.animationImages = images
+func animateScene(imageView: UIImageView, images: [String],duration:Double = 1,repeatCount:Int) {
+    var imageArray: [UIImage] = []
+    for img in images{
+        let image = UIImage(named: img)!
+        imageArray.append(image)
+    }
+    imageView.animationImages = imageArray
     imageView.animationDuration = duration
     imageView.animationRepeatCount = repeatCount
     imageView.startAnimating()
