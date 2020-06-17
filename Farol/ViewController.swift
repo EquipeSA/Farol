@@ -50,7 +50,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         congratulationNotification.center.y += 100
         congratulationNotification.layer.cornerRadius = 10
-        ilusionViewOfCollectionView.layer.cornerRadius = 30
+        
+        ilusionViewOfCollectionView.roundCorners([.topLeft, .topRight], radius: 30)
+//        calendarCV.roundCorners([.topLeft, .topRight], radius: 30)
         
         let today = getTodayNumber()
         for habit in daysOfHabit {
@@ -497,7 +499,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 50, height: 77)
+        return CGSize(width: 45, height: 65)
+//        return CGSize(width: 50, height: 77)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
