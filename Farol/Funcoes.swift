@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 func calenDays(numOfDays:Int) -> [HabitDate]{
     let calendar = Calendar.current
     var date = calendar.startOfDay(for: Date())
@@ -20,18 +19,25 @@ func calenDays(numOfDays:Int) -> [HabitDate]{
         let day = calendar.component(.day, from: date)
         let strDay = String(day)
         let strWeek = convertToWeekString(correspondingNumber: week)
-        habitDays.append(HabitDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: false, habitDay: false, trashDays: true, insight: nil, date: nil, incompleted: true, badUI: false))
+        habitDays.append(HabitDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: false, habitDay: false, trashDays: true, insight: nil, date: nil, incompleted: true, badUI: false,scenes: scenes[0]))
         date = calendar.date(byAdding: .day, value: -1, to: date)!
     }
     habitDays.reverse()
     habitDays.remove(at: 3)
     date = calendar.startOfDay(for: Date())
-    for _ in 1 ... numOfDays {
+    for i in 1 ... numOfDays {
         let week = calendar.component(.weekday, from: date)
         let day = calendar.component(.day, from: date)
         let strDay = String(day)
         let strWeek = convertToWeekString(correspondingNumber: week)
-        habitDays.append(HabitDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: false, habitDay: false, trashDays: false, insight: nil, date: nil, incompleted: true, badUI: false))
+        let scenesLength = scenes.count
+        var correspondentScene:SceneManager
+        if i <= scenesLength{
+            correspondentScene = scenes[i-1]
+        }else{
+            correspondentScene = scenes[0]
+        }
+        habitDays.append(HabitDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: false, habitDay: false, trashDays: false, insight: nil, date: nil, incompleted: true, badUI: false, scenes: correspondentScene))
         date = calendar.date(byAdding: .day, value: 1, to: date)!
     }
     return habitDays
