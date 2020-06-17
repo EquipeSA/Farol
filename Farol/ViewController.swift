@@ -27,7 +27,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = UIColor(red: 0.18, green: 0.18, blue: 0.25, alpha: 1.00)
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(appMovedToForegroundCheckIfIsNewHabitDay), name: UIApplication.willEnterForegroundNotification, object: nil)

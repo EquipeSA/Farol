@@ -35,9 +35,9 @@ func storyScenes() -> [SceneManager]{
         currentScene: UIImage(named: "farolAcendendo-2")!, animateTime: 1, animateRepeat: 2)
     
     let scene2 = SceneManager(
-        defaultScene: UIImage(named: "alternativeBack")!,
+        defaultScene: UIImage(named: "backgroundFarolELua")!,
         animatedScene: createImageArray(imagePrefix: "cadente"),
-        currentScene: UIImage(named: "cadente")!,animateTime:1,animateRepeat: 2)
+        currentScene: UIImage(named: "cadente")!,animateTime:2,animateRepeat: 3)
     
     let scene3 = SceneManager(
         defaultScene: UIImage(named: "backgroundFarolELua")!,
@@ -47,11 +47,13 @@ func storyScenes() -> [SceneManager]{
     let scene4 = SceneManager(
     defaultScene: UIImage(named: "backgroundFarolELua")!,
     animatedScene: createImageArray(imagePrefix: "boreal"),
-    currentScene: UIImage(named: "boreal")!,animateTime:5,animateRepeat: 3)
+    currentScene: UIImage(named: "boreal")!,animateTime:2,animateRepeat: 3)
     
-    storyScenes.append(scene4)
+    
+    
     storyScenes.append(scene1)
     storyScenes.append(scene2)
     storyScenes.append(scene3)
+    storyScenes.append(scene4)
     return storyScenes
 }
