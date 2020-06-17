@@ -26,34 +26,34 @@ class SceneManager {
     let animateRepeat:Int
 }
 
-//func storyScenes() -> [SceneManager]{
-//    var storyScenes:[SceneManager] = []
-//
-//    let scene1 = SceneManager(
-//        defaultScene: UIImage(named: "backgroundFarolELua")!,
-//        animatedScene: createImageArray(imagePrefix: "farolAcendendo"),
-//        currentScene: UIImage(named: "farolAcendendo-2")!, animateTime: 1, animateRepeat: 2)
-//
-//    let scene2 = SceneManager(
-//        defaultScene: UIImage(named: "backgroundFarolELua")!,
-//        animatedScene: createImageArray(imagePrefix: "cadente"),
-//        currentScene: UIImage(named: "cadente")!,animateTime:2,animateRepeat: 3)
-//
-//    let scene3 = SceneManager(
-//        defaultScene: UIImage(named: "backgroundFarolELua")!,
-//        animatedScene: createImageArray(imagePrefix: "fatcat"),
-//        currentScene: UIImage(named: "fatcat")!,animateTime:3.5,animateRepeat: 3)
-//
-//    let scene4 = SceneManager(
-//    defaultScene: UIImage(named: "backgroundFarolELua")!,
-//    animatedScene: createImageArray(imagePrefix: "boreal"),
-//    currentScene: UIImage(named: "boreal")!,animateTime:2,animateRepeat: 3)
-//
-//
-//
-//    storyScenes.append(scene1)
-//    storyScenes.append(scene2)
-//    storyScenes.append(scene3)
-//    storyScenes.append(scene4)
-//    return storyScenes
-//}
+func storyScenes() -> [SceneManager]{
+    var storyScenes:[SceneManager] = []
+
+    let scene1 = SceneManager(
+        defaultScene: UIImage(named: "backgroundFarolELua")!,
+        animatedScene: createImageArray(imagePrefix: "farolAcendendo"),
+        currentScene: UIImage(named: "farolAcendendo-2")!, animateTime: 1, animateRepeat: 2)
+
+    let scene2 = SceneManager(
+        defaultScene: UIImage(named: "backgroundFarolELua")!,
+        animatedScene: createImageArray(imagePrefix: "cadente"),
+        currentScene: UIImage(named: "cadente")!,animateTime:2,animateRepeat: 3)
+
+    let scene3 = SceneManager(
+        defaultScene: UIImage(named: "backgroundFarolELua")!,
+        animatedScene: createImageArray(imagePrefix: "fatcat"),
+        currentScene: UIImage(named: "fatcat")!,animateTime:3.5,animateRepeat: 3)
+
+    let scene4 = SceneManager(
+    defaultScene: UIImage(named: "backgroundFarolELua")!,
+    animatedScene: createImageArray(imagePrefix: "boreal"),
+    currentScene: UIImage(named: "boreal")!,animateTime:2,animateRepeat: 3)
+
+
+
+    storyScenes.append(scene1)
+    storyScenes.append(scene2)
+    storyScenes.append(scene3)
+    storyScenes.append(scene4)
+    return storyScenes
+}

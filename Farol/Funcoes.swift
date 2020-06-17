@@ -8,10 +8,12 @@
 
 import UIKit
 
+
 func calenDays(numOfDays:Int) -> [HabitDate]{
     let calendar = Calendar.current
     var date = calendar.startOfDay(for: Date())
     var habitDays = [HabitDate]()
+    var scenes = storyScenes()
     
     for _ in 1 ... 4 {
         let week = calendar.component(.weekday, from: date)
@@ -92,19 +94,24 @@ func fade(imageView: UIImageView, toImage: UIImage) {
 }
 
 
-func createImageArray(total: Int, imagePrefix: String) -> [UIImage] {
+func createImageArray(imagePrefix: String) -> [UIImage] {
     var imageArray: [UIImage] = []
-    for imageCount in 0..<total {
+    var aux = true
+    var imageCount = 0
+    while aux {
         let imageName = "\(imagePrefix)-\(imageCount).pdf"
-        let image = UIImage(named: imageName)!
-        imageArray.append(image)
-        print(imageArray)
+        if let image = try? UIImage(named: imageName){
+            imageArray.append(image)
+            imageCount+=1
+        } else {
+            aux = false
+        }
     }
     return imageArray
 }
 
-    // Can be refactored to an extension on UIImage
-func animate(imageView: UIImageView, images: [UIImage],duration:Double = 1,repeatCount:Int) {
+
+func animateScene(imageView: UIImageView, images: [UIImage],duration:Double = 1,repeatCount:Int) {
     imageView.animationImages = images
     imageView.animationDuration = duration
     imageView.animationRepeatCount = repeatCount
