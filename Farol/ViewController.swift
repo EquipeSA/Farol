@@ -568,7 +568,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let sizeIphone8Plus = CGSize(width: 414.0, height: 736.0)
         let sizeIphone11 = CGSize(width: 414.0, height: 896.0)
         if tamanhoDaTelaAtual == sizeIphone8Plus || tamanhoDaTelaAtual == sizeIphone11 {
-            print("ui")
+            //print("ui")
             return CGSize(width: 50, height: 65)
         }
         return CGSize(width: 45, height: 65)
