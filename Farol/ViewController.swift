@@ -62,7 +62,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         ilusionViewOfCollectionView.roundCorners([.topLeft, .topRight], radius: 30)
         
         let today = getTodayNumber()
-        let date = getTodayNumber()
+        let date = getCurrentDate()
         for habit in daysOfHabit {
             if habit.day == today {
                 if habit.badUI == true {
