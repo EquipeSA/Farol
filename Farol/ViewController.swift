@@ -66,7 +66,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             if habit.day == today {
                 if habit.badUI == true {
                     // botar ui feia aqui
-                    print("BAD UI")
+                    view.backgroundColor = UIColor(red: 0.20, green: 0.20, blue: 0.20, alpha: 1.00)
+                    backgroundImage.image = UIImage(named: "sombrio1")
                 } else if habit.completed == true {
                     self.insightQuestionLabel.isHidden = true
                     self.textViewInsight.isHidden = true
@@ -340,6 +341,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             if habit.day == today {
                 if habit.badUI == true {
                            // botar ui feia aqui
+                    view.backgroundColor = UIColor(red: 0.20, green: 0.20, blue: 0.20, alpha: 1.00)
+                    backgroundImage.image = UIImage(named: "sombrio1")
                            print("BAD UI")
                        } else if habit.completed == true {
                            UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
@@ -524,6 +527,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         if pickedDay.badUI == true {
             // botar ui feia aqui
+            view.backgroundColor = UIColor(red: 0.20, green: 0.20, blue: 0.20, alpha: 1.00)
+            backgroundImage.image = UIImage(named: "sombrio1")
             print("BAD UI")
         } else if pickedDay.completed == true {
             UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
@@ -601,3 +606,5 @@ extension ViewController: UITextViewDelegate {
         }
     }
 }
+
+
