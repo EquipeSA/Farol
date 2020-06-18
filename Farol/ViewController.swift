@@ -455,6 +455,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var daysCompleted = 0
     
     @IBAction func saveButtonAction(_ sender: Any) {
+        textViewInsight.resignFirstResponder()
         let date = getCurrentDate()
         completedTodayHabit = true
         print(completedTodayHabit)
@@ -682,6 +683,10 @@ extension ViewController: UITextViewDelegate {
             saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
             saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
         }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }
 
