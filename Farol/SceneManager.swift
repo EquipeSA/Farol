@@ -56,10 +56,11 @@ func storyScenes() -> [SceneManager]{
 
     
     
-    storyScenes.append(scene4)
+    
     storyScenes.append(scene1)
     storyScenes.append(scene2)
     storyScenes.append(scene3)
+    storyScenes.append(scene4)
     storyScenes.append(scene5)
     
     return storyScenes

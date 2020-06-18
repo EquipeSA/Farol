@@ -44,6 +44,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         print(completedTodayHabit)
         checkIfFirstTimeInApp(reset: false)
         
+        view.backgroundColor = UIColor(red: 0.18, green: 0.18, blue: 0.25, alpha: 1.00)
+        
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(dayChanged), name: .NSCalendarDayChanged, object: nil)
         notificationCenter.addObserver(self, selector: #selector(appMovedToForegroundCheckIfIsNewHabitDay), name: UIApplication.willEnterForegroundNotification, object: nil)
