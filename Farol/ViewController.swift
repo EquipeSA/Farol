@@ -42,7 +42,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         super.viewDidLoad()
         print("view did load")
         print(completedTodayHabit)
-        checkIfFirstTimeInApp(reset: false)
+        checkIfFirstTimeInApp(reset: true)
         
         view.backgroundColor = UIColor(red: 0.18, green: 0.18, blue: 0.25, alpha: 1.00)
         
