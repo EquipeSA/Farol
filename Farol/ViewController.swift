@@ -62,6 +62,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         ilusionViewOfCollectionView.roundCorners([.topLeft, .topRight], radius: 30)
         
         let today = getTodayNumber()
+        let date = getTodayNumber()
         for habit in daysOfHabit {
             if habit.day == today {
                 if habit.badUI == true {
@@ -73,6 +74,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     self.textViewInsight.isHidden = true
                     self.ilusionView.isHidden = true
                     self.saveButton.isHidden = true
+                    self.dateOfCollectionViewLabel.isHidden = true
+                    self.dateOfCollectionViewLabel.alpha = 0
                                   
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                         self.textViewInsight.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
@@ -83,12 +86,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                         self.textViewInsight.text = habit.insight
                         self.textViewInsight.textAlignment = .center
                         self.textViewInsight.isUserInteractionEnabled = false
+                        
+                        self.dateOfCollectionViewLabel.text = date
                                       
                         UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
                             self.insightQuestionLabel.isHidden = false
                             self.textViewInsight.isHidden = false
                             self.ilusionView.isHidden = false
                             self.saveButton.isHidden = false
+                            self.dateOfCollectionViewLabel.isHidden = false
+                            self.dateOfCollectionViewLabel.alpha = 1
                         })
                     }
                 } else if habit.day == today && habit.completed == false {
