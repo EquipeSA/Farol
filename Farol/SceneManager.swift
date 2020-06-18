@@ -53,8 +53,16 @@ func storyScenes() -> [SceneManager]{
     defaultScene: "backgroundFarolELua",
     animatedScene: createImageArray(imagePrefix: "camp"),
     currentScene: "camp",animateTime:1.5,animateRepeat: 3)
-
     
+    let scene6 = SceneManager(
+    defaultScene: "fogueteDefault",
+    animatedScene: createImageArray(imagePrefix: "foguete"),
+    currentScene: "foguete",animateTime:1.5,animateRepeat: 3)
+
+    let scene7 = SceneManager(
+    defaultScene: "backgroundFarolELua",
+    animatedScene: createImageArray(imagePrefix: "boat"),
+    currentScene: "boat",animateTime:3,animateRepeat: 2)
     
     
     storyScenes.append(scene1)
@@ -62,6 +70,8 @@ func storyScenes() -> [SceneManager]{
     storyScenes.append(scene3)
     storyScenes.append(scene4)
     storyScenes.append(scene5)
-    
+    storyScenes.append(scene6)
+    storyScenes.append(scene7)
+
     return storyScenes
 }
