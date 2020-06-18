@@ -364,11 +364,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                                })
                            }
                        } else if habit.day == today && habit.completed == false {
+                            let date = getCurrentDate()
                            UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                                self.insightQuestionLabel.alpha = 0
                                self.textViewInsight.alpha = 0
                                self.ilusionView.alpha = 0
                                self.saveButton.alpha = 0
+                               self.dateOfCollectionViewLabel.alpha = 0
                             })
                             
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -385,18 +387,25 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                                self.saveButton.isEnabled = false
                                self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
                                self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
+                                self.dateOfCollectionViewLabel.text = date
 
                                UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                                    self.insightQuestionLabel.alpha = 1
                                    self.saveButton.alpha = 1
                                    self.ilusionView.alpha = 1
                                    self.textViewInsight.alpha = 1
+                                   self.dateOfCollectionViewLabel.alpha = 1
                                })
                            }
                        }
             }
         }
     }
+    
+    func setDateTextInCalendar() {
+        
+    }
+    
     var daysCompleted = 0
     
     @IBAction func saveButtonAction(_ sender: Any) {
@@ -531,6 +540,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.textViewInsight.alpha = 0
                 self.ilusionView.alpha = 0
                 self.saveButton.alpha = 0
+                self.dateOfCollectionViewLabel.alpha = 0
             })
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
