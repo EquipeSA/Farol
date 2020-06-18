@@ -12,7 +12,7 @@ func calenDays(numOfDays:Int) -> [HabitDate]{
     let calendar = Calendar.current
     var date = calendar.startOfDay(for: Date())
     var habitDays = [HabitDate]()
-    var scenes = storyScenes()
+    let scenes = storyScenes()
     
     for _ in 1 ... 4 {
         let week = calendar.component(.weekday, from: date)
@@ -34,8 +34,10 @@ func calenDays(numOfDays:Int) -> [HabitDate]{
         var correspondentScene:SceneManager
         if i <= scenesLength{
             correspondentScene = scenes[i-1]
+            print("sera???")
         }else{
             correspondentScene = scenes[0]
+            print("Ta entrando aqui")
         }
         habitDays.append(HabitDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: false, habitDay: false, trashDays: false, insight: nil, date: nil, incompleted: true, badUI: false, scenes: correspondentScene))
         date = calendar.date(byAdding: .day, value: 1, to: date)!
