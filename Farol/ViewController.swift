@@ -511,15 +511,23 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             NotificationCenter.default.removeObserver(self)
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseInOut], animations: {
-                self.congratulationNotification.center.y += 100
+                self.congratulationNotification.alpha = 1
+                self.congratulationNotification.isHidden = false
+                
+                
             })
         }
         
-        UIView.animate(withDuration: 0.4, delay: 1, options: [.curveEaseInOut], animations: {
-            self.congratulationNotification.center.y -= 100
-        })
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseInOut], animations: {
+                self.congratulationNotification.alpha = 0
+            })
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.congratulationNotification.isHidden = true
+            }
+        }
         
         var count = 0
         for habit in daysOfHabit {
