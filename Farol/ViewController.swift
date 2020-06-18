@@ -393,69 +393,69 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     view.backgroundColor = UIColor(red: 0.20, green: 0.20, blue: 0.20, alpha: 1.00)
                     backgroundImage.image = UIImage(named: "sombrio1")
                            print("BAD UI")
-                       } else if habit.completed == true {
-                           UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
-                               self.insightQuestionLabel.alpha = 0
-                               self.textViewInsight.alpha = 0
-                               self.ilusionView.alpha = 0
-                               self.saveButton.alpha = 0
-                            self.dateOfCollectionViewLabel.alpha = 0
-                            self.dateOfCollectionViewLabel.isHidden = true
-                           })
+                } else if habit.completed == true {
+                    UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+                        self.insightQuestionLabel.alpha = 0
+                        self.textViewInsight.alpha = 0
+                        self.ilusionView.alpha = 0
+                        self.saveButton.alpha = 0
+                        self.dateOfCollectionViewLabel.alpha = 0
+                        self.dateOfCollectionViewLabel.isHidden = true
+                    })
                            
-                           DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                               self.textViewInsight.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
-                               self.ilusionView.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
-                               self.textViewInsight.textColor = UIColor(red: 204/255, green: 204/255, blue: 204/255, alpha: 1)
-                               self.textViewInsight.textAlignment = .center
-                               self.insightQuestionLabel.text = habit.date!
-                               self.textViewInsight.text = habit.insight
-                               self.textViewInsight.textAlignment = .center
-                               self.textViewInsight.isUserInteractionEnabled = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                        self.textViewInsight.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
+                        self.ilusionView.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
+                        self.textViewInsight.textColor = UIColor(red: 204/255, green: 204/255, blue: 204/255, alpha: 1)
+                        self.textViewInsight.textAlignment = .center
+                        self.insightQuestionLabel.text = habit.date!
+                        self.textViewInsight.text = habit.insight
+                        self.textViewInsight.textAlignment = .center
+                        self.textViewInsight.isUserInteractionEnabled = false
                                
-                               UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
-                                   self.insightQuestionLabel.alpha = 1
-                                   self.textViewInsight.alpha = 1
-                                   self.ilusionView.alpha = 1
-                               })
-                           }
-                       } else if habit.day == today && habit.completed == false {
-                           UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
-                               self.insightQuestionLabel.alpha = 0
-                               self.textViewInsight.alpha = 0
-                               self.ilusionView.alpha = 0
-                               self.saveButton.alpha = 0
-                               self.dateOfCollectionViewLabel.alpha = 0
-                               self.dateOfCollectionViewLabel.isHidden = true
-                            })
+                        UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
+                            self.insightQuestionLabel.alpha = 1
+                            self.textViewInsight.alpha = 1
+                            self.ilusionView.alpha = 1
+                        })
+                    }
+                } else if habit.day == today && habit.completed == false {
+                    UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+                        self.insightQuestionLabel.alpha = 0
+                        self.textViewInsight.alpha = 0
+                        self.ilusionView.alpha = 0
+                        self.saveButton.alpha = 0
+                        self.dateOfCollectionViewLabel.alpha = 0
+                        self.dateOfCollectionViewLabel.isHidden = true
+                    })
                             
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                               self.insightQuestionLabel.text = "Qual seu insight de hoje?"
-                           
-                               self.textViewInsight.isUserInteractionEnabled = true
-                               self.textViewInsight.textAlignment = .left
-                               self.textViewInsight.text = nil
-                               self.textViewInsight.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
-                               self.textViewInsight.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        self.insightQuestionLabel.text = "Qual seu insight de hoje?"
+                        
+                        self.textViewInsight.isUserInteractionEnabled = true
+                        self.textViewInsight.textAlignment = .left
+                        self.textViewInsight.text = nil
+                        self.textViewInsight.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
+                        self.textViewInsight.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
                                       
-                               self.ilusionView.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
+                        self.ilusionView.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
                            
-                               self.saveButton.isEnabled = false
-                               self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
-                               self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
+                        self.saveButton.isEnabled = false
+                        self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
+                        self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
                                 
-                                self.dateOfCollectionViewLabel.text = date
+                        self.dateOfCollectionViewLabel.text = date
 
-                               UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
-                                   self.insightQuestionLabel.alpha = 1
-                                   self.saveButton.alpha = 1
-                                   self.ilusionView.alpha = 1
-                                   self.textViewInsight.alpha = 1
-                                   self.dateOfCollectionViewLabel.alpha = 1
-                                   self.dateOfCollectionViewLabel.isHidden = false
-                               })
-                           }
-                       }
+                        UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+                            self.insightQuestionLabel.alpha = 1
+                            self.saveButton.alpha = 1
+                            self.ilusionView.alpha = 1
+                            self.textViewInsight.alpha = 1
+                            self.dateOfCollectionViewLabel.alpha = 1
+                            self.dateOfCollectionViewLabel.isHidden = false
+                        })
+                    }
+                }
             }
         }
     }
@@ -523,8 +523,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseInOut], animations: {
                 self.congratulationNotification.alpha = 1
                 self.congratulationNotification.isHidden = false
-                
-                
             })
         }
         
@@ -575,7 +573,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         } else {
             cell.isUserInteractionEnabled = true
         }
-        
         return cell
     }
     
