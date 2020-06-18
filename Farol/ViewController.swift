@@ -14,6 +14,7 @@
 //  Copyright © 2020 yuryAntony. All rights reserved.
 //
 
+
 import UIKit
     
     
@@ -231,6 +232,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                         daysOfHabit.append(day)
                         DispatchQueue.main.async {
                             self.calendarCV.reloadData()
+                            let currentScene = UIImage(named: day.scenes.currentScene)
+                            self.backgroundImage.image = currentScene
                         }
                     }
                 }
