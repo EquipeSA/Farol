@@ -7,6 +7,11 @@
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="sf-ui-display-thin-58646e9b26e8b.otf">
+            <string>SFUIDisplay-Thin</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -23,8 +28,8 @@
                                 <rect key="frame" x="8.5" y="25" width="358" height="153"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Qual seu insight de hoje?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fYZ-ey-kAQ">
-                                        <rect key="frame" x="62.5" y="0.0" width="233.5" height="26"/>
-                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="19"/>
+                                        <rect key="frame" x="66" y="0.0" width="226" height="26"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="19"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -61,7 +66,7 @@
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="358" id="vJA-8b-R8C"/>
                                                 </constraints>
                                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <fontDescription key="fontDescription" name="SFUIDisplay-Thin" family="SF UI Display" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                         </subviews>
@@ -120,16 +125,16 @@
                                             </collectionViewCell>
                                         </cells>
                                     </collectionView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hoje" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bLh-55-zhc">
-                                        <rect key="frame" x="170" y="8" width="35" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hoje" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bLh-55-zhc">
+                                        <rect key="frame" x="165.5" y="12" width="44" height="27.5"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstItem="bLh-55-zhc" firstAttribute="top" secondItem="Vnz-vc-P6B" secondAttribute="top" constant="8" id="EvQ-6N-dcb"/>
+                                    <constraint firstItem="bLh-55-zhc" firstAttribute="top" secondItem="Vnz-vc-P6B" secondAttribute="top" constant="12" id="EvQ-6N-dcb"/>
                                     <constraint firstItem="to1-tq-XC9" firstAttribute="leading" secondItem="Vnz-vc-P6B" secondAttribute="leading" id="ohv-0H-V1Q"/>
                                     <constraint firstAttribute="trailing" secondItem="to1-tq-XC9" secondAttribute="trailing" id="pAY-Wc-kc4"/>
                                     <constraint firstItem="bLh-55-zhc" firstAttribute="centerX" secondItem="Vnz-vc-P6B" secondAttribute="centerX" id="sZT-K5-ej7"/>
