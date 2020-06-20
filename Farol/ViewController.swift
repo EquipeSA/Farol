@@ -59,7 +59,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         congratulationNotification.layer.cornerRadius = 10
         
         ilusionViewOfCollectionView.roundCorners([.topLeft, .topRight], radius: 30)
-//        calendarCV.roundCorners([.topLeft, .topRight], radius: 30)
         
         let today = getTodayNumber()
         for habit in daysOfHabit {
