@@ -36,6 +36,10 @@ class CalendarCell: UICollectionViewCell {
             if day?.trashDays == false && day?.completed == true  {
                 selectedImage.image = UIImage(named: "bolinhaCheia")
             }
+            
+            if day?.badUI == true {
+                selectedImage.image = UIImage(named: "bolinhaVermelha")
+            }
         }
     }
     

@@ -10,7 +10,7 @@ import UIKit
 
 class HabitDate {
     
-    init(day: String, weekDay: String, completed: Bool, selecionavel: Bool, habitDay: Bool, trashDays: Bool, insight: String?, date: String?) {
+    init(day: String, weekDay: String, completed: Bool, selecionavel: Bool, habitDay: Bool, trashDays: Bool, insight: String?, date: String?, incompleted: Bool, badUI: Bool) {
         self.day = day
         self.weekDay = weekDay
         self.completed = completed
@@ -19,6 +19,8 @@ class HabitDate {
         self.trashDays = trashDays
         self.insight = insight
         self.date = date
+        self.incompleted = incompleted
+        self.badUI = badUI
     }
     
     let day: String
@@ -29,4 +31,6 @@ class HabitDate {
     var trashDays: Bool
     var habitDay: Bool
     var date: String?
+    var incompleted: Bool
+    var badUI: Bool
 }

@@ -18,7 +18,7 @@ func calenDays(numOfDays:Int) -> [HabitDate]{
         let day = calendar.component(.day, from: date)
         let strDay = String(day)
         let strWeek = convertToWeekString(correspondingNumber: week)
-        habitDays.append(HabitDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: false, habitDay: false, trashDays: true, insight: nil, date: nil))
+        habitDays.append(HabitDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: false, habitDay: false, trashDays: true, insight: nil, date: nil, incompleted: true, badUI: false))
         date = calendar.date(byAdding: .day, value: -1, to: date)!
     }
     habitDays.reverse()
@@ -29,7 +29,7 @@ func calenDays(numOfDays:Int) -> [HabitDate]{
         let day = calendar.component(.day, from: date)
         let strDay = String(day)
         let strWeek = convertToWeekString(correspondingNumber: week)
-        habitDays.append(HabitDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: false, habitDay: false, trashDays: false, insight: nil, date: nil))
+        habitDays.append(HabitDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: false, habitDay: false, trashDays: false, insight: nil, date: nil, incompleted: true, badUI: false))
         date = calendar.date(byAdding: .day, value: 1, to: date)!
     }
     return habitDays
@@ -72,6 +72,17 @@ func getTodayNumber() -> String {
     let splitToday = todayWithoutComma.components(separatedBy: " ")
     let day = splitToday[1]
     return day
+}
+
+func getTodayNumberInt() -> Int {
+    let today = getCurrentDate()
+    let todayWithoutComma = today.replacingOccurrences(of: ",", with: "")
+    
+    let splitToday = todayWithoutComma.components(separatedBy: " ")
+    let day = splitToday[1]
+    
+    let returnDay = Int(day)!
+    return returnDay
 }
 
 func fade(imageView: UIImageView, toImage: UIImage) {

@@ -13,6 +13,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     let defaults = UserDefaults.standard
     var daysOfHabit: [HabitDate] = []
     var farolAcendeImages: [UIImage] = []
+    var completedTodayHabit: Bool = false
     
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var congratulationNotification: UIView!
@@ -49,6 +50,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @objc func dayChanged() {
         print(111)
+        if completedTodayHabit == false {
+            completedTodayHabit = false
+            let yesterday = getTodayNumberInt() - 1
+            let yesterdayString = String(yesterday)
+            for habit in daysOfHabit {
+                if habit.day == yesterdayString {
+                    habit.badUI = true
+                    calendarCV.reloadData()
+                }
+            }
+        } else {
+            completedTodayHabit = false
+        }
         let today = getTodayNumber()
         for habit in daysOfHabit {
             if habit.day == today {
@@ -141,13 +155,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBAction func saveButtonAction(_ sender: Any) {
         let date = getCurrentDate()
+        completedTodayHabit = true
         textViewInsight.isUserInteractionEnabled = false
         let today = getTodayNumber()
         for habit in daysOfHabit {
             if habit.day == today {
                 habit.completed = true
                 habit.date = date
+                habit.incompleted = false
                 habit.selecionavel = true
+                habit.badUI = false
                 habit.insight = self.textViewInsight.text
                 self.calendarCV.reloadData()
                 print(habit.insight ?? "eh nil")
@@ -229,7 +246,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let pickedDay = daysOfHabit[indexPath.item]
         let todayNumber = getTodayNumber()
         
-        if  pickedDay.completed == true {
+        if pickedDay.badUI == true {
+            // botar ui feia aqui
+            print("BAD UI")
+        } else if pickedDay.completed == true {
             print("kkk \(pickedDay.day)")
             UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                 self.insightQuestionLabel.alpha = 0
@@ -261,19 +281,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.textViewInsight.alpha = 0
                 self.ilusionView.alpha = 0
                 self.saveButton.alpha = 0
-            })
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+             })
+             
+             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.insightQuestionLabel.text = "Qual seu insight de hoje?"
-           
+            
                 self.textViewInsight.isUserInteractionEnabled = true
                 self.textViewInsight.textAlignment = .left
                 self.textViewInsight.text = nil
                 self.textViewInsight.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
                 self.textViewInsight.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
-                      
+                       
                 self.ilusionView.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
-           
+            
                 self.saveButton.isEnabled = false
                 self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
                 self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
