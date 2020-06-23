@@ -33,7 +33,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(dayChanged), name: .NSCalendarDayChanged, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(appMovedToForegroundCenterCollectionView), name: UIApplication.willEnterForegroundNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(appMovedToForegroundCheckIfIsNewHabitDay), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         checkIfFirstTimeInApp(reset: false)
@@ -49,9 +48,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     @objc func dayChanged() {
+        print(111)
         let today = getTodayNumber()
         for habit in daysOfHabit {
             if habit.day == today {
+                print(222)
                 habit.habitDay = true
                 calendarCV.reloadData()
             }
@@ -59,6 +60,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         var count = 0
         for habit in daysOfHabit {
+            print(333)
             if habit.day == today {
                 break
             }
@@ -66,12 +68,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         
         UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+            print(444)
             self.insightQuestionLabel.alpha = 0
             self.textViewInsight.alpha = 0
             self.ilusionView.alpha = 0
         })
                     
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            print(555)
             self.insightQuestionLabel.text = "Qual seu insight de hoje?"
                                               
             self.textViewInsight.isUserInteractionEnabled = true
@@ -87,6 +91,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
             
             UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+                print(666)
                 self.insightQuestionLabel.alpha = 1
                 self.saveButton.alpha = 1
                 self.ilusionView.alpha = 1
@@ -109,23 +114,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 calendarCV.reloadData()
             }
         }
-    }
-    
-    @objc func appMovedToForegroundCenterCollectionView() {
-        var count = 0
-        let today = getTodayNumber()
-        for habit in daysOfHabit {
-            if habit.day == today {
-                break
-            }
-            count += 1
-        }
-        
-        UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
-            let desiredPosition = IndexPath(item: count, section: 0)
-            self.calendarCV.scrollToItem(at: desiredPosition, at: .centeredHorizontally, animated: false)
-            self.calendarCV.layoutIfNeeded()
-        })
     }
 
     func checkIfFirstTimeInApp(reset: Bool) {
@@ -186,7 +174,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.textViewInsight.alpha = 1
                 self.ilusionView.alpha = 1
             })
-            animate(imageView: self.environment, images: self.farolAcendeImages,duration: 2,repeatCount: 10)
+            animate(imageView: self.environment, images: self.farolAcendeImages,duration: 2,repeatCount: 2)
         }
                     
         daysCompleted += 1
@@ -237,13 +225,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         return CGSize(width: 50, height: 77)
     }
     
-    var testTodayClick = 1
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let pickedDay = daysOfHabit[indexPath.item]
         let todayNumber = getTodayNumber()
-        let todayString = String(todayNumber)
         
-        if  pickedDay.selecionavel == true && pickedDay.day != todayString {
+        if  pickedDay.completed == true {
             print("kkk \(pickedDay.day)")
             UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                 self.insightQuestionLabel.alpha = 0
@@ -268,7 +254,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     self.ilusionView.alpha = 1
                 })
             }
-        } else if pickedDay.day == todayNumber {
+        } else if pickedDay.day == todayNumber && pickedDay.completed == false {
             print("hihihi \(pickedDay.day)")
             UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                 self.insightQuestionLabel.alpha = 0

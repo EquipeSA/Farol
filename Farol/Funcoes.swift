@@ -18,7 +18,7 @@ func calenDays(numOfDays:Int) -> [HabitDate]{
         let day = calendar.component(.day, from: date)
         let strDay = String(day)
         let strWeek = convertToWeekString(correspondingNumber: week)
-        habitDays.append(HabitDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: false, habitDay: false, trashDays: true, insight: nil, date: nil, testDay: nil))
+        habitDays.append(HabitDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: false, habitDay: false, trashDays: true, insight: nil, date: nil))
         date = calendar.date(byAdding: .day, value: -1, to: date)!
     }
     habitDays.reverse()
@@ -29,7 +29,7 @@ func calenDays(numOfDays:Int) -> [HabitDate]{
         let day = calendar.component(.day, from: date)
         let strDay = String(day)
         let strWeek = convertToWeekString(correspondingNumber: week)
-        habitDays.append(HabitDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: false, habitDay: false, trashDays: false, insight: nil, date: nil, testDay: nil))
+        habitDays.append(HabitDate(day: strDay, weekDay: strWeek, completed: false, selecionavel: false, habitDay: false, trashDays: false, insight: nil, date: nil))
         date = calendar.date(byAdding: .day, value: 1, to: date)!
     }
     return habitDays
