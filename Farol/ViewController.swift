@@ -54,8 +54,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         configureTextViewInsight()
         configureSaveButton()
         
-        congratulationNotification.center.y += 100
-        congratulationNotification.layer.cornerRadius = 10
+        congratulationNotification.alpha = 0
+        congratulationNotification.isHidden = true
         
         ilusionViewOfCollectionView.roundCorners([.topLeft, .topRight], radius: 30)
         
@@ -93,8 +93,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     self.textViewInsight.isHidden = true
                     self.ilusionView.isHidden = true
                     self.saveButton.isHidden = true
+                    self.dateOfCollectionViewLabel.isHidden = true
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        let date = getCurrentDate()
                         self.insightQuestionLabel.text = "Qual seu insight de hoje?"
     
                         self.textViewInsight.isUserInteractionEnabled = true
@@ -108,12 +110,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                         self.saveButton.isEnabled = false
                         self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
                         self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
+                        
+                        self.dateOfCollectionViewLabel.text = date
 
                         UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                             self.insightQuestionLabel.isHidden = false
                             self.saveButton.isHidden = false
                             self.ilusionView.isHidden = false
                             self.textViewInsight.isHidden = false
+                            self.dateOfCollectionViewLabel.isHidden = false
+                            self.dateOfCollectionViewLabel.alpha = 1
                         })
                     }
                 }
@@ -266,12 +272,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             count += 1
         }
         
+        let date = getCurrentDate()
+        
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                 self.insightQuestionLabel.alpha = 0
                 self.textViewInsight.alpha = 0
                 self.ilusionView.alpha = 0
                 self.saveButton.alpha = 0
+                self.dateOfCollectionViewLabel.alpha = 0
+                self.dateOfCollectionViewLabel.isHidden = true
             })
                                
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -288,12 +298,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.saveButton.isEnabled = true
                 self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
                 self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
+                self.dateOfCollectionViewLabel.text = date
                        
                 UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                     self.insightQuestionLabel.alpha = 1
                     self.saveButton.alpha = 1
                     self.ilusionView.alpha = 1
                     self.textViewInsight.alpha = 1
+                    
+                    self.dateOfCollectionViewLabel.alpha = 1
+                    self.dateOfCollectionViewLabel.isHidden = false
                            
                     let desiredPosition = IndexPath(item: count, section: 0)
                     self.calendarCV.scrollToItem(at: desiredPosition, at: .centeredHorizontally, animated: false)
@@ -333,7 +347,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.calendarCV.layoutIfNeeded()
         })
         
-        // kikiki
+        let date = getCurrentDate()
         for habit in daysOfHabit {
             if habit.day == today {
                 if habit.badUI == true {
@@ -345,6 +359,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                                self.textViewInsight.alpha = 0
                                self.ilusionView.alpha = 0
                                self.saveButton.alpha = 0
+                               self.dateOfCollectionViewLabel.alpha = 0
+                               self.dateOfCollectionViewLabel.isHidden = true
                            })
                            
                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
@@ -364,7 +380,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                                })
                            }
                        } else if habit.day == today && habit.completed == false {
-                            let date = getCurrentDate()
                            UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                                self.insightQuestionLabel.alpha = 0
                                self.textViewInsight.alpha = 0
@@ -387,7 +402,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                                self.saveButton.isEnabled = false
                                self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
                                self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
-                                self.dateOfCollectionViewLabel.text = date
+                               self.dateOfCollectionViewLabel.text = date
 
                                UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                                    self.insightQuestionLabel.alpha = 1
@@ -395,15 +410,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                                    self.ilusionView.alpha = 1
                                    self.textViewInsight.alpha = 1
                                    self.dateOfCollectionViewLabel.alpha = 1
+                                self.dateOfCollectionViewLabel.isHidden = false
                                })
                            }
                        }
             }
         }
-    }
-    
-    func setDateTextInCalendar() {
-        
     }
     
     var daysCompleted = 0
@@ -440,6 +452,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.textViewInsight.alpha = 0
             self.ilusionView.alpha = 0
             self.saveButton.alpha = 0
+            self.dateOfCollectionViewLabel.alpha = 0
         })
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -462,15 +475,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             NotificationCenter.default.removeObserver(self)
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+        UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseInOut], animations: {
+            self.congratulationNotification.isHidden = false
+            self.congratulationNotification.alpha = 1
+        })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseInOut], animations: {
-                self.congratulationNotification.center.y += 100
+                self.congratulationNotification.isHidden = true
+                self.congratulationNotification.alpha = 0
             })
         }
-        
-        UIView.animate(withDuration: 0.4, delay: 1, options: [.curveEaseInOut], animations: {
-            self.congratulationNotification.center.y -= 100
-        })
         
         var count = 0
         for habit in daysOfHabit {
