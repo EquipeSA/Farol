@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -176,7 +176,6 @@
                         <outlet property="calendarCV" destination="to1-tq-XC9" id="4a1-xQ-2O7"/>
                         <outlet property="congratulationNotification" destination="Fj5-eY-uxK" id="TLK-QZ-vIz"/>
                         <outlet property="dateOfCollectionViewLabel" destination="bLh-55-zhc" id="eKE-N2-hZg"/>
-                        <outlet property="environment" destination="ekm-Bb-RJS" id="o5h-y9-jdR"/>
                         <outlet property="ilusionView" destination="1Qy-7h-KM3" id="2fN-Qh-hHJ"/>
                         <outlet property="ilusionViewOfCollectionView" destination="Vnz-vc-P6B" id="sTW-Q9-KMA"/>
                         <outlet property="insightQuestionLabel" destination="fYZ-ey-kAQ" id="wGC-5P-RXt"/>

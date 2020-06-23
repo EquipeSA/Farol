@@ -35,7 +35,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var textViewInsight: UITextView!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var insightQuestionLabel: UILabel!
-    @IBOutlet weak var environment: UIImageView!
     
     @IBOutlet weak var calendarCV: UICollectionView!
     
@@ -231,8 +230,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                         daysOfHabit.append(day)
                         DispatchQueue.main.async {
                             self.calendarCV.reloadData()
-                            let currentScene = UIImage(named: day.scenes.currentScene)
-                            self.backgroundImage.image = currentScene
                         }
                     }
                 }
@@ -253,6 +250,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 habit.habitDay = true
                 DispatchQueue.main.async {
                     self.calendarCV.reloadData()
+                    let currentScene = UIImage(named: habit.scenes.defaultScene)
+                    self.backgroundImage.image = currentScene
                 }
                 saveItems()
                 print("save no dia mudado, aqui verifica se é o do dia para botar bolinha roxa vazia")
@@ -520,6 +519,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             print("BAD UI")
         } else if pickedDay.completed == true {
             UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+                let currentScene = UIImage(named: pickedDay.scenes.currentScene)
+                self.backgroundImage.image = currentScene
                 self.insightQuestionLabel.alpha = 0
                 self.textViewInsight.alpha = 0
                 self.ilusionView.alpha = 0
@@ -543,6 +544,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 })
             }
         } else if pickedDay.day == todayNumber && pickedDay.completed == false {
+            let currentScene = UIImage(named: pickedDay.scenes.defaultScene)
+            self.backgroundImage.image = currentScene
             UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                 self.insightQuestionLabel.alpha = 0
                 self.textViewInsight.alpha = 0
@@ -552,7 +555,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
              
              DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.insightQuestionLabel.text = "Qual seu insight de hoje?"
-            
                 self.textViewInsight.isUserInteractionEnabled = true
                 self.textViewInsight.textAlignment = .left
                 self.textViewInsight.text = nil
