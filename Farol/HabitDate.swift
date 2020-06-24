@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HabitDate {
+class HabitDate: Codable {
     
     init(day: String, weekDay: String, completed: Bool, selecionavel: Bool, habitDay: Bool, trashDays: Bool, insight: String?, date: String?, incompleted: Bool, badUI: Bool) {
         self.day = day

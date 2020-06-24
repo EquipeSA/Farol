@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("HabitDays.plist")
+    
     let defaults = UserDefaults.standard
     var daysOfHabit: [HabitDate] = []
     var farolAcendeImages: [UIImage] = []
@@ -31,6 +33,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //
+        print(dataFilePath)
+        //
+        
         farolAcendeImages = createImageArray(total: 5, imagePrefix: "farolAcendendo")
         
         let notificationCenter = NotificationCenter.default
@@ -38,6 +44,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         notificationCenter.addObserver(self, selector: #selector(appMovedToForegroundCheckIfIsNewHabitDay), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         checkIfFirstTimeInApp(reset: false)
+        
         calendarCV.delegate = self
         calendarCV.dataSource = self
         textViewInsight.delegate = self
@@ -49,11 +56,31 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         ilusionViewOfCollectionView.layer.cornerRadius = 30
     }
     
+    func saveItems() {
+        let encoder = PropertyListEncoder()
+        do {
+            let data = try encoder.encode(daysOfHabit)
+            try data.write(to: dataFilePath!)
+        } catch {
+            print("Error encoding item array, \(error)")
+        }
+    }
+    
+    func loadItems() {
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            do {
+                daysOfHabit = try decoder.decode([HabitDate].self, from: data)
+            } catch {
+                print("Error decoding habitDays array, \(error)")
+            }
+        }
+    }
+    
     func resetAll() {
         daysNotCompleted = 0
         daysOfHabit = calenDays(numOfDays: 21)
         DispatchQueue.main.async {
-            print(2)
             self.calendarCV.reloadData()
         }
         
@@ -67,6 +94,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             if daysNotCompleted >= 3 {
                 print("reset tudo")
                 resetAll()
+                saveItems()
+                print("save no dia mudado e reset tudo, tem que ver se resetou tudo")
             } else {
                 let yesterday = getTodayNumberInt() - 1
                 let yesterdayString = String(yesterday)
@@ -83,24 +112,27 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     if day.day == newHabitDayAddedToLastPosition {
                         daysOfHabit.append(day)
                         DispatchQueue.main.async {
-                            print(1)
                             self.calendarCV.reloadData()
                         }
                     }
                 }
+                saveItems()
+                print("save no dia mudado e menos de 3 erros, tem que ver se adicionou so um no final")
             }
         } else {
             completedTodayHabit = false
             daysNotCompleted = 0
         }
+        
         let today = getTodayNumber()
         for habit in daysOfHabit {
             if habit.day == today {
                 habit.habitDay = true
                 DispatchQueue.main.async {
-                    print(3)
                     self.calendarCV.reloadData()
                 }
+                saveItems()
+                print("save no dia mudado, aqui verifica se é o do dia para botar bolinha roxa vazia")
             }
         }
         
@@ -153,11 +185,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         for habit in daysOfHabit {
             if habit.day == today {
                 habit.habitDay = true
+                saveItems()
+                print("save quando verifica se eh dia do habito para mudar pra bolinha roxa vazia")
                 DispatchQueue.main.async {
-                    print(4)
                     self.calendarCV.reloadData()
                 }
             }
+        }
+        loadItems()
+        DispatchQueue.main.async {
+            self.calendarCV.reloadData()
         }
     }
 
@@ -166,17 +203,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             defaults.removeObject(forKey: "First Launch")
         } else {
             if defaults.bool(forKey: "First Launch") == true {
-                print("Seconds+")
-                       
+                print("Not first time in the app")
+               loadItems()
+            } else {
+                // Run Code At First Launch
+                print("First time in the app")
                 // Run Code After First Launch
                 daysOfHabit = calenDays(numOfDays: 21)
-                       
-                defaults.set(true, forKey: "First Launch")
-            } else {
-                print("First")
-                
-                // Run Code At First Launch
-                daysOfHabit = calenDays(numOfDays: 21)
+                saveItems()
+                print("salvando habitos primeira vez que entra no app")
                 defaults.set(true, forKey: "First Launch")
             }
         }
@@ -198,8 +233,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 habit.insight = self.textViewInsight.text
                 DispatchQueue.main.async {
                     self.calendarCV.reloadData()
-                    print(5)
                 }
+                saveItems()
+                print("salva quando adiciona um insight")
                 break
             }
         }
@@ -230,7 +266,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     
         daysCompleted += 1
         if daysCompleted == 21{
-            print("huehue")
+            print("HABITO CRIADO")
             NotificationCenter.default.removeObserver(self)
         }
         
@@ -284,7 +320,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             // botar ui feia aqui
             print("BAD UI")
         } else if pickedDay.completed == true {
-            print("kkk \(pickedDay.day)")
             UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                 self.insightQuestionLabel.alpha = 0
                 self.textViewInsight.alpha = 0
@@ -309,7 +344,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 })
             }
         } else if pickedDay.day == todayNumber && pickedDay.completed == false {
-            print("hihihi \(pickedDay.day)")
             UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                 self.insightQuestionLabel.alpha = 0
                 self.textViewInsight.alpha = 0
