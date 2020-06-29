@@ -32,15 +32,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(dataFilePath)
-        
+        print("view did load")
+        print(completedTodayHabit)
+        checkIfFirstTimeInApp(reset: false)
+    
         farolAcendeImages = createImageArray(total: 5, imagePrefix: "farolAcendendo")
         
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(dayChanged), name: .NSCalendarDayChanged, object: nil)
         notificationCenter.addObserver(self, selector: #selector(appMovedToForegroundCheckIfIsNewHabitDay), name: UIApplication.willEnterForegroundNotification, object: nil)
-        
-        checkIfFirstTimeInApp(reset: false)
         
         calendarCV.delegate = self
         calendarCV.dataSource = self
@@ -78,6 +78,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                             self.insightQuestionLabel.isHidden = false
                             self.textViewInsight.isHidden = false
                             self.ilusionView.isHidden = false
+                            self.saveButton.isHidden = false
                         })
                     }
                 } else if habit.day == today && habit.completed == false {
@@ -114,41 +115,46 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func checkIfFirstTimeInApp(reset: Bool) {
-           if reset == true {
-               defaults.removeObject(forKey: "First Launch")
-                print("first launch removido")
-           } else {
-               if defaults.bool(forKey: "First Launch") == true {
-                   print("Not first time in the app")
-                   let today = getTodayNumber()
-                   loadItems()
-                   var count = 0
-                   for habit in daysOfHabit {
-                       if habit.day == today {
-                           break
-                       }
-                       count += 1
-                   }
-                   UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
-                       let desiredPosition = IndexPath(item: count, section: 0)
-                       self.calendarCV.scrollToItem(at: desiredPosition, at: .centeredHorizontally, animated: false)
-                       self.calendarCV.layoutIfNeeded()
-                   })
-                   daysNotCompleted = defaults.integer(forKey: "daysNotCompleted")
-                   
-               } else {
-                   // Run Code At First Launch
-                   print("First time in the app")
-                   // Run Code After First Launch
-                   daysOfHabit = calenDays(numOfDays: 21)
-                   saveItems()
-                   print("salvando habitos primeira vez que entra no app")
-                   defaults.set(true, forKey: "First Launch")
-                   defaults.set(0, forKey: "daysNotCompleted")
-                   daysNotCompleted = 0
-               }
-           }
-       }
+        print("check if first app")
+        if reset == true {
+            defaults.removeObject(forKey: "First Launch")
+            print("first launch removido")
+        } else {
+            if defaults.bool(forKey: "First Launch") == true {
+                print("Not first time in the app")
+                let today = getTodayNumber()
+                loadItems()
+                    
+                print("load items aqui")
+                var count = 0
+                for habit in daysOfHabit {
+                    if habit.day == today {
+                        break
+                    }
+                    count += 1
+                }
+                UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+                    let desiredPosition = IndexPath(item: count, section: 0)
+                    self.calendarCV.scrollToItem(at: desiredPosition, at: .centeredHorizontally, animated: false)
+                    self.calendarCV.layoutIfNeeded()
+                })
+                daysNotCompleted = defaults.integer(forKey: "daysNotCompleted")
+                completedTodayHabit = defaults.bool(forKey: "completeTodayHabit")
+            } else {
+                // Run Code At First Launch
+                print("First time in the app")
+                // Run Code After First Launch
+                daysOfHabit = calenDays(numOfDays: 21)
+                saveItems()
+                print("salvando habitos primeira vez que entra no app")
+                defaults.set(true, forKey: "First Launch")
+                defaults.set(0, forKey: "daysNotCompleted")
+                completedTodayHabit = false
+                defaults.set(completedTodayHabit, forKey: "completeTodayHabit")
+                daysNotCompleted = 0
+            }
+        }
+    }
     
     func saveItems() {
         let encoder = PropertyListEncoder()
@@ -183,10 +189,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @objc func dayChanged() {
         print("dayChanged")
-        
+        //problema eh o completed today habit quye eh resetado toda vez q o app eh matadodxdc xer4f
+        completedTodayHabit = defaults.bool(forKey: "completeTodayHabit")
+        print(completedTodayHabit)
         if completedTodayHabit == false {
+            print("days completed eh falso = \(daysNotCompleted)")
             daysNotCompleted += 1
             defaults.set(daysNotCompleted, forKey: "daysNotCompleted")
+            completedTodayHabit = false
+            defaults.set(completedTodayHabit, forKey: "completeTodayHabit")
             print("days not completed \(daysNotCompleted)")
             completedTodayHabit = false
             if daysNotCompleted >= 3 {
@@ -195,6 +206,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 saveItems()
                 print("save no dia mudado e reset tudo, tem que ver se resetou tudo")
             } else {
+                print("dentrou no menos 3")
                 let yesterday = getTodayNumberInt() - 1
                 let yesterdayString = String(yesterday)
                 for habit in daysOfHabit {
@@ -218,8 +230,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 print("save no dia mudado e menos de 3 erros, tem que ver se adicionou so um no final")
             }
         } else {
-            completedTodayHabit = false
+            print("completou habito")
             daysNotCompleted = 0
+            completedTodayHabit = false
+            defaults.set(completedTodayHabit, forKey: "completeTodayHabit")
             defaults.set(daysNotCompleted, forKey: "daysNotCompleted")
         }
         
@@ -248,6 +262,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.insightQuestionLabel.alpha = 0
                 self.textViewInsight.alpha = 0
                 self.ilusionView.alpha = 0
+                self.saveButton.alpha = 0
             })
                                
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -261,7 +276,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                                                                     
                 self.ilusionView.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
                                                 
-                self.saveButton.isEnabled = false
+                self.saveButton.isEnabled = true
                 self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
                 self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
                        
@@ -378,6 +393,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBAction func saveButtonAction(_ sender: Any) {
         let date = getCurrentDate()
         completedTodayHabit = true
+        print(completedTodayHabit)
+        defaults.set(completedTodayHabit, forKey: "completeTodayHabit")
         textViewInsight.isUserInteractionEnabled = false
         let today = getTodayNumber()
         for habit in daysOfHabit {
