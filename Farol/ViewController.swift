@@ -476,15 +476,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         
         UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseInOut], animations: {
-            self.congratulationNotification.isHidden = false
             self.congratulationNotification.alpha = 1
+            self.congratulationNotification.isHidden = false
         })
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseInOut], animations: {
-                self.congratulationNotification.isHidden = true
                 self.congratulationNotification.alpha = 0
             })
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseInOut], animations: {
+                    self.congratulationNotification.isHidden = true
+                })
+            }
         }
         
         var count = 0
