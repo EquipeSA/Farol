@@ -113,6 +113,43 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
+    func checkIfFirstTimeInApp(reset: Bool) {
+           if reset == true {
+               defaults.removeObject(forKey: "First Launch")
+                print("first launch removido")
+           } else {
+               if defaults.bool(forKey: "First Launch") == true {
+                   print("Not first time in the app")
+                   let today = getTodayNumber()
+                   loadItems()
+                   var count = 0
+                   for habit in daysOfHabit {
+                       if habit.day == today {
+                           break
+                       }
+                       count += 1
+                   }
+                   UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+                       let desiredPosition = IndexPath(item: count, section: 0)
+                       self.calendarCV.scrollToItem(at: desiredPosition, at: .centeredHorizontally, animated: false)
+                       self.calendarCV.layoutIfNeeded()
+                   })
+                   daysNotCompleted = defaults.integer(forKey: "daysNotCompleted")
+                   
+               } else {
+                   // Run Code At First Launch
+                   print("First time in the app")
+                   // Run Code After First Launch
+                   daysOfHabit = calenDays(numOfDays: 21)
+                   saveItems()
+                   print("salvando habitos primeira vez que entra no app")
+                   defaults.set(true, forKey: "First Launch")
+                   defaults.set(0, forKey: "daysNotCompleted")
+                   daysNotCompleted = 0
+               }
+           }
+       }
+    
     func saveItems() {
         let encoder = PropertyListEncoder()
         do {
@@ -136,6 +173,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func resetAll() {
         daysNotCompleted = 0
+        defaults.set(daysNotCompleted, forKey: "daysNotCompleted")
         daysOfHabit = calenDays(numOfDays: 21)
         DispatchQueue.main.async {
             self.calendarCV.reloadData()
@@ -145,8 +183,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @objc func dayChanged() {
         print("dayChanged")
+        
         if completedTodayHabit == false {
             daysNotCompleted += 1
+            defaults.set(daysNotCompleted, forKey: "daysNotCompleted")
             print("days not completed \(daysNotCompleted)")
             completedTodayHabit = false
             if daysNotCompleted >= 3 {
@@ -180,6 +220,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         } else {
             completedTodayHabit = false
             daysNotCompleted = 0
+            defaults.set(daysNotCompleted, forKey: "daysNotCompleted")
         }
         
         let today = getTodayNumber()
@@ -329,38 +370,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                                })
                            }
                        }
-            }
-        }
-    }
-
-    func checkIfFirstTimeInApp(reset: Bool) {
-        if reset == true {
-            defaults.removeObject(forKey: "First Launch")
-        } else {
-            if defaults.bool(forKey: "First Launch") == true {
-                print("Not first time in the app")
-                let today = getTodayNumber()
-                loadItems()
-                var count = 0
-                for habit in daysOfHabit {
-                    if habit.day == today {
-                        break
-                    }
-                    count += 1
-                }
-                UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
-                    let desiredPosition = IndexPath(item: count, section: 0)
-                    self.calendarCV.scrollToItem(at: desiredPosition, at: .centeredHorizontally, animated: false)
-                    self.calendarCV.layoutIfNeeded()
-                })
-            } else {
-                // Run Code At First Launch
-                print("First time in the app")
-                // Run Code After First Launch
-                daysOfHabit = calenDays(numOfDays: 21)
-                saveItems()
-                print("salvando habitos primeira vez que entra no app")
-                defaults.set(true, forKey: "First Launch")
             }
         }
     }
