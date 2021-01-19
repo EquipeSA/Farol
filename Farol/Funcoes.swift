@@ -12,7 +12,7 @@ func calenDays(numOfDays:Int) -> [HabitDate]{
     let calendar = Calendar.current
     var date = calendar.startOfDay(for: Date())
     var habitDays = [HabitDate]()
-    var scenes = storyScenes()
+    let scenes = storyScenes()
     
     for _ in 1 ... 4 {
         let week = calendar.component(.weekday, from: date)
@@ -106,7 +106,7 @@ func createImageArray(imagePrefix: String) -> [String] {
     var imageCount = 0
     while aux {
         let imageName = "\(imagePrefix)-\(imageCount).pdf"
-        if let image = try? UIImage(named: imageName){
+        if let _ = UIImage(named: imageName){
             imageArray.append(imageName)
             imageCount+=1
         } else {

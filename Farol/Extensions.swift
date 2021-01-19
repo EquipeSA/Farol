@@ -38,7 +38,7 @@ extension UIView {
 
 extension Date {
     var dayAfter: Date {
-        var after = Calendar.current.date(byAdding: .day, value: 1, to: self)!
+        //var after = Calendar.current.date(byAdding: .day, value: 1, to: self)!
         return Calendar.current.date(byAdding: .day, value: 1, to: self)!
     }
     
