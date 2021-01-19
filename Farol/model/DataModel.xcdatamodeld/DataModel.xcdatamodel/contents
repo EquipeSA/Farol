@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20B29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="HabitCalendar" representedClassName="HabitCalendar" syncable="YES" codeGenerationType="class">
+    <entity name="HabitDay" representedClassName="HabitDay" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="String"/>
         <attribute name="day" optional="YES" attributeType="String"/>
         <attribute name="dayInsight" optional="YES" attributeType="String"/>
@@ -13,6 +13,6 @@
         <attribute name="weekDay" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="HabitCalendar" positionX="-63" positionY="-18" width="128" height="179"/>
+        <element name="HabitDay" positionX="-63" positionY="-18" width="128" height="179"/>
     </elements>
 </model>
