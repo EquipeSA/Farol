@@ -6,14 +6,6 @@
 //  Copyright © 2020 yuryAntony. All rights reserved.
 //
 
-//
-//  ViewController.swift
-//  Farol
-//
-//  Created by yury antony on 04/06/20.
-//  Copyright © 2020 yuryAntony. All rights reserved.
-//
-
 
 import UIKit
     
@@ -40,8 +32,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("view did load")
-        print(completedTodayHabit)
         checkIfFirstTimeInApp(reset: false)
         
         view.backgroundColor = UIColor(red: 0.18, green: 0.18, blue: 0.25, alpha: 1.00)
@@ -203,7 +193,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     @objc func dayChanged() {
-        print("dayChanged")
         //problema eh o completed today habit quye eh resetado toda vez q o app eh matadodxdc xer4f
         completedTodayHabit = defaults.bool(forKey: "completeTodayHabit")
         print(completedTodayHabit)

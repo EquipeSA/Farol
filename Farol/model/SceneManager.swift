@@ -58,10 +58,6 @@ func storyScenes() -> [SceneManager]{
     defaultScene: "fogueteDefault",
     animatedScene: createImageArray(imagePrefix: "foguete"),
     currentScene: "foguete",animateTime:1.5,animateRepeat: 2)
-
-    
-    
-    
     
     storyScenes.append(scene1)
     storyScenes.append(scene2)
