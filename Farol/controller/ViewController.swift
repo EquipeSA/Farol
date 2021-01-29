@@ -8,8 +8,10 @@
 
 
 import UIKit
-    
-    
+import NaturalLanguage
+import CoreML
+
+
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("HabitDays.plist")
@@ -27,8 +29,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var textViewInsight: UITextView!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var insightQuestionLabel: UILabel!
-    
     @IBOutlet weak var calendarCV: UICollectionView!
+    
+    private lazy var insightPredictor: NLModel? = {
+        let model = try? NLModel(mlModel: InsightClassifier(configuration: MLModelConfiguration()).model)
+        return model
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +68,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     self.textViewInsight.isHidden = true
                     self.ilusionView.isHidden = true
                     self.saveButton.isHidden = true
-                                  
+                    
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                         self.textViewInsight.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
                         self.ilusionView.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
@@ -72,7 +78,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                         self.textViewInsight.text = habit.insight
                         self.textViewInsight.textAlignment = .center
                         self.textViewInsight.isUserInteractionEnabled = false
-                                      
+                        
                         UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
                             self.insightQuestionLabel.isHidden = false
                             self.textViewInsight.isHidden = false
@@ -90,21 +96,21 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         let date = getCurrentDate()
                         self.insightQuestionLabel.text = "Qual seu insight de hoje?"
-    
+                        
                         self.textViewInsight.isUserInteractionEnabled = true
                         self.textViewInsight.textAlignment = .left
                         self.textViewInsight.text = nil
                         self.textViewInsight.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
                         self.textViewInsight.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
-                                            
+                        
                         self.ilusionView.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
-                                  
+                        
                         self.saveButton.isEnabled = false
                         self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
                         self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
                         
                         self.dateOfCollectionViewLabel.text = date
-
+                        
                         UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                             self.insightQuestionLabel.isHidden = false
                             self.saveButton.isHidden = false
@@ -129,7 +135,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 print("Not first time in the app")
                 let today = getTodayNumber()
                 loadItems()
-                    
+                
                 print("load items aqui")
                 var count = 0
                 for habit in daysOfHabit {
@@ -274,23 +280,23 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.dateOfCollectionViewLabel.alpha = 0
                 self.dateOfCollectionViewLabel.isHidden = true
             })
-                               
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.insightQuestionLabel.text = "Qual seu insight de hoje?"
-                                                         
+                
                 self.textViewInsight.isUserInteractionEnabled = true
                 self.textViewInsight.textAlignment = .left
                 self.textViewInsight.text = nil
                 self.textViewInsight.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
                 self.textViewInsight.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
-                                                                    
+                
                 self.ilusionView.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
-                                                
+                
                 self.saveButton.isEnabled = true
                 self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
                 self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
                 self.dateOfCollectionViewLabel.text = date
-                       
+                
                 UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                     self.insightQuestionLabel.alpha = 1
                     self.saveButton.alpha = 1
@@ -299,7 +305,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     
                     self.dateOfCollectionViewLabel.alpha = 1
                     self.dateOfCollectionViewLabel.isHidden = false
-                           
+                    
                     let desiredPosition = IndexPath(item: count, section: 0)
                     self.calendarCV.scrollToItem(at: desiredPosition, at: .centeredHorizontally, animated: false)
                     self.calendarCV.layoutIfNeeded()
@@ -342,76 +348,76 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         for habit in daysOfHabit {
             if habit.day == today {
                 if habit.badUI == true {
-                           // botar ui feia aqui
-                           print("BAD UI")
-                       } else if habit.completed == true {
-                           UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
-                               self.insightQuestionLabel.alpha = 0
-                               self.textViewInsight.alpha = 0
-                               self.ilusionView.alpha = 0
-                               self.saveButton.alpha = 0
-                               self.dateOfCollectionViewLabel.alpha = 0
-                               self.dateOfCollectionViewLabel.isHidden = true
-                           })
-                           
-                           DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                               self.textViewInsight.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
-                               self.ilusionView.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
-                               self.textViewInsight.textColor = UIColor(red: 204/255, green: 204/255, blue: 204/255, alpha: 1)
-                               self.textViewInsight.textAlignment = .center
-                               self.insightQuestionLabel.text = habit.date!
-                               self.textViewInsight.text = habit.insight
-                               self.textViewInsight.textAlignment = .center
-                               self.textViewInsight.isUserInteractionEnabled = false
-                               
-                               UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
-                                   self.insightQuestionLabel.alpha = 1
-                                   self.textViewInsight.alpha = 1
-                                   self.ilusionView.alpha = 1
-                               })
-                           }
-                       } else if habit.day == today && habit.completed == false {
-                           UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
-                               self.insightQuestionLabel.alpha = 0
-                               self.textViewInsight.alpha = 0
-                               self.ilusionView.alpha = 0
-                               self.saveButton.alpha = 0
-                               self.dateOfCollectionViewLabel.alpha = 0
-                            })
-                            
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                               self.insightQuestionLabel.text = "Qual seu insight de hoje?"
-                           
-                               self.textViewInsight.isUserInteractionEnabled = true
-                               self.textViewInsight.textAlignment = .left
-                               self.textViewInsight.text = nil
-                               self.textViewInsight.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
-                               self.textViewInsight.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
-                                      
-                               self.ilusionView.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
-                           
-                               self.saveButton.isEnabled = false
-                               self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
-                               self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
-                               self.dateOfCollectionViewLabel.text = date
-
-                               UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
-                                   self.insightQuestionLabel.alpha = 1
-                                   self.saveButton.alpha = 1
-                                   self.ilusionView.alpha = 1
-                                   self.textViewInsight.alpha = 1
-                                   self.dateOfCollectionViewLabel.alpha = 1
-                                self.dateOfCollectionViewLabel.isHidden = false
-                               })
-                           }
-                       }
+                    // botar ui feia aqui
+                    print("BAD UI")
+                } else if habit.completed == true {
+                    UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+                        self.insightQuestionLabel.alpha = 0
+                        self.textViewInsight.alpha = 0
+                        self.ilusionView.alpha = 0
+                        self.saveButton.alpha = 0
+                        self.dateOfCollectionViewLabel.alpha = 0
+                        self.dateOfCollectionViewLabel.isHidden = true
+                    })
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                        self.textViewInsight.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
+                        self.ilusionView.backgroundColor = UIColor(red: 43/255, green: 42/255, blue: 64/255, alpha: 0.0)
+                        self.textViewInsight.textColor = UIColor(red: 204/255, green: 204/255, blue: 204/255, alpha: 1)
+                        self.textViewInsight.textAlignment = .center
+                        self.insightQuestionLabel.text = habit.date!
+                        self.textViewInsight.text = habit.insight
+                        self.textViewInsight.textAlignment = .center
+                        self.textViewInsight.isUserInteractionEnabled = false
+                        
+                        UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
+                            self.insightQuestionLabel.alpha = 1
+                            self.textViewInsight.alpha = 1
+                            self.ilusionView.alpha = 1
+                        })
+                    }
+                } else if habit.day == today && habit.completed == false {
+                    UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+                        self.insightQuestionLabel.alpha = 0
+                        self.textViewInsight.alpha = 0
+                        self.ilusionView.alpha = 0
+                        self.saveButton.alpha = 0
+                        self.dateOfCollectionViewLabel.alpha = 0
+                    })
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        self.insightQuestionLabel.text = "Qual seu insight de hoje?"
+                        
+                        self.textViewInsight.isUserInteractionEnabled = true
+                        self.textViewInsight.textAlignment = .left
+                        self.textViewInsight.text = nil
+                        self.textViewInsight.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
+                        self.textViewInsight.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
+                        
+                        self.ilusionView.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
+                        
+                        self.saveButton.isEnabled = false
+                        self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
+                        self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
+                        self.dateOfCollectionViewLabel.text = date
+                        
+                        UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+                            self.insightQuestionLabel.alpha = 1
+                            self.saveButton.alpha = 1
+                            self.ilusionView.alpha = 1
+                            self.textViewInsight.alpha = 1
+                            self.dateOfCollectionViewLabel.alpha = 1
+                            self.dateOfCollectionViewLabel.isHidden = false
+                        })
+                    }
+                }
             }
         }
     }
     
     var daysCompleted = 0
     
-    @IBAction func saveButtonAction(_ sender: Any) {
+    func dayConcluded(){
         let date = getCurrentDate()
         completedTodayHabit = true
         print(completedTodayHabit)
@@ -430,7 +436,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     self.calendarCV.reloadData()
                 }
                 saveItems()
-                print("salva quando adiciona um insight")
                 let currentScene = UIImage(named: habit.scenes.currentScene)
                 self.backgroundImage.image = currentScene
                 animateScene(imageView: self.backgroundImage, images: habit.scenes.animatedScene,duration: habit.scenes.animateTime,repeatCount: habit.scenes.animateRepeat)
@@ -459,7 +464,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.ilusionView.alpha = 1
             })
         }
-                    
+        
         daysCompleted += 1
         if daysCompleted == 21{
             print("HABITO CRIADO")
@@ -497,6 +502,27 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         })
     }
     
+    func aRandomChoice(){
+        let randonScene = SceneManager(sceneName: "Lier", animateTime: 3, animateRepeat: 1)
+        animateScene(imageView: self.backgroundImage, images: randonScene.animatedScene,duration: randonScene.animateTime,repeatCount: randonScene.animateRepeat)
+        self.backgroundImage.image = UIImage(named: randonScene.currentScene)
+        
+        
+    }
+    
+    @IBAction func saveButtonAction(_ sender: Any) {
+        if let label = insightPredictor?.predictedLabel(for: self.textViewInsight.text) {
+            switch label {
+            case "random":
+                aRandomChoice()
+            case "insight":
+                dayConcluded()
+            default:
+                return
+            }
+        }
+    }
+    
     func configureTextViewInsight() {
         textViewInsight.roundCorners([.bottomLeft, .bottomRight], radius: 12)
         ilusionView.roundCorners([.topLeft, .topRight], radius: 12)
@@ -511,7 +537,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return daysOfHabit.count
     }
-       
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCell", for: indexPath) as! CalendarCell
         cell.day = daysOfHabit[indexPath.item]
@@ -576,22 +602,22 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.textViewInsight.alpha = 0
                 self.ilusionView.alpha = 0
                 self.saveButton.alpha = 0
-             })
-             
-             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            })
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.insightQuestionLabel.text = "Qual seu insight de hoje?"
                 self.textViewInsight.isUserInteractionEnabled = true
                 self.textViewInsight.textAlignment = .left
                 self.textViewInsight.text = nil
                 self.textViewInsight.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
                 self.textViewInsight.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
-                       
+                
                 self.ilusionView.backgroundColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
-            
+                
                 self.saveButton.isEnabled = false
                 self.saveButton.backgroundColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
                 self.saveButton.setTitleColor(UIColor(red: 147/255, green: 147/255, blue: 147/255, alpha: 1), for: .normal)
-
+                
                 UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
                     self.insightQuestionLabel.alpha = 1
                     self.saveButton.alpha = 1

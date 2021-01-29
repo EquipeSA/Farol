@@ -20,6 +20,7 @@
 		D05FF88524896CBF00CD861E /* Funcoes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05FF88424896CBF00CD861E /* Funcoes.swift */; };
 		D0789A9925B7645000D760DC /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0789A9725B7645000D760DC /* DataModel.xcdatamodeld */; };
 		D0789A9C25B7670700D760DC /* habitCalendarDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0789A9B25B7670700D760DC /* habitCalendarDataManager.swift */; };
+		D0C2D11C25C3A519007C385F /* InsightClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = D0C2D11B25C3A519007C385F /* InsightClassifier.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		D05FF88424896CBF00CD861E /* Funcoes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Funcoes.swift; sourceTree = "<group>"; };
 		D0789A9825B7645000D760DC /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		D0789A9B25B7670700D760DC /* habitCalendarDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = habitCalendarDataManager.swift; sourceTree = "<group>"; };
+		D0C2D11B25C3A519007C385F /* InsightClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = InsightClassifier.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 		D05FF86F24896C3000CD861E /* Farol */ = {
 			isa = PBXGroup;
 			children = (
+				D0C2D11B25C3A519007C385F /* InsightClassifier.mlmodel */,
 				D0789A8925B74E7C00D760DC /* controller */,
 				D0789A8A25B74E8700D760DC /* view */,
 				D0789A8B25B74E8D00D760DC /* model */,
@@ -192,6 +195,7 @@
 				B728B2F9248AC40A00549D0F /* CalendarCell.swift in Sources */,
 				D0789A9925B7645000D760DC /* DataModel.xcdatamodeld in Sources */,
 				D0040185249A8FC100A15279 /* SceneManager.swift in Sources */,
+				D0C2D11C25C3A519007C385F /* InsightClassifier.mlmodel in Sources */,
 				B7203D2D2497C7AC0074B985 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
