@@ -30,11 +30,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var insightQuestionLabel: UILabel!
     @IBOutlet weak var calendarCV: UICollectionView!
+    @IBOutlet weak var congratulationText: UILabel!
+    @IBOutlet weak var notificationMark: UIImageView!
     
     private lazy var insightPredictor: NLModel? = {
         let model = try? NLModel(mlModel: InsightClassifier(configuration: MLModelConfiguration()).model)
         return model
     }()
+    
+    enum NotificationType{
+        case created, lier, fail
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +61,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         congratulationNotification.alpha = 0
         congratulationNotification.isHidden = true
+        congratulationNotification.layer.cornerRadius = 5
+        congratulationNotification.layer.masksToBounds = true
+        
+        //let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+        //let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        //blurEffectView.frame = congratulationNotification.bounds
+        //blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        //congratulationNotification.addSubview(blurEffectView)
         
         ilusionViewOfCollectionView.roundCorners([.topLeft, .topRight], radius: 30)
         
@@ -121,6 +136,35 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                         })
                     }
                 }
+            }
+        }
+    }
+    
+    func NotificationUp(type: NotificationType){
+        switch type {
+        case .created:
+            notificationMark.image = UIImage(named: "checkMark")
+            congratulationText.text = "Insight salvo, aprecie a vista!"
+        case .lier:
+            notificationMark.image = UIImage(named: "warningMark")
+            congratulationText.text = "O farol não reconheçe!"
+        default:
+            congratulationText.text = "Insight salvo, aprecie a vista!"
+        }
+        
+        UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseInOut], animations: {
+            self.congratulationNotification.alpha = 0.7
+            self.congratulationNotification.isHidden = false
+        })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseInOut], animations: {
+                self.congratulationNotification.alpha = 0
+            })
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseInOut], animations: {
+                    self.congratulationNotification.isHidden = true
+                })
             }
         }
     }
@@ -471,21 +515,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             NotificationCenter.default.removeObserver(self)
         }
         
-        UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseInOut], animations: {
-            self.congratulationNotification.alpha = 1
-            self.congratulationNotification.isHidden = false
-        })
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseInOut], animations: {
-                self.congratulationNotification.alpha = 0
-            })
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseInOut], animations: {
-                    self.congratulationNotification.isHidden = true
-                })
-            }
-        }
+        NotificationUp(type: .created)
         
         var count = 0
         for habit in daysOfHabit {
@@ -503,11 +533,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func aRandomChoice(){
-        let randonScene = SceneManager(sceneName: "Lier", animateTime: 3, animateRepeat: 1)
+        NotificationUp(type: .lier)
+        let randonScene = SceneManager(sceneName: "Lier", animateTime: 5, animateRepeat: 1)
         animateScene(imageView: self.backgroundImage, images: randonScene.animatedScene,duration: randonScene.animateTime,repeatCount: randonScene.animateRepeat)
         self.backgroundImage.image = UIImage(named: randonScene.currentScene)
-        
-        
     }
     
     @IBAction func saveButtonAction(_ sender: Any) {
